@@ -1,23 +1,70 @@
 import './App.css';
-import { EuiProvider } from '@elastic/eui';
-import createCache from '@emotion/cache';
-// import { StrictMode } from 'react';
-// import { AuthProvider } from './context/AuthProvider';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from './context/AuthProvider';
+import {
+  useNavigate,
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import Feed from './pages/Feed';
+import Missing from './pages/Missing';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import Signup from './pages/Signup';
+import Profile from './components/profile/Profile';
 
-const cache = createCache({
-  key: 'myapp',
-  container: document.querySelector('meta[name="global-style-insert"]'),
-});
+import AddPostForm from './components/post/AddPostForm';
+import EditPostForm from './components/post/EditPostForm';
+import UserPage from './components/user/UserPage';
+import UserList from './components/user/UserList';
+import PostList from './components/post/PostList';
 
-export default function App() {
+import Dashboard from './components/admin/Dashboard';
+import AdminRoute from './components/admin/AdminRoute';
+
+function App() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate;
   return (
-    <EuiProvider colorMode="dark" cache={cache}>
-      <div className="App">
-        <header className="App-header">
-          <h1>Hello</h1>
-        </header>
-      </div>
-    </EuiProvider>
+    <Router>
+      <Routes>
+        {/* <Route
+          path="/"
+          element={
+            <React.Fragment>
+              <AddPostForm />
+              <PostList />
+            </React.Fragment>
+          }
+        /> */}
+
+        <Route path="/">
+          <Route path="feed" element={<PostList />}>
+            <Route path="new" element={<AddPostForm />} />
+            <Route path="edit/:postId" element={<EditPostForm />} />
+            <Route path="users" element={<UserList />}>
+              <Route path=":id" element={<UserPage />} />
+            </Route>
+          </Route>
+        </Route>
+        <Route path="profile" element={<Profile />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Signup />} />
+        <Route path="logout" element={<Logout />} />
+        <Route path="*" element={<Missing />} />
+
+        <Route
+          path="dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
+export default App;

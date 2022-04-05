@@ -51,7 +51,7 @@ exports.createPost = async (req, res, next) => {
       console.log(post);
       const postCreated = await Post.create(post);
       if (postCreated) {
-        res.status(201).json({ newPost: post });
+        res.status(201).json({ newPost: postCreated });
       } else {
         res.status(401).json({ error: 'Query not completed' });
       }
