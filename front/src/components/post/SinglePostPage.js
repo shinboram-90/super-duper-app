@@ -4,6 +4,7 @@ import axios from '../../api/axios';
 import AuthContext from '../../context/AuthProvider';
 import DeletePost from './DeletePost';
 import AddPostForm from './AddPostForm';
+import EditPostForm from './EditPostForm';
 
 const SinglePostPage = ({ post, onDelete, onEdit }) => {
   // const params = useParams();
@@ -44,9 +45,8 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
       <br />
       <h2>{post.title}</h2>
       <p>{post.content}</p>
-      <div className="flexGrow">
-        <Link to="/">Home</Link>
-      </div>
+      <div className="flexGrow"></div>
+      <EditPostForm id={post.id} onEdit={onEdit} />
       <DeletePost id={post.id} onDelete={onDelete} />
       <hr />
     </section>

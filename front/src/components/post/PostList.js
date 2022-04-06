@@ -6,7 +6,7 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 import SinglePostPage from './SinglePostPage';
 import AddPostForm from './AddPostForm';
-import EditPostForm from './EditPostForm';
+// import EditPostForm from './EditPostForm';
 
 const PostList = () => {
   const { user } = useContext(AuthContext);
@@ -23,8 +23,8 @@ const PostList = () => {
       user_id: user.id,
       title: newPostObject.title,
       content: newPostObject.content,
-      image: newPostObject.image,
     };
+    newPostObject.append('file', newPostObject.image);
     try {
       const response = await axios.post('/api/posts', newPostObject);
       console.log(response.data.newPost);
@@ -67,6 +67,7 @@ const PostList = () => {
   const editPost = async (id, postContent) => {
     try {
       const response = await axios.put(`/api/posts/${id}`, postContent);
+      console.log(response.data);
       if (response) {
         const updatedPost = [...posts].filter((post) => post.id === id);
         setPosts(updatedPost);
