@@ -5,39 +5,39 @@ import AuthContext from '../../context/AuthProvider';
 import DeletePost from './DeletePost';
 import AddPostForm from './AddPostForm';
 import EditPostForm from './EditPostForm';
+import Comments from '../comment/Comments';
 
 const SinglePostPage = ({ post, onDelete, onEdit }) => {
   // const params = useParams();
   // const id = params.postId;
   // console.log(id);
-  // const [post, setPost] = useState([]);
+  const postId = post.id;
+  const [comments, setComments] = useState([]);
   const { user } = useContext(AuthContext);
 
-  // const deletePost = async () => {
-  //   try {
-  //     const response = await axios.delete(`/api/posts/${post.id}`);
-  //     setPosts();
-  //     console.log(response.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const [showComments, setShowComments] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchPost = () => {
-  //     axios
-  //       .get(`api/posts/${id}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         console.log(response.data.post[0]);
-  //         setPost(response.data.post[0]);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   };
-  //   fetchPost();
-  // }, [id]);
+  const toggle = () => {
+    setShowComments(!showComments);
+  };
+
+  const fetchComments = async (postId) => {
+    try {
+      const response = await axios.get(`/api/posts/${postId}/comments`);
+      console.log(response.data.commentList);
+      if (response.data.commentList !== undefined) {
+        setComments(response.data.commentList);
+      }
+    } catch (err) {
+      console.error('Failed to fetch comments: ', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments(postId);
+  }, [postId]);
+
+  console.log(comments);
 
   return (
     <section>
@@ -48,6 +48,9 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
       <div className="flexGrow"></div>
       <EditPostForm id={post.id} onEdit={onEdit} />
       <DeletePost id={post.id} onDelete={onDelete} />
+      <button onClick={toggle}>{post.comments}</button>
+
+      {showComments && <Comments id={postId} comments={comments} post={post} />}
       <hr />
     </section>
   );

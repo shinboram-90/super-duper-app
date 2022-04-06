@@ -17,8 +17,6 @@ export const EditPostForm = ({ id, onEdit }) => {
   const { user } = useContext(AuthContext);
   const userId = user.user[0].id;
 
-  console.log(userId);
-
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
   const onImageChanged = (e) => setImage(e.target.files[0]);

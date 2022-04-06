@@ -13,6 +13,7 @@ const PostList = () => {
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState([]);
+  // const [comments, setComments] = useState([]);
 
   // const [likes, setLikes] = useState();
   // const [comments, setComments] = useState([]);
@@ -106,21 +107,6 @@ const PostList = () => {
       console.error(err);
     }
   };
-  // const fetchComments = async (id) => {
-  //   try {
-  //     const response = await axios.get(`/api/posts/${id}/comments`);
-  //     console.log(response.data);
-  //     if (response) {
-  //       setComments(response.data.commentList[0]);
-
-  //       return comments.map((comment) => (
-  //         <ReadComments key={comment.id} comment={comment} />
-  //       ));
-  //     }
-  //   } catch (err) {
-  //     console.error('Failed to login: ', err);
-  //   }
-  // };
 
   return (
     <>
@@ -139,6 +125,10 @@ const PostList = () => {
                 post={post}
                 onEdit={editPost}
                 onDelete={deletePost}
+                // fetchComments={fetchComments}
+                // comments={comments}
+                // onEditComment={editComments}
+                // onDeleteComment={deleteComment}
               />
             ))}
           </ul>
