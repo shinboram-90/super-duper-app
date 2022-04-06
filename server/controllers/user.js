@@ -18,19 +18,17 @@ exports.logout = async (req, res, next) => {
   }
 };
 
-// exports.getCurrentUser = async (req, res, next) => {
-//   try {
-//     const getCurrentUser = await User.findByEmail();
-//     if (getCurrentUser)
-//     return res
-//       .clearCookie('access_token')
-//       .status(200)
-//       .json({ message: 'Successfully logged out 😏 🍀' });
-//   } catch (e) {
-//     console.log(e);
-//     res.sendStatus(500);
-//   }
-// };
+exports.getCurrentUser = async (req, res, next) => {
+  const currentUserId = req.auth.userId;
+  console.log(req.auth.userId);
+  try {
+    const currentUser = await User.findById(currentUserId);
+    if (currentUser) return res.status(200).json({ currentUser: currentUser });
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+};
 
 exports.getAllActive = async (req, res, next) => {
   try {
@@ -190,7 +188,7 @@ exports.login = async (req, res, next) => {
 
   // Post request where we need either the username or the email to login
   try {
-    const loggedInUser = await User.signin(username, email);
+    const loggedInUser = await User.signin(username, password);
     if (loggedInUser[0]) {
       const match = await bcrypt.compare(password, loggedInUser[0].password);
 
