@@ -1,11 +1,10 @@
 import { useRef, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { loginCall } from '../api/apiCall';
 import AuthContext from '../context/AuthProvider';
 
 const Login = () => {
-  const { isLoading, dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { isLoggedIn, isLoading, dispatch } = useContext(AuthContext);
 
   const username = useRef(null);
   const password = useRef(null);
@@ -20,11 +19,11 @@ const Login = () => {
       },
       dispatch
     );
-
-    navigate('/');
   };
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to={'/'} />
+  ) : (
     <section style={{ padding: 100 }}>
       <h1>WELCOME TO GROUPOMANIA</h1>
 
@@ -65,7 +64,7 @@ const Login = () => {
         Need an account?
         <br />
         <span className="line">
-          <Link to="/signup">Register</Link>
+          <Link to="/register">Register</Link>
         </span>
       </p>
     </section>

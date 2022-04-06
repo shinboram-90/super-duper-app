@@ -1,8 +1,10 @@
-import { useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useRef, useContext } from 'react';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import axios from '../api/axios';
+import AuthContext from '../context/AuthProvider';
 
 const Signup = () => {
+  const { user } = useContext(AuthContext);
   const email = useRef(null);
   const username = useRef(null);
   const password = useRef(null);
@@ -12,7 +14,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
+    if (password.current.value !== password2.current.value) {
       console.log('not natching');
     } else {
       const user = {
@@ -22,15 +24,20 @@ const Signup = () => {
       };
       try {
         const response = await axios.post('/api/signup', user);
-        console.log(response.data);
+        if (response.data) {
+          navigate('/login');
+
+          console.log(response.data);
+        }
       } catch (err) {
         console.error(err);
       }
     }
-    navigate('/api/login');
   };
 
-  return (
+  return user ? (
+    <Navigate to={'/'} />
+  ) : (
     <section style={{ padding: 100 }}>
       <form onSubmit={handleSubmit}>
         <label>Username</label>

@@ -68,8 +68,8 @@ exports.deleteUser = async (req, res, next) => {
     }
     const avatar = user[0].avatar;
     if (avatar) {
-      const filename = await avatar.split('/avatars/')[1];
-      fs.unlink(`uploads/avatars/${filename}`, () => {
+      const filename = await avatar.split('/uploads/')[1];
+      fs.unlink(`/uploads/${filename}`, () => {
         const deleteUser = User.delete(req.params.id);
         res.status(200).json({
           message: 'User successfully deleted with all images',
@@ -97,7 +97,7 @@ exports.modifyUser = async (req, res, next) => {
       console.log(req.file);
       const user = {
         ...req.body,
-        avatar: `${req.protocol}://${req.get('host')}/uploads/avatars/${
+        avatar: `${req.protocol}://${req.get('host')}/uploads/${
           req.file.filename
         }`,
       };
@@ -108,9 +108,9 @@ exports.modifyUser = async (req, res, next) => {
 
         // User already has one avatar, unlink the existing one and replace it
         if (avatar) {
-          const filename = avatar.split('avatars/')[1];
+          const filename = avatar.split('/uploads/')[1];
 
-          fs.unlink(`uploads/avatars/${filename}`, async () => {
+          fs.unlink(`uploads/${filename}`, async () => {
             const updatedUser = await User.update(user, id);
             // console.log(req.file.avatar);
             if (updatedUser) {

@@ -43,7 +43,7 @@ exports.createPost = async (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       status: 'published',
-      image: `${req.protocol}://${req.get('host')}/uploads/images/${
+      image: `${req.protocol}://${req.get('host')}/uploads/${
         req.file.filename
       }`,
     };
@@ -86,7 +86,7 @@ exports.modifyPost = async (req, res, next) => {
     console.log(req.file);
     const post = {
       ...req.body,
-      image: `${req.protocol}://${req.get('host')}/uploads/images/${
+      image: `${req.protocol}://${req.get('host')}/uploads/${
         req.file.filename
       }`,
     };
@@ -96,8 +96,8 @@ exports.modifyPost = async (req, res, next) => {
 
       // Post already has image(s), user is adding more to them
       if (image) {
-        const filename = image.split('images/')[1];
-        fs.unlink(`uploads/images/${filename}`, async () => {
+        const filename = image.split('/uploads/')[1];
+        fs.unlink(`uploads/${filename}`, async () => {
           const updatedPost = await Post.update(post, id);
           if (updatedPost) {
             res.status(200).json({
@@ -149,9 +149,9 @@ exports.deletePost = async (req, res, next) => {
 
     if (image) {
       // loop to unlink all images
-      const filename = await image.split('/images/')[1];
+      const filename = await image.split('/uploads/')[1];
 
-      fs.unlink(`uploads/images/${filename}`, async () => {
+      fs.unlink(`uploads/${filename}`, async () => {
         const deletePost = await Post.delete(id);
         res.status(200).json({
           message: 'Post successfully deleted with image',

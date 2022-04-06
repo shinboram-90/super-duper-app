@@ -24,10 +24,10 @@ const Navbar = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/feed">Feed</Link>
+              <Link to="/">Feed</Link>
             </li>
             <li>
-              <Link to="/feed/new">Add a post</Link>
+              <Link to="/new">Add a post</Link>
             </li>
             {/* <li>
               <Link to="/edit/:postId">Edit Post</Link>
@@ -36,7 +36,7 @@ const Navbar = () => {
               <Link to="/profile">Profile</Link>
             </li>
             <li>
-              <Link to="/feed/users">Users</Link>
+              <Link to="/users">Users</Link>
             </li>
           </ul>
           <button type="button" onClick={handleLogout}>

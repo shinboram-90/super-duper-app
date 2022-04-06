@@ -51,14 +51,11 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(
-  '/uploads/images',
-  express.static(path.join(__dirname, '/uploads/images'))
-);
-app.use(
-  '/uploads/avatars',
-  express.static(path.join(__dirname, '/uploads/avatars'))
-);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use(
+//   '/uploads/avatars',
+//   express.static(path.join(__dirname, '/uploads/avatars'))
+// );
 app.use('/api', userRoutes);
 app.use('/api', postRoutes);
 app.use('/api', commentRoutes);
@@ -74,8 +71,8 @@ app.use(limiter);
 // });
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 module.exports = app;

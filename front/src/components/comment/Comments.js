@@ -30,7 +30,6 @@ const Comments = ({ id, post, comments }) => {
         <>
           {comments.map((comment) => (
             <li key={'comment' + comment.id} comment={comment}>
-              {console.log(comment)}
               <h2>title: {comment.title}</h2>
               <p>content: {comment.content}</p>
               <div>author: {comment.username}</div>

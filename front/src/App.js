@@ -23,9 +23,11 @@ import PostList from './components/post/PostList';
 
 import Dashboard from './components/admin/Dashboard';
 import AdminRoute from './components/admin/AdminRoute';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 function App() {
   const { user } = useContext(AuthContext);
+  console.log(user);
   const navigate = useNavigate;
   return (
     <Router>
@@ -39,9 +41,8 @@ function App() {
             </React.Fragment>
           }
         /> */}
-
-        <Route path="/">
-          <Route path="feed" element={<PostList />}>
+        <Route element={<PrivateRoute user={user} />}>
+          <Route path="/" element={<PostList />}>
             <Route path="new" element={<AddPostForm />} />
             <Route path="edit/:postId" element={<EditPostForm />} />
             <Route path="users" element={<UserList />}>

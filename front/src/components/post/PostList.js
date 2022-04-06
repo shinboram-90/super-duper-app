@@ -9,7 +9,7 @@ import AddPostForm from './AddPostForm';
 // import EditPostForm from './EditPostForm';
 
 const PostList = () => {
-  const { user } = useContext(AuthContext);
+  const { user, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState([]);
@@ -18,19 +18,21 @@ const PostList = () => {
   // const [likes, setLikes] = useState();
   // const [comments, setComments] = useState([]);
 
-  const addPost = async (newPostObject) => {
+  const addPost = async (formData) => {
     // if (canSave) {
-    newPostObject = {
-      user_id: user.id,
-      title: newPostObject.title,
-      content: newPostObject.content,
-    };
-    newPostObject.append('file', newPostObject.image);
+    // newPostObject = {
+    //   user_id: user.id,
+    //   title: newPostObject.title,
+    //   content: newPostObject.content,
+    //   image: newPostObject.image,
+    // };
+    // console.log(newPostObject);
     try {
-      const response = await axios.post('/api/posts', newPostObject);
+      const response = await axios.post('/api/posts', formData);
+      console.log(formData);
       console.log(response.data.newPost);
       alert('New post successfully created');
-      console.log(posts);
+
       // const addPost = [...posts].push(response.data.newPost);
       const newPost = [...posts];
       newPost.unshift({
@@ -113,7 +115,7 @@ const PostList = () => {
       <Navbar />
       <section>
         <AddPostForm onAdd={addPost} />
-        <Link to="/feed/new">Add a post</Link>
+        <Link to="/new">Add a post</Link>
         <h2>Posts list</h2>
         <br />
         <p>All the gossip happening here.</p>

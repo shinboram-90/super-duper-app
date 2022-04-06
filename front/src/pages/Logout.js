@@ -6,11 +6,16 @@ const Logout = () => {
   const backToLogin = () => {
     navigate('/login');
   };
+
+  const backToRegister = () => {
+    navigate('/register');
+  };
   return (
     <section>
       <p>Successfully logout</p>
       <p>That was a mistake ?</p>
       <button onClick={backToLogin}>Login</button>
+      <button onClick={backToRegister}>Register</button>
     </section>
   );
 };
