@@ -1,25 +1,25 @@
 import { useState, useContext, useEffect } from 'react';
-
+import useAuth from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthProvider';
 import axios from '../../api/axios';
 
 const Profile = () => {
-  // const userStorage = JSON.parse(localStorage.getItem('auth'));
-  const [me, setMe] = useState();
-  const { user } = useContext(AuthContext);
+  const { auth } = useAuth();
 
-  console.log(user);
+  console.log(auth);
 
-  const fetchCurrentUser = async () => {
-    const response = await axios.get('/api/profile');
+  const [profile, setProfile] = useState();
+
+  const handleClick = async () => {
+    const response = await axios.put(`/api/users/${auth.id}`);
     // console.log(response.data.currentUser[0]);
-    return setMe(response.data.currentUser[0]);
+    setProfile(response.data);
   };
 
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchCurrentUser();
+  // }, []);
 
   // if (!auth) {
   //   return <Navigate replace to="/login" />;
@@ -28,8 +28,11 @@ const Profile = () => {
   return (
     <>
       <div>My Profile</div>
-      <p>username: {me.username}</p>
-      <p>email: {me.email}</p>
+      <p>username: {auth.username}</p>
+      <p>email: {auth.email}</p>
+
+      <img alt="user avatar" src={auth.avatar} crossOrigin="true" />
+      <button onClick={handleClick}>Edit Profile</button>
     </>
   );
 };

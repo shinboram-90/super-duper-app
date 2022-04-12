@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 
 export const AddPostForm = ({ onAdd }) => {
   const [title, setTitle] = useState('');
@@ -10,40 +10,27 @@ export const AddPostForm = ({ onAdd }) => {
   // const id = params.postId;
   // console.log(id);
 
-  const { user } = useContext(AuthContext);
-  const userId = user.user[0].id;
+  // const { auth } = useAuth();
+  // const userId = auth.id;
 
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
   const onImageChanged = (e) => setImage(e.target.files[0]);
 
-  // setPostPicture(URL.createObjectURL(event.target.files[0]));
   // // const canSave = [title, content, userId, image].every(Boolean);
 
   // const onSavePostClicked = async () => {
   // if (canSave) {
   const formData = new FormData();
+
   if (image) {
-    // formData.append('image', image.name);
-    // console.log(formData.get('image'));
     formData.append('image', image, image.name);
     formData.append('title', title);
-    formData.append('user_id', user.id);
     formData.append('content', content);
   } else {
     formData.append('title', title);
-    formData.append('user_id', user.id);
     formData.append('content', content);
   }
-  // console.log(formData.get('image'));
-
-  // formData.append('newPost', newPost);
-
-  // console.log(formData);
-  // formData.append('newPost', newPost);
-  // console.log(image.name);
-  // console.log(title);
-  // console.log(formData);
 
   return (
     <section>

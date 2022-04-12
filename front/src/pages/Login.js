@@ -1,73 +1,129 @@
-import { useRef, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { loginCall } from '../api/apiCall';
-import AuthContext from '../context/AuthProvider';
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from '../api/axios';
+
+import useAuth from '../hooks/useAuth';
+
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
+// import { DisplayToggles } from './display_toggles';
 
 const Login = () => {
-  const { isLoggedIn, isLoading, dispatch } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const username = useRef(null);
-  const password = useRef(null);
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+  });
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const redirectPath = location.state?.path || '/';
+  // const password = useRef(null);
 
-    loginCall(
-      {
-        username: username.current.value,
-        password: password.current.value,
-      },
-      dispatch
-    );
+  // const onChange = (event) => {
+  //   if (event.target.value.match(phoneRegex)) {
+  //     setErrorText("");
+  //     setPhone(event.target.value);
+  //   } else {
+  //     setErrorText("invalid format");
+  //   }
+  // };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setData({
+      ...data,
+      [e.target.name]: value,
+    });
   };
 
-  return isLoggedIn ? (
-    <Navigate to={'/'} />
-  ) : (
-    <section style={{ padding: 100 }}>
-      <h1>WELCOME TO GROUPOMANIA</h1>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendDataToAPI();
+  };
 
-      <form onSubmit={handleLogin} method="POST">
-        <label htmlFor="username">
-          Username
-          <input
-            type="text"
-            id="username"
-            name="username"
-            ref={username}
-            placeholder="Enter your username"
-          />
-        </label>
+  const sendDataToAPI = async () => {
+    const userData = {
+      ...data,
+    };
+    try {
+      const response = await axios.post('/api/login', userData);
+      if (response.status === 200) {
+        console.log(response.data);
+        setData({});
+        const user = response.data.user[0];
 
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            ref={password}
-            required
-          />
-        </label>
-        {isLoading ? (
-          <div className="loading">
-            <span>Loading...</span>
-          </div>
-        ) : (
-          <button disabled={isLoading} type="submit">
-            Login
-          </button>
-        )}
-      </form>
+        localStorage.setItem('user', JSON.stringify(response.data.user[0]));
 
-      <p>
-        Need an account?
-        <br />
-        <span className="line">
-          <Link to="/register">Register</Link>
-        </span>
-      </p>
-    </section>
+        setAuth(user);
+        navigate(redirectPath, { replace: true });
+      }
+    } catch (err) {
+      console.error(`Catching ${err}`);
+    }
+  };
+
+  return (
+    <>
+      <section style={{ padding: 100 }}>
+        <h1>WELCOME TO GROUPOMANIA</h1>
+        <form onSubmit={handleSubmit} method="POST">
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              '& > :not(style)': { m: 1 },
+            }}
+          >
+            <TextField
+              label="Username"
+              // helperText={text === "" ? 'Empty field!' : "Please enter your username"}
+              id="username"
+              name="username"
+              value={data.username || ''}
+              type="text"
+              size="small"
+              required
+              onChange={handleChange}
+
+              // error={text === ""}
+            />
+
+            <TextField
+              label="Password"
+              type="password"
+              helperText="Please enter your password"
+              id="password"
+              name="password"
+              value={data.password || ''}
+              size="small"
+              autoComplete="current-password"
+              required
+              onChange={handleChange}
+            />
+          </Box>
+
+          {/* {isLoading ? (
+            <div className="loading">
+              <span>Loading...</span>
+            </div>
+          ) : ( */}
+          <button type="submit">Login</button>
+          {/* // )} */}
+        </form>
+
+        <p>
+          Need an account?
+          <br />
+          <span className="line">
+            <Link to="/register">Register</Link>
+          </span>
+        </p>
+      </section>
+    </>
   );
 };
 

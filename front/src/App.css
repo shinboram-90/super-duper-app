@@ -10,3 +10,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 } */
+
+.MuiFormControl-root .css-qboea9-MuiFormControl-root{
+  flex-direction: column;
+}

@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
-import AuthContext from '../../context/AuthProvider';
+import useAuth from '../../hooks/useAuth';
 import DeletePost from './DeletePost';
 import AddPostForm from './AddPostForm';
 import EditPostForm from './EditPostForm';
@@ -15,7 +15,7 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
   const image = post.image;
 
   const [comments, setComments] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { auth } = useAuth();
 
   const [showComments, setShowComments] = useState(false);
 

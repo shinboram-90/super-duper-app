@@ -1,5 +1,6 @@
-import { useState, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { useState } from 'react';
+
+import useAuth from '../../hooks/useAuth';
 
 export const EditPostForm = ({ id, onEdit }) => {
   const [title, setTitle] = useState('');
@@ -14,8 +15,8 @@ export const EditPostForm = ({ id, onEdit }) => {
     setShowForm(!showForm);
   };
 
-  const { user } = useContext(AuthContext);
-  const userId = user.user[0].id;
+  const { auth } = useAuth();
+  const userId = auth.id;
 
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
