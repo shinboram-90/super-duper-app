@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+
 import axios from '../../api/axios';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 // import ReadComments from './ReadComments';
@@ -9,24 +9,17 @@ import AddPostForm from './AddPostForm';
 // import EditPostForm from './EditPostForm';
 
 const PostList = () => {
-  const { user, isLoggedIn } = useContext(AuthContext);
+  // const role = useContext(RoleContext);
+
+  // console.log(role);
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState([]);
-  // const [comments, setComments] = useState([]);
 
   // const [likes, setLikes] = useState();
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const addPost = async (formData) => {
-    // if (canSave) {
-    // newPostObject = {
-    //   user_id: user.id,
-    //   title: newPostObject.title,
-    //   content: newPostObject.content,
-    //   image: newPostObject.image,
-    // };
-    // console.log(newPostObject);
     try {
       const response = await axios.post('/api/posts', formData);
       console.log(formData);

@@ -35,8 +35,6 @@ exports.getOnePost = async (req, res, next) => {
 };
 
 exports.createPost = async (req, res, next) => {
-  console.log(req.auth.userId);
-
   if (req.file) {
     const post = {
       user_id: req.auth.userId,

@@ -1,31 +1,15 @@
-import { createContext, useReducer, useEffect } from 'react';
-import AuthReducer from './AuthReducer';
+import { createContext, useState } from 'react';
 
-const INITIAL_STATE = {
-  user: JSON.parse(localStorage.getItem('auth')) || null,
-  isLoading: false,
-  isLoggedIn: false,
-  error: false,
-};
-const AuthContext = createContext(INITIAL_STATE);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-
-  useEffect(() => {
-    localStorage.setItem('auth', JSON.stringify(state.user));
-  }, [state.user]);
+  // Initialize the state with the default value of the LS to keep our user logged in, if empty then it returns an empty object
+  const [auth, setAuth] = useState(
+    JSON.parse(localStorage.getItem('user')) || {}
+  );
 
   return (
-    <AuthContext.Provider
-      value={{
-        user: state.user,
-        isLoading: state.isLoading,
-        isLoggedIn: state.isLoggedIn,
-        error: state.error,
-        dispatch,
-      }}
-    >
+    <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

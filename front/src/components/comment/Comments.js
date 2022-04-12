@@ -1,6 +1,6 @@
 import React from 'react';
-import { useContext, useState, useEffect } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import { useState, useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
 
 // const Comment = (comment) => {
 //   return (
@@ -16,8 +16,8 @@ const Comments = ({ id, post, comments }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const { user } = useContext(AuthContext);
-  const userId = user.user[0].id;
+  const { auth } = useAuth();
+  const userId = auth.id;
 
   // const contentComponent = comments.map((comment) => (
   //   <Comment key={'comment' + comment.id} comment={comment} />
