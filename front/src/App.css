@@ -11,6 +11,11 @@
   font-size: calc(10px + 2vmin);
 } */
 
-.MuiFormControl-root .css-qboea9-MuiFormControl-root{
+/* .MuiFormControl-root .css-qboea9-MuiFormControl-root{
   flex-direction: column;
+} */
+
+a{
+  text-decoration: none;
+  color: black;
 }
