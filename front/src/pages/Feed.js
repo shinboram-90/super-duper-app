@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { AuthContext } from '../../context/AuthContext';
+import useAuth from '../hooks/useAuth';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-  // const { user } = useContext(AuthContext);
+  const { auth } = useAuth();
 
   const fetchPosts = async () => {
     try {

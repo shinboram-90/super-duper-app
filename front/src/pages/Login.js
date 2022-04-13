@@ -4,8 +4,7 @@ import axios from '../api/axios';
 
 import useAuth from '../hooks/useAuth';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { Button, Box, TextField } from '@mui/material';
 
 // import { DisplayToggles } from './display_toggles';
 
@@ -67,7 +66,7 @@ const Login = () => {
 
   return (
     <>
-      <section style={{ padding: 100 }}>
+      <section className="login__container" style={{ padding: 100 }}>
         <h1>WELCOME TO GROUPOMANIA</h1>
         <form onSubmit={handleSubmit} method="POST">
           <Box
@@ -104,6 +103,9 @@ const Login = () => {
               required
               onChange={handleChange}
             />
+            <Button type="submit" variant="contained">
+              Login
+            </Button>
           </Box>
 
           {/* {isLoading ? (
@@ -111,7 +113,7 @@ const Login = () => {
               <span>Loading...</span>
             </div>
           ) : ( */}
-          <button type="submit">Login</button>
+
           {/* // )} */}
         </form>
 

@@ -1,10 +1,12 @@
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
+
+import { Button, Box, TextField } from '@mui/material';
 import axios from '../api/axios';
-import AuthContext from '../context/AuthProvider';
+import useAuth from '../hooks/useAuth';
 
 const Signup = () => {
-  const { user } = useContext(AuthContext);
+  const { auth } = useAuth();
   const email = useRef(null);
   const username = useRef(null);
   const password = useRef(null);
@@ -35,11 +37,9 @@ const Signup = () => {
     }
   };
 
-  return user ? (
-    <Navigate to={'/'} />
-  ) : (
+  return (
     <section style={{ padding: 100 }}>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input
           type="text"
@@ -73,9 +73,63 @@ const Signup = () => {
           ref={password2}
         />
         <button type="submit">Create an account</button>
+      </form> */}
+      <form onSubmit={handleSubmit}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            '& > :not(style)': { m: 1 },
+          }}
+        >
+          <TextField
+            label="Username"
+            id="username"
+            name="username"
+            type="text"
+            size="small"
+            required
+            inputRef={username}
+          />
+          <TextField
+            label="Email"
+            id="email"
+            name="email"
+            type="text"
+            size="small"
+            required
+            inputRef={email}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            helperText="Please enter your password"
+            id="password"
+            name="password"
+            size="small"
+            inputRef={password}
+            required
+          />
+
+          <TextField
+            label="Password"
+            type="password"
+            helperText="Confirm your password"
+            id="password"
+            name="password2"
+            size="small"
+            inputRef={password2}
+            required
+          />
+          <Button type="submit" variant="contained">
+            Sign Up
+          </Button>
+        </Box>
       </form>
+
       <p>
-        Already registered?
+        Already have an account?
         <br />
         <span className="line">
           <Link to="/login">Sign In</Link>

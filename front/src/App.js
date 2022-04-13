@@ -1,13 +1,7 @@
 import './App.css';
-import { useContext } from 'react';
-import AuthContext from './context/AuthProvider';
-import {
-  useNavigate,
-  Navigate,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from 'react-router-dom';
+
+import useAuth from './hooks/useAuth';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Feed from './pages/Feed';
 import Missing from './pages/Missing';
 import Login from './pages/Login';
@@ -26,9 +20,9 @@ import AdminRoute from './components/admin/AdminRoute';
 import RequireAuth from './components/auth/RequireAuth';
 
 function App() {
-  // const { currentUser } = useContext(AuthContext);
-  // console.log(currentUser);
-  const navigate = useNavigate;
+  const { auth } = useAuth();
+  console.log(auth);
+
   return (
     <Router>
       <Routes>
