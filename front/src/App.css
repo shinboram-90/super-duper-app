@@ -24,3 +24,11 @@ a{
 a, a:visited{
   color: inherit;
 }
+
+ul{
+  padding: 0
+}
+
+.MuiCardHeader-avatar.css-1ssile9-MuiCardHeader-avatar {
+align-items: center;
+}

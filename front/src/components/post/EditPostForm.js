@@ -61,7 +61,7 @@ export const EditPostForm = ({ id, onEdit }) => {
           />
 
           <button type="submit" onClick={() => onEdit(id, updatedPost)}>
-            Publish Post
+            Edit Post
           </button>
         </>
       )}

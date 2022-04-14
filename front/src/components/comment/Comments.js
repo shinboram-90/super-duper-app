@@ -26,7 +26,6 @@ const Comments = ({ id, post, comments }) => {
   return (
     <section>
       <aside>
-        <h1>Comments</h1>
         <>
           {comments.map((comment) => (
             <li key={'comment' + comment.id} comment={comment}>

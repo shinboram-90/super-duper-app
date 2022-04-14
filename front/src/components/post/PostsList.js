@@ -8,6 +8,8 @@ import SinglePostPage from './SinglePostPage';
 import AddPostForm from './AddPostForm';
 // import EditPostForm from './EditPostForm';
 
+import { Container } from '@mui/material';
+
 const PostList = () => {
   // const role = useContext(RoleContext);
 
@@ -106,13 +108,13 @@ const PostList = () => {
   return (
     <>
       <Navbar />
-      <section>
+      <Container>
         <AddPostForm onAdd={addPost} />
         <Link to="/new">Add a post</Link>
         <h2>Posts list</h2>
         <br />
         <p>All the gossip happening here.</p>
-        <div style={{ display: 'flex' }}>
+        <div>
           <ul>
             {posts.map((post) => (
               <SinglePostPage
@@ -127,10 +129,8 @@ const PostList = () => {
               />
             ))}
           </ul>
-
-          <hr />
         </div>
-      </section>
+      </Container>
       <Outlet />
     </>
   );
