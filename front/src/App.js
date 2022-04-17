@@ -20,8 +20,8 @@ import AdminRoute from './components/admin/AdminRoute';
 import RequireAuth from './components/auth/RequireAuth';
 
 function App() {
-  const { auth } = useAuth();
-  console.log(auth);
+  // const { auth } = useAuth();
+  // console.log(auth);
 
   return (
     <Router>

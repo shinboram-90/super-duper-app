@@ -32,3 +32,18 @@ ul{
 .MuiCardHeader-avatar.css-1ssile9-MuiCardHeader-avatar {
 align-items: center;
 }
+
+.edit__helper--click{
+  position: absolute;
+  height: 36px;
+  width: 200px;
+  top:-7px;
+  left: -51px;
+}
+.delete__helper--click{
+  position: absolute;
+  height: 36px;
+  width: 200px;
+  top:-7px;
+  left: -51px;
+}

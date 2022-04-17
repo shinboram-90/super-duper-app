@@ -35,9 +35,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-import ImageIcon from '@mui/icons-material/Image';
-import WorkIcon from '@mui/icons-material/Work';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import Stack from '@mui/material/Stack';
+import Badge from '@mui/material/Badge';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const ITEM_HEIGHT = 48;
 
@@ -176,7 +176,6 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
                 sx={{
                   bgcolor: red[100],
                 }}
-                aria-label="recipe"
               >
                 {auth.avatar}
               </Avatar>
@@ -186,16 +185,15 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
           action={
             <IconButton aria-label="settings">
               <div>
-                <IconButton
+                <div
                   aria-label="more"
-                  id="long-button"
                   aria-controls={open ? 'long-menu' : undefined}
                   aria-expanded={open ? 'true' : undefined}
                   aria-haspopup="true"
                   onClick={handleClick}
                 >
                   <MoreVertIcon />
-                </IconButton>
+                </div>
 
                 <Menu
                   anchorEl={anchorEl}
@@ -208,23 +206,19 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
                     },
                   }}
                 >
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
+                  <MenuItem>
+                    <ListItemIcon onClick={handleClose}>
                       <SendIcon fontSize="small" />
                     </ListItemIcon>
-                    <Typography variant="inherit">
-                      <EditPostForm id={post.id} onEdit={onEdit} />
-                      {/* Edit */}
-                    </Typography>
+
+                    <EditPostForm post={post} onEdit={onEdit} />
+                    {/* Edit */}
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       <PriorityHighIcon fontSize="small" />
-                    </ListItemIcon>
-                    <Typography variant="inherit">
-                      {' '}
-                      <DeletePost id={post.id} onDelete={onDelete} />
-                    </Typography>
+                    </ListItemIcon>{' '}
+                    <DeletePost id={post.id} onDelete={onDelete} />
                   </MenuItem>
                 </Menu>
               </div>
@@ -249,29 +243,54 @@ const SinglePostPage = ({ post, onDelete, onEdit }) => {
             {post.content}
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon onClick={handleLike} color={flag ? 'warning' : ''} />
-          </IconButton>
-          {likes === 1 ? (
-            <span onClick={handleLike}>{likes} like</span>
-          ) : likes > 1 ? (
-            <span onClick={handleLike}>{likes} likes</span>
-          ) : (
-            <span onClick={handleLike}>0 like</span>
-          )}
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
+
+        <CardActions
+          disableSpacing
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton aria-label="add to favorites" onClick={handleLike}>
+              <FavoriteIcon color={flag ? 'warning' : ''} />
+            </IconButton>
+            {likes === 1 ? (
+              <span>{likes} like</span>
+            ) : likes > 1 ? (
+              <span>{likes} likes</span>
+            ) : (
+              <span>0 like</span>
+            )}
+            {/* <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton> */}
+          </div>
+          <div>
+            <span
+              onClick={() => {
+                setExpanded(!expanded);
+              }}
+              sx={{
+                bgcolor: 'transparent',
+                '&:hover': { bgcolor: 'transparent' },
+              }}
+            >
+              <Badge color="secondary" badgeContent={post.comments} showZero>
+                <CommentIcon />
+              </Badge>
+            </span>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </div>
         </CardActions>
+
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>Comments:</Typography>

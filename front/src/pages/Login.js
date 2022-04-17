@@ -4,7 +4,7 @@ import axios from '../api/axios';
 
 import useAuth from '../hooks/useAuth';
 
-import { Button, Box, TextField } from '@mui/material';
+import { Button, Box, TextField, Container } from '@mui/material';
 
 // import { DisplayToggles } from './display_toggles';
 
@@ -66,11 +66,12 @@ const Login = () => {
 
   return (
     <>
-      <section className="login__container" style={{ padding: 100 }}>
+      <Container className="login__container" style={{ padding: 100 }}>
         <h1>WELCOME TO GROUPOMANIA</h1>
         <form onSubmit={handleSubmit} method="POST">
           <Box
             sx={{
+              maxWidth: '500px',
               display: 'flex',
               alignItems: 'center',
               flexDirection: 'column',
@@ -124,7 +125,7 @@ const Login = () => {
             <Link to="/register">Register</Link>
           </span>
         </p>
-      </section>
+      </Container>
     </>
   );
 };

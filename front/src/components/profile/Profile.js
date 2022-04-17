@@ -1,11 +1,11 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthProvider';
 import axios from '../../api/axios';
 
 const Profile = () => {
   const { auth } = useAuth();
+  const myId = auth.id;
 
   console.log(auth);
 
@@ -17,14 +17,25 @@ const Profile = () => {
     setProfile(response.data);
   };
 
-  // useEffect(() => {
-  //   fetchCurrentUser();
-  // }, []);
+  const fetchProfilePosts = async (myId) => {
+    try {
+      const response = await axios.get(`/api//profile/${myId}`);
+      if (response) {
+        console.log(response.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  // if (!auth) {
-  //   return <Navigate replace to="/login" />;
-  // }
-  // console.log(auth);
+  useEffect(() => {
+    fetchProfilePosts(myId);
+  }, [myId]);
+
+  if (!auth) {
+    return <Navigate replace to="/login" />;
+  }
+  console.log(auth);
   return (
     <>
       <div>My Profile</div>

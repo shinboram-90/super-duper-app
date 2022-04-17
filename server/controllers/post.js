@@ -14,7 +14,7 @@ exports.getAllPosts = async (req, res, next) => {
 };
 
 exports.getAllMyPosts = async (req, res, next) => {
-  const myId = req.params.myId;
+  const myId = req.auth.userId;
   try {
     const postList = await Post.findByMyId(myId);
     res.status(200).json({ myPosts: postList });
