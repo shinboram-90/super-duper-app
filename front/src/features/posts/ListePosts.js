@@ -1,36 +1,26 @@
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectAllPosts,
-  fetchPosts,
-  getPostsStatus,
-  getPostsError,
-} from './postsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPostsData } from './postsSlice';
 import PostsExcerpt from './PostExcerpt';
 import { useEffect } from 'react';
 import AddPost from './AddPost';
+import axios from '../../api/axios';
 
 const PostsList = () => {
-  const posts = useSelector(selectAllPosts);
-  const postStatus = useSelector(getPostsStatus);
-  const error = useSelector(getPostsError);
+  // trigger actions
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
+  // data stored in the store
+  const posts = useSelector((state) => state.posts.posts);
 
-  let content;
-  if (postStatus === 'loading') {
-    content = <p>"Loading..."</p>;
-  } else if (postStatus === 'succeeded') {
-    content = posts.map((post) => (
-      <PostsExcerpt key={`posts:${post.id}`} postId={post.id} />
-    ));
-  } else if (postStatus === 'failed') {
-    content = <p>{error}</p>;
-  }
+  useEffect(() => {
+    axios
+      .get('api/posts')
+      .then((res) => dispatch(setPostsData(res.data.postList)));
+  }, [dispatch]);
+
+  const content = posts.map((post) => (
+    <PostsExcerpt key={`posts:${post.id}`} post={post} />
+  ));
 
   return (
     <section>
