@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { editPost, setPostsData, getOnePost } from './postsSlice';
+import { editPost, setPostsData } from './postsSlice';
+import { useSelector } from 'react-redux';
 import axios from '../../api/axios';
 import DelPost from './DelPost';
 
@@ -21,12 +22,6 @@ const PostExcerpt = ({ post }) => {
   //   formData.append('content', content);
   // }
   const canSave = [title, content].every(Boolean);
-
-  const formData = {
-    title,
-    content,
-    image,
-  };
 
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
@@ -52,20 +47,25 @@ const PostExcerpt = ({ post }) => {
     axios
       .get(`api/posts/`)
       .then((res) => dispatch(setPostsData(res.data.postList)));
-  }, [dispatch, post.id, title, content, image]);
+  }, [dispatch, post.id, title, content, image, editing]);
 
   const onEditPostClick = async (e) => {
     e.preventDefault();
+
+    const formData = {
+      title,
+      content,
+      image,
+    };
+
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
-        console.log(formData);
-        console.log(res.data.modifications);
         dispatch(editPost(res.data.modifications));
       });
 
-      setTitle('');
-      setContent('');
-      setImage(null);
+      setTitle(post.title);
+      setContent(post.content);
+      setImage(post.image);
       setEditing(false);
     } catch (err) {
       console.error('Failed to save the post', err);
@@ -80,20 +80,21 @@ const PostExcerpt = ({ post }) => {
             type="text"
             id="title"
             name="title"
-            defaultValue={post.title || ''}
+            // defaultValue={post.title}
             onChange={onTitleChanged}
+            value={title}
           />
-
-          <input type="file" name="image" onChange={onImageChanged} />
-          <div>{imgPreview}</div>
 
           <label htmlFor="content">Content:</label>
           <textarea
             id="content"
             name="content"
-            defaultValue={post.content || ''}
+            // defaultValue={post.content}
+            value={content}
             onChange={onContentChanged}
           />
+          <input type="file" name="image" onChange={onImageChanged} />
+          <div>{imgPreview}</div>
           <input type="submit" disabled={!canSave} value="Confirm changes" />
         </form>
       ) : (
@@ -102,7 +103,12 @@ const PostExcerpt = ({ post }) => {
           <p>{post.content}</p>
           <div>
             {post.image !== null ? (
-              <img alt={post.title} src={post.image} crossOrigin="true" />
+              <img
+                alt={post.title}
+                src={post.image}
+                crossOrigin="true"
+                style={{ maxWidth: 500 }}
+              />
             ) : (
               ''
             )}

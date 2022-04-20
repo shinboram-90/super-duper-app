@@ -91,7 +91,9 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     // getOnePost: (state, { payload }) => {
-    //   state.posts = state.posts.find((post) => post.id === payload);
+    //   const post = state.posts.find((post) => post.id === payload);
+    //   console.log(post);
+    //   return post;
     // },
     setPostsData: (state, { payload }) => {
       state.posts = payload;
@@ -101,21 +103,20 @@ const postsSlice = createSlice({
       // state.posts = [...state.posts, payload];
     },
     editPost: (state, { payload }) => {
-      // state[i]= payload.data
-      // state.posts = state.posts.map((post) => {
-      //   if (post.id === payload) {
-      //     return {
-      //       ...post,
-      //       data: payload.data,
-      //     };
-      //   } else {
-      //     return post;
-      //   }
-      // });
-      const postIndex = state.posts.findIndex((post) => post.id === payload);
-      if (postIndex >= 0) {
-        state[postIndex] = payload;
-      }
+      state.posts = state.posts.map((post) => {
+        if (post.id === payload) {
+          return {
+            ...post,
+            data: payload.data,
+          };
+        } else {
+          return post;
+        }
+      });
+      // const postIndex = state.posts.findIndex((post) => post.id === payload);
+      // if (postIndex >= 0) {
+      //   state[postIndex] = payload;
+      // }
     },
     deletePost: (state, { payload }) => {
       state.posts = state.posts.filter((post) => post.id !== payload);
