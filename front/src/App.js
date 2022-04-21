@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Profile from './components/profile/Profile';
+import ListePosts from './features/posts/ListePosts';
 
 import AddPostForm from './components/post/AddPostForm';
 import EditPostForm from './components/post/EditPostForm';
@@ -36,12 +37,12 @@ function App() {
           }
         /> */}
         {/* <Route element={<PrivateRoute user={currentUser} />}> */}
-        <Route path="/" element={<PostsList />} />
-        <Route path="new" element={<AddPostForm />} />
+        <Route path="/" element={<ListePosts />} />
+        {/* <Route path="new" element={<AddPostForm />} />
         <Route path="edit/:postId" element={<EditPostForm />} />
         <Route path="users" element={<UserList />}>
           <Route path=":id" element={<UserPage />} />
-        </Route>
+        </Route> */}
         {/* </Route>
         </Route> */}
         <Route path="profile" element={<Profile />} />

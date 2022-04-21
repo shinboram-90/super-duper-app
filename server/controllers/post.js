@@ -46,10 +46,9 @@ exports.createPost = async (req, res, next) => {
       }`,
     };
     try {
-      console.log(post);
       const postCreated = await Post.create(post);
       if (postCreated) {
-        res.status(201).json({ newPost: postCreated });
+        res.status(201).json({ newPost: post });
       } else {
         res.status(401).json({ error: 'Query not completed' });
       }
@@ -92,7 +91,7 @@ exports.modifyPost = async (req, res, next) => {
       const getPost = await Post.findById(id);
       const image = getPost[0].image;
 
-      // Post already has image(s), user is adding more to them
+      // Post already has one image, delete and replace
       if (image) {
         const filename = image.split('/uploads/')[1];
         fs.unlink(`uploads/${filename}`, async () => {
@@ -106,6 +105,7 @@ exports.modifyPost = async (req, res, next) => {
           }
         });
       } else {
+        // Adding image to a post which has no file
         const updatedPost = await Post.update(post, id);
         if (updatedPost) {
           res.status(200).json({
@@ -115,11 +115,12 @@ exports.modifyPost = async (req, res, next) => {
           res.status(404).json({ message: 'Cannot modify post infos' });
         }
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error(err);
       res.sendStatus(500);
     }
   } else {
+    // Modifying text only
     const updatedPost = await Post.update(req.body, id);
     if (updatedPost) {
       res.status(200).json({
