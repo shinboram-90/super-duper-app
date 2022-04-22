@@ -136,35 +136,33 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { editPost, setPostsData, getOnePost } from './postsSlice';
+import { editPost } from './postsSlice';
 import axios from '../../api/axios';
 import DelPost from './DelPost';
 
 const PostExcerpt = ({ post }) => {
   const dispatch = useDispatch();
-  // const [title, setTitle] = useState(post.title);
-  // const [content, setContent] = useState(post.content);
-  const titleRef = useRef();
-  const contentRef = useRef();
+  const [title, setTitle] = useState(post.title);
+  const [content, setContent] = useState(post.content);
+  // const titleRef = useRef();
+  // const contentRef = useRef();
   const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
 
-  const navigate = useNavigate();
+  const formData = new FormData();
 
-  // const formData = new FormData();
+  if (image) {
+    formData.set('image', image);
+    formData.set('title', title);
+    formData.set('content', content);
+  } else {
+    formData.set('title', title);
+    formData.set('content', content);
+  }
+  const canSave = [title, content].every(Boolean);
 
-  // if (image) {
-  //   formData.set('image', image);
-  //   formData.set('title', title);
-  //   formData.set('content', content);
-  // } else {
-  //   formData.set('title', title);
-  //   formData.set('content', content);
-  // }
-  // const canSave = [title, content].every(Boolean);
-
-  // const onTitleChanged = (e) => setTitle(e.target.value);
-  // const onContentChanged = (e) => setContent(e.target.value);
+  const onTitleChanged = (e) => setTitle(e.target.value);
+  const onContentChanged = (e) => setContent(e.target.value);
   const onImageChanged = (e) => setImage(e.target.files[0]);
   const [editing, setEditing] = useState(false);
 
@@ -202,18 +200,18 @@ const PostExcerpt = ({ post }) => {
     //   content: contentRef.current.value,
     // };
 
-    const formData = new FormData();
-    if (image) {
-      formData.append('image', image);
-    } else {
-      formData.append('image', imageRef.current.value);
-    }
-    formData.append('title', titleRef.current.value);
-    formData.append('content', contentRef.current.value);
+    // const formData = new FormData();
+    // if (image) {
+    //   formData.append('image', image);
+    // } else {
+    //   formData.append('image', imageRef.current.value);
+    // }
+    // formData.append('title', titleRef.current.value);
+    // formData.append('content', contentRef.current.value);
 
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
-        console.log(formData);
+        console.log(res.data.modifications);
         dispatch(editPost([post.id, res.data.modifications]));
       });
 
@@ -232,13 +230,13 @@ const PostExcerpt = ({ post }) => {
         <form onSubmit={onEditPostClick}>
           <label htmlFor="title">Title:</label>
           <input
-            ref={titleRef}
+            // ref={titleRef}
             type="text"
             id="title"
             name="title"
             defaultValue={post.title}
             // autoFocus
-            // onChange={onTitleChanged}
+            onChange={onTitleChanged}
           />
 
           <input
@@ -252,20 +250,22 @@ const PostExcerpt = ({ post }) => {
 
           <label htmlFor="content">Content:</label>
           <textarea
-            ref={contentRef}
+            // ref={contentRef}
             type="text"
             id="content"
             name="content"
             defaultValue={post.content}
             // autoFocus
-            // onChange={onContentChanged}
+            onChange={onContentChanged}
           />
-          <input type="submit" value="Confirm changes" />
+          <input disabled={!canSave} type="submit" value="Confirm changes" />
         </form>
       ) : (
         <div>
-          <h3>{titleRef.current ? titleRef.current.value : post.title}</h3>
-          <p>{contentRef.current ? contentRef.current.value : post.content}</p>
+          {/* <h3>{titleRef.current ? titleRef.current.value : post.title}</h3>
+          <p>{contentRef.current ? contentRef.current.value : post.content}</p> */}
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
           <div>
             {post.image ? (
               <img
