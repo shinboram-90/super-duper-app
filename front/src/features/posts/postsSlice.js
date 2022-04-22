@@ -283,25 +283,22 @@ const postsSlice = createSlice({
       // state.posts = [...state.posts, payload];
     },
     editPost: (state, { payload }) => {
-      // state.posts = state.posts.map((post) => {
-      //   if (post.id === payload[1]) {
-      //     return {
-      //       ...post,
-      //       // title: payload[0],
-      //     };
-      //   } else {
-      //     return post;
-      //   }
-      // });
+      state.posts = state.posts.map((post) => {
+        console.log(payload);
+        if (post.id === payload[0]) {
+          return { ...payload[1] };
+        }
+        return post;
+      });
       // const postIndex = state.posts.findIndex((post) => post.id === payload);
       // if (postIndex >= 0) {
-      //   state.postIndex = payload;
+      //   state.postIndex = { ...payload };
       // }
-      const index = state.posts.findIndex((post) => post.id === payload[1]);
-      state[index] = {
-        ...state[index],
-        ...payload,
-      };
+      // const index = state.posts.findIndex((post) => post.id === payload[0]);
+      // state[index] = {
+      //   ...state[index],
+      //   ...payload,
+      // };
     },
     deletePost: (state, { payload }) => {
       state.posts = state.posts.filter((post) => post.id !== payload);

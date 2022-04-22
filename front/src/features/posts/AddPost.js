@@ -73,6 +73,7 @@ export const AddPost = () => {
           name="postTitle"
           placeholder="Posts's title"
           onChange={onTitleChanged}
+          value={title}
         />
 
         <input type="file" id="image" name="image" onChange={onImageChanged} />
@@ -80,10 +81,12 @@ export const AddPost = () => {
 
         <label htmlFor="postContent">Content:</label>
         <textarea
+          type="text"
           id="postContent"
           name="postContent"
           placeholder="Posts's Content"
           onChange={onContentChanged}
+          value={content}
         />
 
         <input type="submit" disabled={!canSave} value="Publish Post" />

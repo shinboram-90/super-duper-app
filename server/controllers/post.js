@@ -123,8 +123,9 @@ exports.modifyPost = async (req, res, next) => {
     // Modifying text only
     const updatedPost = await Post.update(req.body, id);
     if (updatedPost) {
+      post = req.body;
       res.status(200).json({
-        modifications: req.body,
+        modifications: { id, post },
       });
     }
   }

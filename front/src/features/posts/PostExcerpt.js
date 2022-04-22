@@ -133,7 +133,8 @@
 
 // export default PostExcerpt;
 
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { editPost, setPostsData, getOnePost } from './postsSlice';
 import axios from '../../api/axios';
@@ -141,35 +142,34 @@ import DelPost from './DelPost';
 
 const PostExcerpt = ({ post }) => {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState(post.title);
-  const [content, setContent] = useState(post.content);
+  // const [title, setTitle] = useState(post.title);
+  // const [content, setContent] = useState(post.content);
+  const titleRef = useRef();
+  const contentRef = useRef();
+  const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
+
+  const navigate = useNavigate();
 
   // const formData = new FormData();
 
   // if (image) {
-  //   formData.append('image', image);
-  //   formData.append('title', title);
-  //   formData.append('content', content);
+  //   formData.set('image', image);
+  //   formData.set('title', title);
+  //   formData.set('content', content);
   // } else {
-  //   formData.append('title', title);
-  //   formData.append('content', content);
+  //   formData.set('title', title);
+  //   formData.set('content', content);
   // }
-  const canSave = [title, content].every(Boolean);
+  // const canSave = [title, content].every(Boolean);
 
-  const formData = {
-    title,
-    content,
-    image,
-  };
-
-  const onTitleChanged = (e) => setTitle(e.target.value);
-  const onContentChanged = (e) => setContent(e.target.value);
-  const onImageChanged = (e) =>
-    setImage(URL.createObjectURL(e.target.files[0]));
+  // const onTitleChanged = (e) => setTitle(e.target.value);
+  // const onContentChanged = (e) => setContent(e.target.value);
+  const onImageChanged = (e) => setImage(e.target.files[0]);
   const [editing, setEditing] = useState(false);
 
-  const onClickRemoveImage = () => {
+  const onClickRemoveImage = (e) => {
+    e.preventDefault();
     setImage(null);
   };
 
@@ -177,31 +177,51 @@ const PostExcerpt = ({ post }) => {
   if (image) {
     imgPreview = (
       <>
-        <img style={{ maxWidth: 400 }} src={image} alt="" crossOrigin="true" />
+        <img
+          style={{ maxWidth: 200 }}
+          src={imageRef.current?.value ? URL.createObjectURL(image) : image}
+          alt=""
+          crossOrigin="true"
+        />
         <button onClick={onClickRemoveImage}>X</button>
       </>
     );
   }
 
-  useEffect(() => {
-    axios
-      .get(`api/posts/`)
-      .then((res) => dispatch(setPostsData(res.data.postList)));
-  }, [dispatch, post.id, title, content, image]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`api/posts/`)
+  //     .then((res) => dispatch(setPostsData(res.data.postList)));
+  // }, [dispatch, post.id, title, content, image]);
 
   const onEditPostClick = async (e) => {
     e.preventDefault();
+    // const formData = {
+    //   id: post.id,
+    //   title: titleRef.current.value,
+    //   content: contentRef.current.value,
+    // };
+
+    const formData = new FormData();
+    if (image) {
+      formData.append('image', image);
+    } else {
+      formData.append('image', imageRef.current.value);
+    }
+    formData.append('title', titleRef.current.value);
+    formData.append('content', contentRef.current.value);
+
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
         console.log(formData);
-        console.log(res.data.modifications);
-        dispatch(editPost(res.data.modifications));
+        dispatch(editPost([post.id, res.data.modifications]));
       });
 
-      setTitle('');
-      setContent('');
-      setImage(null);
+      // navigate('/profile');
+
       setEditing(false);
+
+      console.log(image);
     } catch (err) {
       console.error('Failed to save the post', err);
     }
@@ -212,31 +232,42 @@ const PostExcerpt = ({ post }) => {
         <form onSubmit={onEditPostClick}>
           <label htmlFor="title">Title:</label>
           <input
+            ref={titleRef}
             type="text"
             id="title"
             name="title"
-            defaultValue={post.title || ''}
-            onChange={onTitleChanged}
+            defaultValue={post.title}
+            // autoFocus
+            // onChange={onTitleChanged}
           />
 
-          <input type="file" name="image" onChange={onImageChanged} />
+          <input
+            ref={imageRef}
+            type="file"
+            id="image"
+            name="image"
+            onInput={onImageChanged}
+          />
           <div>{imgPreview}</div>
 
           <label htmlFor="content">Content:</label>
           <textarea
+            ref={contentRef}
+            type="text"
             id="content"
             name="content"
-            defaultValue={post.content || ''}
-            onChange={onContentChanged}
+            defaultValue={post.content}
+            // autoFocus
+            // onChange={onContentChanged}
           />
-          <input type="submit" disabled={!canSave} value="Confirm changes" />
+          <input type="submit" value="Confirm changes" />
         </form>
       ) : (
         <div>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
+          <h3>{titleRef.current ? titleRef.current.value : post.title}</h3>
+          <p>{contentRef.current ? contentRef.current.value : post.content}</p>
           <div>
-            {post.image !== null ? (
+            {post.image ? (
               <img
                 alt={post.title}
                 src={post.image}
