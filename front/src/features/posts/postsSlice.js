@@ -286,8 +286,8 @@ const postsSlice = createSlice({
     editPost: (state, { payload }) => {
       state.posts = state.posts.map((post) => {
         console.log(payload);
-        if (post.id === payload[0].id) {
-          return { ...payload[0].post };
+        if (post.id === payload[0]) {
+          return { ...payload[1] };
         }
         return post;
       });

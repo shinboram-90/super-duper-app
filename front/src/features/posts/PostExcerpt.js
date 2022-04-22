@@ -215,7 +215,7 @@ const PostExcerpt = ({ post }) => {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
         console.log(formData);
         console.log(res.data.modifications);
-        dispatch(editPost(res.data.modifications));
+        dispatch(editPost([post.id, res.data.modifications]));
       });
 
       // navigate('/profile');
