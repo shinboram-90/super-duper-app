@@ -279,14 +279,15 @@ const postsSlice = createSlice({
       state.posts = payload;
     },
     addPost: (state, { payload }) => {
+      console.log(payload);
       state.posts.unshift(payload);
       // state.posts = [...state.posts, payload];
     },
     editPost: (state, { payload }) => {
       state.posts = state.posts.map((post) => {
         console.log(payload);
-        if (post.id === payload[0]) {
-          return { ...payload[1] };
+        if (post.id === payload[0].id) {
+          return { ...payload[0].post };
         }
         return post;
       });
@@ -301,6 +302,7 @@ const postsSlice = createSlice({
       // };
     },
     deletePost: (state, { payload }) => {
+      console.log(payload);
       state.posts = state.posts.filter((post) => post.id !== payload);
     },
   },
