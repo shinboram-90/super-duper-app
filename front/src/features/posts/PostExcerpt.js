@@ -150,15 +150,12 @@ const PostExcerpt = ({ post }) => {
   const [image, setImage] = useState(post.image);
 
   const formData = new FormData();
-
   if (image) {
     formData.set('image', image);
-    formData.set('title', title);
-    formData.set('content', content);
-  } else {
-    formData.set('title', title);
-    formData.set('content', content);
   }
+  formData.set('title', title);
+  formData.set('content', content);
+
   const canSave = [title, content].every(Boolean);
 
   const onTitleChanged = (e) => setTitle(e.target.value);
@@ -211,11 +208,8 @@ const PostExcerpt = ({ post }) => {
 
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
-        console.log(res.data.modifications);
         dispatch(editPost([post.id, res.data.modifications]));
       });
-
-      // navigate('/profile');
 
       setEditing(false);
 
