@@ -287,7 +287,7 @@ const postsSlice = createSlice({
       state.posts = state.posts.map((post) => {
         console.log(payload);
         if (post.id === payload[0]) {
-          return { ...payload[1] };
+          return { ...payload[1].post };
         }
         return post;
       });

@@ -98,7 +98,7 @@ exports.modifyPost = async (req, res, next) => {
           const updatedPost = await Post.update(post, id);
           if (updatedPost) {
             res.status(200).json({
-              modifications: post,
+              modifications: { id, post },
             });
           } else {
             res.status(404).json({ message: 'Cannot modify post infos' });
@@ -109,7 +109,7 @@ exports.modifyPost = async (req, res, next) => {
         const updatedPost = await Post.update(post, id);
         if (updatedPost) {
           res.status(200).json({
-            modifications: post,
+            modifications: { id, post },
           });
         } else {
           res.status(404).json({ message: 'Cannot modify post infos' });
