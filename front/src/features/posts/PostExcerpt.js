@@ -149,16 +149,6 @@ const PostExcerpt = ({ post }) => {
   const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
 
-  const formData = new FormData();
-
-  if (image) {
-    formData.set('image', image);
-    formData.set('title', title);
-    formData.set('content', content);
-  } else {
-    formData.set('title', title);
-    formData.set('content', content);
-  }
   const canSave = [title, content].every(Boolean);
 
   const onTitleChanged = (e) => setTitle(e.target.value);
@@ -194,20 +184,15 @@ const PostExcerpt = ({ post }) => {
 
   const onEditPostClick = async (e) => {
     e.preventDefault();
-    // const formData = {
-    //   id: post.id,
-    //   title: titleRef.current.value,
-    //   content: contentRef.current.value,
-    // };
 
-    // const formData = new FormData();
-    // if (image) {
-    //   formData.append('image', image);
-    // } else {
-    //   formData.append('image', imageRef.current.value);
-    // }
-    // formData.append('title', titleRef.current.value);
-    // formData.append('content', contentRef.current.value);
+    const formData = new FormData();
+    if (image) {
+      formData.append('image', image);
+    } else {
+      formData.append('image', imageRef.current.value);
+    }
+    formData.append('title', title);
+    formData.append('content', content);
 
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
