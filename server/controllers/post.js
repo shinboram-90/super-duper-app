@@ -78,23 +78,38 @@ exports.createPost = async (req, res, next) => {
 
 exports.modifyPost = async (req, res, next) => {
   const id = req.params.id;
+  const getPost = await Post.findById(id);
+  const image = getPost[0].image;
 
-  if (req.file) {
-    console.log(req.file);
-    const post = {
-      ...req.body,
-      image: `${req.protocol}://${req.get('host')}/uploads/${
-        req.file.filename
-      }`,
-    };
-    try {
-      const getPost = await Post.findById(id);
-      const image = getPost[0].image;
-
-      // Post already has one image, delete and replace
-      if (image) {
-        const filename = image.split('/uploads/')[1];
-        fs.unlink(`uploads/${filename}`, async () => {
+  if (getPost[0].user_id !== req.auth.userId) {
+    return res
+      .status(403)
+      .json({ error: 'Unauthorized request, id not matching' });
+  } else {
+    if (req.file) {
+      console.log(req.file);
+      const post = {
+        ...req.body,
+        image: `${req.protocol}://${req.get('host')}/uploads/${
+          req.file.filename
+        }`,
+      };
+      try {
+        // Post already has one image, delete and replace
+        if (image) {
+          const filename = image.split('/uploads/')[1];
+          fs.unlink(`uploads/${filename}`, async () => {
+            const updatedPost = await Post.update(post, id);
+            if (updatedPost) {
+              res.status(200).json({
+                modifications: { id, post },
+              });
+            } else {
+              res.status(404).json({ message: 'Cannot modify post infos' });
+            }
+          });
+        } else {
+          // Adding image to a post which has no file
           const updatedPost = await Post.update(post, id);
           if (updatedPost) {
             res.status(200).json({
@@ -103,30 +118,20 @@ exports.modifyPost = async (req, res, next) => {
           } else {
             res.status(404).json({ message: 'Cannot modify post infos' });
           }
-        });
-      } else {
-        // Adding image to a post which has no file
-        const updatedPost = await Post.update(post, id);
-        if (updatedPost) {
-          res.status(200).json({
-            modifications: { id, post },
-          });
-        } else {
-          res.status(404).json({ message: 'Cannot modify post infos' });
         }
+      } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
       }
-    } catch (err) {
-      console.error(err);
-      res.sendStatus(500);
-    }
-  } else {
-    // Modifying text only
-    const updatedPost = await Post.update(req.body, id);
-    if (updatedPost) {
-      post = req.body;
-      res.status(200).json({
-        modifications: { id, post },
-      });
+    } else {
+      // Modifying text only
+      const updatedPost = await Post.update(req.body, id);
+      if (updatedPost) {
+        post = req.body;
+        res.status(200).json({
+          modifications: { id, post },
+        });
+      }
     }
   }
 };

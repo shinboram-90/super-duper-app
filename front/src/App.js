@@ -1,20 +1,20 @@
 import './App.css';
-
 import useAuth from './hooks/useAuth';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import Feed from './pages/Feed';
 import Missing from './pages/Missing';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Profile from './components/profile/Profile';
-import ListePosts from './features/posts/ListePosts';
+import PostsList from './features/posts/PostsList';
 
-import AddPostForm from './components/post/AddPostForm';
-import EditPostForm from './components/post/EditPostForm';
-import UserPage from './components/user/UserPage';
-import UserList from './components/user/UserList';
-import PostsList from './components/post/PostsList';
+import PostAuthor from './features/users/PostAuthor';
 
 import Dashboard from './components/admin/Dashboard';
 import AdminRoute from './components/admin/AdminRoute';
@@ -27,41 +27,40 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route
-          path="/"
-          element={
-            <React.Fragment>
-              <AddPostForm />
-              <PostList />
-            </React.Fragment>
-          }
-        /> */}
-        {/* <Route element={<PrivateRoute user={currentUser} />}> */}
-        <Route path="/" element={<ListePosts />} />
-        {/* <Route path="new" element={<AddPostForm />} />
-        <Route path="edit/:postId" element={<EditPostForm />} />
-        <Route path="users" element={<UserList />}>
-          <Route path=":id" element={<UserPage />} />
-        </Route> */}
-        {/* </Route>
-        </Route> */}
-        <Route path="profile" element={<Profile />} />
+        {/* <Route element={<RequireAuth user={currentUser} />}> */}
+        <Route path="/" element={<Navigate to="feed/posts" replace />} />
+        <Route path="feed" element={<Feed />}>
+          <Route path="posts" element={<PostsList />} />
+          {/* <Route element={<RequireAuth />}> */}
+          <Route path="users/:id" element={<PostAuthor />} />
+          <Route path="profile" element={<Profile />} />
+          {/* </Route> */}
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
         <Route path="logout" element={<Logout />} />
         <Route path="*" element={<Missing />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        {/* <Route path="dashboard" element={<Dashboard />} /> */}
 
-        {/* <Route
+        <Route
           path="dashboard"
           element={
             <AdminRoute>
               <Dashboard />
             </AdminRoute>
           }
-        /> */}
+        />
       </Routes>
     </Router>
   );
 }
 export default App;
+
+// <Routes>
+// <Route path="/" element={<Navigate to="/home" replace />} />
+// <Route path="/home" element={<Home />} />
+// <Route path="films" element={<Films />}>
+//   <Route path="list" element={<FilmsList />} />
+//   <Route path=":filmId" element={<FilmDetail />} />
+// </Route>
+// </Routes>
