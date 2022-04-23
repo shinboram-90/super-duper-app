@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from './postsSlice';
-import PostsExcerpt from './PostExcerpt';
+import PostsExcerpt from './PostsExcerpt';
 import { useEffect } from 'react';
 import AddPost from './AddPost';
 import axios from '../../api/axios';
-
-import CommentsExcerpt from '../comments/CommentsExcerpt';
 
 import { Container, Box } from '@mui/material';
 

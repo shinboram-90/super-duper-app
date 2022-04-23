@@ -9,7 +9,7 @@ const DeleteComment = ({ postId, commentId }) => {
     try {
       axios
         .delete(`api/posts/${postId}/comments/${commentId}`)
-        .then(() => dispatch(deleteComment(postId)));
+        .then(() => dispatch(deleteComment(commentId)));
     } catch (err) {
       console.error('Failed to delete the post', err);
     }

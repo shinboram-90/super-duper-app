@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import DeleteComment from './DeleteComment';
 import EditCommentForm from './EditCommentForm';
 
-const CommentsExcerpt = (postId, comment) => {
+const CommentsExcerpt = ({ postId, comment }) => {
   const [content, setContent] = useState(comment.content);
   const [editing, setEditing] = useState(false);
 
@@ -38,7 +38,9 @@ const CommentsExcerpt = (postId, comment) => {
         </div>
       )}
 
-      <button type="button">Edit</button>
+      <button type="button" onClick={() => setEditing(!editing)}>
+        Edit Comment
+      </button>
       <DeleteComment
         key={'delete' + comment.id}
         postId={postId}

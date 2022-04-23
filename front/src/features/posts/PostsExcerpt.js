@@ -7,15 +7,11 @@ import CommentsList from '../comments/CommentsList';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setCommentsData } from '../comments/commentsSlice';
-import AddCommentForm from '../comments/AddCommentForm';
-import useAuth from '../../hooks/useAuth';
 
-const PostExcerpt = ({ post }) => {
+const PostsExcerpt = ({ post }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
-  const { auth } = useAuth();
-  // console.log(auth);
 
   const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
@@ -74,8 +70,6 @@ const PostExcerpt = ({ post }) => {
   const neededComments = comments.filter(
     (comment) => comment.post_id === post.id
   );
-
-  console.log(neededComments);
 
   const toggleComments = () => {
     try {
@@ -137,7 +131,6 @@ const PostExcerpt = ({ post }) => {
 
             <div>Author : {post.username}</div>
             <div>{post.created_at}</div>
-            <button onClick={toggleComments}>comments: {post.comments}</button>
           </div>
           <button type="button" onClick={() => setEditing(!editing)}>
             Edit
@@ -145,16 +138,13 @@ const PostExcerpt = ({ post }) => {
         </div>
       )}
       <DelPost postId={post.id} />
-      <AddCommentForm postId={post.id} />
+      <button onClick={toggleComments}>comments: {post.comments}</button>
+
       <div>
         <CommentsList comments={neededComments} postId={post.id} />
-        REALLY?
-        {/* {comments.map((comment) => {
-          <p key={comment.id}>COMMENT PPPPPP:{comment.content}</p>;
-        })} */}
       </div>
     </article>
   );
 };
 
-export default PostExcerpt;
+export default PostsExcerpt;

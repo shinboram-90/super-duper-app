@@ -5,7 +5,7 @@ import axios from '../../api/axios';
 import { editComment } from './commentsSlice';
 import { useDispatch } from 'react-redux';
 
-const EditCommentForm = (postId, comment) => {
+const EditCommentForm = ({ postId, comment }) => {
   const [content, setContent] = useState(comment.content);
   const dispatch = useDispatch();
 
@@ -23,9 +23,10 @@ const EditCommentForm = (postId, comment) => {
 
     try {
       await axios
-        .put(`api/posts/${postId}/comment/${comment.id}`, updatedComment)
+        .put(`api/posts/${postId}/comments/${comment.id}`, updatedComment)
         .then((res) => {
-          dispatch(editComment(res.data));
+          dispatch(editComment(res.data.modifications));
+          console.log(res.data.modifications);
         });
 
       // setEditing(false);

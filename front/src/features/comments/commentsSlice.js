@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   comments: [],
 };
@@ -17,21 +17,23 @@ const commentsSlice = createSlice({
       // state.comments = [...state.comments, payload];
     },
     editComment: (state, { payload }) => {
-      state.comments = state.comments.map((comment) => {
-        if (comment.id === payload[0]) {
-          return { ...payload[1].comment };
-        }
-        return comment;
-      });
+      // state.comments = state.comments.map((comment) => {
+      //   if (comment.id === payload[0]) {
+      //     return { ...payload[1].comment };
+      //   }
+      //   return comment;
+      // });
       // const commentIndex = state.comments.findIndex((comment) => comment.id === payload);
       // if (commentIndex >= 0) {
       //   state.commentIndex = { ...payload };
       // }
-      // const index = state.comments.findIndex((comment) => comment.id === payload[0]);
-      // state[index] = {
-      //   ...state[index],
-      //   ...payload,
-      // };
+      const index = state.comments.findIndex(
+        (comment) => comment.id === payload[0]
+      );
+      state[index] = {
+        ...state[index],
+        ...payload,
+      };
     },
     deleteComment: (state, { payload }) => {
       console.log(payload);

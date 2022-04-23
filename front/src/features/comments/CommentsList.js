@@ -30,33 +30,35 @@ const CommentsList = ({ comments, postId }) => {
 
   return (
     <aside style={{ background: 'red' }}>
-      FUUUUUUUCK
-      {/* <AddCommentForm postId={postId} style={{ margin: 500 }} /> */}
-      {comments
-        ? comments.map((comment) => (
-            <ul key={comment.id}>
-              <li>
-                {console.log(comment.content)}
-                <p>content: {comment.content}</p>
-                <div>author: {comment.username}</div>
-                <div>author: {comment.created_at}</div>
-              </li>
+      <AddCommentForm key={'addComment' + { postId }} postId={postId} />
+      {comments.map((comment) => (
+        // <ul key={comment.id}>
+        //   <li>
+        //     {console.log(comment.content)}
+        //     <p>content: {comment.content}</p>
+        //     <div>author: {comment.username}</div>
+        //     <div>author: {comment.created_at}</div>
+        //   </li>
 
-              <EditCommentForm
-                key={'edit' + comment.id}
-                id={comment.id}
-                postId={postId}
-                comment={comment}
-              />
+        //   <EditCommentForm
+        //     key={'edit' + comment.id}
+        //     id={comment.id}
+        //     postId={postId}
+        //     comment={comment}
+        //   />
 
-              <DeleteComment
-                key={'delete' + comment.id}
-                commentId={comment.id}
-                postId={postId}
-              />
-            </ul>
-          ))
-        : 'Nothing to display'}
+        //   <DeleteComment
+        //     key={'delete' + comment.id}
+        //     commentId={comment.id}
+        //     postId={postId}
+        //   />
+        // </ul>
+        <CommentsExcerpt
+          key={'comment' + comment.id}
+          comment={comment}
+          postId={postId}
+        />
+      ))}
     </aside>
   );
 };

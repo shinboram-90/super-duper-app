@@ -18,14 +18,13 @@ export const AddCommentForm = ({ postId }) => {
   const onSaveCommentClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
+      setContent('');
       try {
         await axios
           .post(`api/posts/${postId}/comments`, formData)
           .then((res) => {
-            dispatch(addComment([postId, res.data.newcomment]));
+            dispatch(addComment(res.data.newcomment));
           });
-
-        setContent('');
       } catch (err) {
         console.error('Failed to save the post', err);
       }
@@ -49,6 +48,7 @@ export const AddCommentForm = ({ postId }) => {
           name="commentContent"
           placeholder="comments's Content"
           onChange={onContentChanged}
+          value={content}
         />
 
         <input type="submit" disabled={!canSave} value="Add comment" />

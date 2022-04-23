@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../api/axios';
 import { Box } from '@mui/system';
 import { setPostsData } from '../../features/posts/postsSlice';
-import PostExcerpt from '../../features/posts/PostExcerpt';
+import PostsExcerpt from '../../features/posts/PostsExcerpt';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Profile = () => {
   }, [dispatch, auth.id]);
 
   const content = posts.map((post) => (
-    <PostExcerpt key={`posts:${post.id}`} post={post} />
+    <PostsExcerpt key={`posts:${post.id}`} post={post} />
   ));
 
   // if (!auth) {
