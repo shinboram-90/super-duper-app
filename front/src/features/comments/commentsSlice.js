@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 const initialState = {
   comments: [],
 };
@@ -12,15 +12,15 @@ const commentsSlice = createSlice({
     //   console.log(comment);
     //   return comment;
     // },
-    setcommentsData: (state, { payload }) => {
+    setCommentsData: (state, { payload }) => {
       state.comments = payload;
     },
-    addcomment: (state, { payload }) => {
+    addComment: (state, { payload }) => {
       console.log(payload);
-      state.comments.unshift(payload);
+      state.comments.push(payload);
       // state.comments = [...state.comments, payload];
     },
-    editcomment: (state, { payload }) => {
+    editComment: (state, { payload }) => {
       state.comments = state.comments.map((comment) => {
         if (comment.id === payload[0]) {
           return { ...payload[1].comment };
@@ -37,7 +37,7 @@ const commentsSlice = createSlice({
       //   ...payload,
       // };
     },
-    deletecomment: (state, { payload }) => {
+    deleteComment: (state, { payload }) => {
       console.log(payload);
       state.comments = state.comments.filter(
         (comment) => comment.id !== payload
@@ -49,4 +49,8 @@ const commentsSlice = createSlice({
 export const { setCommentsData, addComment, editComment, deleteComment } =
   commentsSlice.actions;
 
+// export const selectPostsByUser = createSelector(
+//   [setCommentsData, (state, postId) => postId],
+//   (comments, postId) => comments.filter((comment) => comment.post_id === postId)
+// );
 export default commentsSlice.reducer;

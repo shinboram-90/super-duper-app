@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { editPost } from './postsSlice';
 import axios from '../../api/axios';
 import DelPost from './DelPost';
+import CommentsList from '../comments/CommentsList';
+import AddCommentForm from '../comments/AddCommentForm';
 
 const PostExcerpt = ({ post }) => {
   const dispatch = useDispatch();
@@ -119,6 +121,8 @@ const PostExcerpt = ({ post }) => {
         </div>
       )}
       <DelPost postId={post.id} />
+      {/* <AddCommentForm postId={post.id} /> */}
+      <CommentsList postId={post.id} />
     </article>
   );
 };

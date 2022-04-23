@@ -36,11 +36,12 @@ exports.getAllCommentsUser = async (req, res, next) => {
 };
 
 exports.createComment = async (req, res, next) => {
+  const postId = parseInt(req.params.postId);
   try {
     const comment = new Comment({
-      user_id: req.body.user_id,
-      post_id: req.body.post_id,
       content: req.body.content,
+      user_id: req.auth.userId,
+      post_id: postId,
       status: 'published',
     });
 
@@ -50,8 +51,8 @@ exports.createComment = async (req, res, next) => {
     } else {
       res.status(401).json({ error: 'Query not completed' });
     }
-  } catch (e) {
-    res.status(404).json({ error: 'Marked fields cannot be empty' });
+  } catch (err) {
+    res.status(404).json({ error: err });
   }
 };
 
