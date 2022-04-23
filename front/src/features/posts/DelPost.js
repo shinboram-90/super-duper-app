@@ -1,6 +1,5 @@
 import { deletePost } from './postsSlice';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import axios from '../../api/axios';
 
 const DelPost = ({ postId }) => {

@@ -12,7 +12,7 @@ const Comment = function (comment) {
 Comment.findByPost = async (postId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      'SELECT  c.*, u.avatar, u.username, p.title FROM comments c INNER JOIN users u ON c.user_id = u.id INNER JOIN posts p ON c.post_id = p.id WHERE p.id=? ORDER BY c.created_at DESC',
+      'SELECT  c.*, u.avatar, u.username, p.title FROM comments c INNER JOIN users u ON c.user_id = u.id INNER JOIN posts p ON c.post_id = p.id WHERE p.id=? ORDER BY c.created_at ASC',
       postId,
       (err, comments) => {
         if (err) {

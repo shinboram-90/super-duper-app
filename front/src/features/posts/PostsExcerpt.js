@@ -3,8 +3,12 @@ import { useDispatch } from 'react-redux';
 import { editPost } from './postsSlice';
 import axios from '../../api/axios';
 import DelPost from './DelPost';
+import CommentsList from '../comments/CommentsList';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { setCommentsData } from '../comments/commentsSlice';
 
-const PostExcerpt = ({ post }) => {
+const PostsExcerpt = ({ post }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
@@ -61,6 +65,22 @@ const PostExcerpt = ({ post }) => {
       console.error('Failed to save the post', err);
     }
   };
+
+  const comments = useSelector((state) => state.comments.comments);
+  const neededComments = comments.filter(
+    (comment) => comment.post_id === post.id
+  );
+
+  const toggleComments = () => {
+    try {
+      axios
+        .get(`api/posts/${post.id}/comments`)
+        .then((res) => dispatch(setCommentsData(res.data.commentList)));
+    } catch (err) {
+      console.error('Failed to delete the post', err);
+    }
+  };
+
   return (
     <article className="post-excerpt" key={post.id}>
       {editing ? (
@@ -111,7 +131,6 @@ const PostExcerpt = ({ post }) => {
 
             <div>Author : {post.username}</div>
             <div>{post.created_at}</div>
-            <div>comments: {post.comments}</div>
           </div>
           <button type="button" onClick={() => setEditing(!editing)}>
             Edit
@@ -119,8 +138,13 @@ const PostExcerpt = ({ post }) => {
         </div>
       )}
       <DelPost postId={post.id} />
+      <button onClick={toggleComments}>comments: {post.comments}</button>
+
+      <div>
+        <CommentsList comments={neededComments} postId={post.id} />
+      </div>
     </article>
   );
 };
 
-export default PostExcerpt;
+export default PostsExcerpt;

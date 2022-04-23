@@ -1,12 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from './postsSlice';
-import PostsExcerpt from './PostExcerpt';
+import PostsExcerpt from './PostsExcerpt';
 import { useEffect } from 'react';
 import AddPost from './AddPost';
 import axios from '../../api/axios';
-import Navbar from '../../components/Navbar';
-import UsersList from '../../features/users/UsersList';
-import { Outlet } from 'react-router-dom';
 
 import { Container, Box } from '@mui/material';
 
