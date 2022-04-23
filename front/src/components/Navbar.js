@@ -26,12 +26,13 @@ const pages = ['Products', 'Pricing', 'Blog'];
 
 const Navbar = () => {
   const { auth } = useAuth();
+  console.log(auth);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await axios.get('/api/logout');
-      localStorage.removeItem('auth');
+      localStorage.removeItem('user');
 
       navigate('/logout');
     } catch (err) {
@@ -123,7 +124,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: 'center' }}>
-                    <Link to="/users">Users</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                   </Typography>
                 </MenuItem>
               </Menu>
@@ -148,7 +149,7 @@ const Navbar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to="/users">Users</Link>
+                <Link to="/dashboard">Dashboard</Link>
               </Button>
             </Box>
 
@@ -177,22 +178,29 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem>
-                  <Avatar /> <Link to="/profile">Profile</Link>
-                </MenuItem>
-                <Divider />
-                <MenuItem>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  <Link to="/profile">Settings</Link>
-                </MenuItem>
-                <MenuItem>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  <span onClick={handleLogout}>Logout</span>
-                </MenuItem>
+                {auth ? (
+                  <span>
+                    {console.log(auth.user)}
+                    <MenuItem>
+                      <Avatar /> <Link to="profile">Profile</Link>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      <Link to="profile">Settings</Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <span onClick={handleLogout}>Logout</span>
+                    </MenuItem>
+                  </span>
+                ) : (
+                  <div>NO WAY</div>
+                )}
               </Menu>
             </Box>
           </Toolbar>

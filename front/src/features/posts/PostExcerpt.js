@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { editPost } from './postsSlice';
 import axios from '../../api/axios';
@@ -40,7 +39,6 @@ const PostExcerpt = ({ post }) => {
     );
   }
 
-
   const onEditPostClick = async (e) => {
     e.preventDefault();
 
@@ -58,9 +56,7 @@ const PostExcerpt = ({ post }) => {
         dispatch(editPost([post.id, res.data.modifications]));
       });
 
-
       setEditing(false);
-
     } catch (err) {
       console.error('Failed to save the post', err);
     }
@@ -89,7 +85,6 @@ const PostExcerpt = ({ post }) => {
 
           <label htmlFor="content">Content:</label>
           <textarea
-
             type="text"
             id="content"
             name="content"

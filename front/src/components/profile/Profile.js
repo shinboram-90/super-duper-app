@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthProvider';
 import axios from '../../api/axios';
+import { Box } from '@mui/system';
 
 const Profile = () => {
   const { auth } = useAuth();
@@ -26,14 +27,14 @@ const Profile = () => {
   // }
   // console.log(auth);
   return (
-    <>
-      <div>My Profile</div>
+    <Box>
+      <h3>My Profile</h3>
       <p>username: {auth.username}</p>
       <p>email: {auth.email}</p>
 
       <img alt="user avatar" src={auth.avatar} crossOrigin="true" />
       <button onClick={handleClick}>Edit Profile</button>
-    </>
+    </Box>
   );
 };
 
