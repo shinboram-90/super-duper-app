@@ -19,7 +19,6 @@ Post.findAll = async () => {
         if (err) {
           return reject(err);
         }
-        console.log(posts);
         return resolve(posts);
       }
     );
@@ -48,7 +47,7 @@ Post.findById = async (id) => {
         if (err) {
           return reject(err);
         }
-        console.log(post);
+
         return resolve(post);
       }
     );
@@ -64,7 +63,7 @@ Post.findByMyId = async (userId) => {
         if (err) {
           return reject(err);
         }
-        console.log(post);
+
         return resolve(post);
       }
     );

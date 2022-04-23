@@ -22,11 +22,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-
 const Navbar = () => {
   const { auth } = useAuth();
-  console.log(auth);
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -59,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <section>
+    <nav>
       {/* <Box
         sx={{
           display: 'flex',
@@ -180,7 +178,6 @@ const Navbar = () => {
               >
                 {auth ? (
                   <span>
-                    {console.log(auth.user)}
                     <MenuItem>
                       <Avatar /> <Link to="profile">Profile</Link>
                     </MenuItem>
@@ -199,14 +196,27 @@ const Navbar = () => {
                     </MenuItem>
                   </span>
                 ) : (
-                  <div>NO WAY</div>
+                  <span>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      <Link to="/login">Login</Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      <Link to="/register">Register</Link>
+                    </MenuItem>
+                  </span>
                 )}
               </Menu>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-    </section>
+    </nav>
   );
 };
 

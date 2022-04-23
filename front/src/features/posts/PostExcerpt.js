@@ -111,6 +111,7 @@ const PostExcerpt = ({ post }) => {
 
             <div>Author : {post.username}</div>
             <div>{post.created_at}</div>
+            <div>comments: {post.comments}</div>
           </div>
           <button type="button" onClick={() => setEditing(!editing)}>
             Edit

@@ -90,6 +90,7 @@ const Signup = () => {
             type="text"
             size="small"
             required
+            helperText="Choose a username"
             inputRef={username}
           />
           <TextField
@@ -99,12 +100,13 @@ const Signup = () => {
             type="text"
             size="small"
             required
+            helperText="Enter your email address"
             inputRef={email}
           />
           <TextField
             label="Password"
             type="password"
-            helperText="Please enter your password"
+            helperText="Choose a password"
             id="password"
             name="password"
             size="small"

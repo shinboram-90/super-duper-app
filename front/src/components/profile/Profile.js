@@ -1,14 +1,19 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../api/axios';
 import { Box } from '@mui/system';
+import { setPostsData } from '../../features/posts/postsSlice';
+import PostExcerpt from '../../features/posts/PostExcerpt';
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const { auth } = useAuth();
 
-  console.log(auth);
+  const posts = useSelector((state) => state.posts.posts);
+
+  console.log(posts);
 
   const [profile, setProfile] = useState();
 
@@ -18,9 +23,15 @@ const Profile = () => {
     setProfile(response.data);
   };
 
-  // useEffect(() => {
-  //   fetchCurrentUser();
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`api/profile/${auth.id}`)
+      .then((res) => dispatch(setPostsData(res.data.myPosts)));
+  }, [dispatch, auth.id]);
+
+  const content = posts.map((post) => (
+    <PostExcerpt key={`posts:${post.id}`} post={post} />
+  ));
 
   // if (!auth) {
   //   return <Navigate replace to="/login" />;
@@ -34,6 +45,7 @@ const Profile = () => {
 
       <img alt="user avatar" src={auth.avatar} crossOrigin="true" />
       <button onClick={handleClick}>Edit Profile</button>
+      {content}
     </Box>
   );
 };

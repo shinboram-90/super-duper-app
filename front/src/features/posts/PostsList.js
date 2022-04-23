@@ -31,11 +31,8 @@ const PostsList = () => {
     <>
       <Container>
         <Box sx={{ display: 'flex' }}>
-          {/* <UsersList /> */}
           <Box>
-            {' '}
             <AddPost />
-            {/* <Outlet /> */}
             {content}
           </Box>
         </Box>

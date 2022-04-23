@@ -16,7 +16,6 @@ const PostAuthor = () => {
       axios
         .get(`api/users/${id}`)
         .then((response) => {
-          console.log(response);
           setUser(response.data.user[0]);
         })
         .catch((error) => {
