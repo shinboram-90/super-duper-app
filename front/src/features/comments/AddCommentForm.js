@@ -22,7 +22,7 @@ export const AddCommentForm = ({ postId }) => {
         await axios
           .post(`api/posts/${postId}/comments`, formData)
           .then((res) => {
-            dispatch(addComment(res.data.newcomment));
+            dispatch(addComment([postId, res.data.newcomment]));
           });
 
         setContent('');

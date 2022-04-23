@@ -6,7 +6,7 @@ import DeleteComment from './DeleteComment';
 import EditCommentForm from './EditCommentForm';
 
 const CommentsExcerpt = (postId, comment) => {
-  // const [content, setContent] = useState(comment.content);
+  const [content, setContent] = useState(comment.content);
   const [editing, setEditing] = useState(false);
 
   const { auth } = useAuth();
@@ -23,7 +23,7 @@ const CommentsExcerpt = (postId, comment) => {
   // };
   return (
     <div style={{ backgroundColor: 'red' }}>
-      {/* {editing ? (
+      {editing ? (
         <div>
           <EditCommentForm
             key={'edit' + comment.id}
@@ -36,14 +36,14 @@ const CommentsExcerpt = (postId, comment) => {
           <h3>{comment.content}</h3>
           <p>{comment.username}</p>
         </div>
-      )} */}
-      <h1>YOOOOOOOo FROM THE OUTHERSIDE</h1>
+      )}
+
       <button type="button">Edit</button>
-      {/* <DeleteComment
+      <DeleteComment
         key={'delete' + comment.id}
         postId={postId}
         commentId={comment.id}
-      /> */}
+      />
     </div>
   );
 };

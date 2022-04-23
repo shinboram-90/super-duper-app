@@ -10,49 +10,53 @@ import { setCommentsData } from './commentsSlice';
 
 import CommentsExcerpt from './CommentsExcerpt';
 
-const CommentsList = ({ postId }) => {
-  const dispatch = useDispatch();
+const CommentsList = ({ comments, postId }) => {
+  // console.log(comments.first);
 
-  const comments = useSelector((state) => state.comments.comments);
-  // const ordered = comments.filter((comment) => comment.post_id === postId);
-  // console.log(ordered);
+  // const commentsArray = Object.keys(comments).map(function (key) {
+  //   return comments[key];
+  // });
 
-  useEffect(() => {
-    axios
-      .get(`api/posts/${postId}/comments`)
-      .then((res) => dispatch(setCommentsData(res.data.commentList)));
-  }, [dispatch, postId]);
+  // const comment = commentsArray.filter((x) => x.id === filmId);
+  // const dispatch = useDispatch();
+
+  // const comments = useSelector((state) => state.comments.comments);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`api/posts/${postId}/comments`)
+  //     .then((res) => dispatch(setCommentsData(res.data.commentList)));
+  // }, [dispatch, postId]);
 
   return (
-    <aside>
-      <AddCommentForm postId={postId} style={{ margin: 500 }} />
+    <aside style={{ background: 'red' }}>
+      FUUUUUUUCK
+      {/* <AddCommentForm postId={postId} style={{ margin: 500 }} /> */}
       {comments
         ? comments.map((comment) => (
-            <ul key={'comments' + comment.id}>
+            <ul key={comment.id}>
               <li>
+                {console.log(comment.content)}
                 <p>content: {comment.content}</p>
                 <div>author: {comment.username}</div>
                 <div>author: {comment.created_at}</div>
-                {/* <p>{console.log(comment.content)}</p> */}
               </li>
 
-              {/* <button type="submit">Edit Comment</button> */}
               <EditCommentForm
                 key={'edit' + comment.id}
                 id={comment.id}
                 postId={postId}
                 comment={comment}
               />
-              {/* <button type="submit">Delete Comment</button> */}
+
               <DeleteComment
                 key={'delete' + comment.id}
-                id={comment.id}
+                commentId={comment.id}
                 postId={postId}
               />
             </ul>
           ))
-        : 'No comments to display'}
-      <Outlet />
+        : 'Nothing to display'}
     </aside>
   );
 };

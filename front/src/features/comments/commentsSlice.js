@@ -7,12 +7,8 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
-    // getOnecomment: (state, { payload }) => {
-    //   const comment = state.comments.find((comment) => comment.id === payload);
-    //   console.log(comment);
-    //   return comment;
-    // },
     setCommentsData: (state, { payload }) => {
+      console.log(payload);
       state.comments = payload;
     },
     addComment: (state, { payload }) => {

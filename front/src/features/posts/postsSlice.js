@@ -270,11 +270,6 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    // getOnePost: (state, { payload }) => {
-    //   const post = state.posts.find((post) => post.id === payload);
-    //   console.log(post);
-    //   return post;
-    // },
     setPostsData: (state, { payload }) => {
       state.posts = payload;
     },

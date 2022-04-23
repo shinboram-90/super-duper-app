@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import AddPost from './AddPost';
 import axios from '../../api/axios';
 
+import CommentsExcerpt from '../comments/CommentsExcerpt';
+
 import { Container, Box } from '@mui/material';
 
 const PostsList = () => {
