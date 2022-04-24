@@ -69,7 +69,7 @@ exports.deleteUser = async (req, res, next) => {
     const avatar = user[0].avatar;
     if (avatar) {
       const filename = await avatar.split('/uploads/')[1];
-      fs.unlink(`/uploads/${filename}`, () => {
+      fs.unlink(`uploads/${filename}`, () => {
         const deleteUser = User.delete(req.params.id);
         res.status(200).json({
           message: 'User successfully deleted with all images',

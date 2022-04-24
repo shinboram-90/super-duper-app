@@ -186,7 +186,7 @@ const Navbar = () => {
                       <ListItemIcon>
                         <Settings fontSize="small" />
                       </ListItemIcon>
-                      <Link to="profile">Settings</Link>
+                      <Link to="profile/edit">Settings</Link>
                     </MenuItem>
                     <MenuItem>
                       <ListItemIcon>

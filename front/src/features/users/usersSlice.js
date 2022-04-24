@@ -1,32 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   users: [],
+  user: {},
 };
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    setUserData: (state, { payload }) => {
+      console.log(payload);
+      console.log(payload[0].id);
+      state.user = state.users.find((user) => user.id === payload[0].id);
+    },
     setUsersData: (state, { payload }) => {
+      console.log(payload);
       state.users = payload;
     },
     editUser: (state, { payload }) => {
+      console.log(payload[1]);
+      // state.users = state.users.map((user) => {
+      //   if (user.id === payload[0]) {
+      //     return [...payload];
+      //   }
+      //   return user;
+      // });
       state.users = state.users.map((user) => {
-        console.log(payload);
         if (user.id === payload[0]) {
-          return { ...payload[1].user };
+          return { ...payload[1] };
         }
         return user;
       });
-      // const postIndex = state.posts.findIndex((post) => post.id === payload);
-      // if (postIndex >= 0) {
-      //   state.postIndex = { ...payload };
-      // }
-      // const index = state.posts.findIndex((post) => post.id === payload[0]);
-      // state[index] = {
-      //   ...state[index],
-      //   ...payload,
-      // };
     },
     deleteUser: (state, { payload }) => {
       console.log(payload);
@@ -35,6 +39,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setUsersData, editUser, deleteUser } = usersSlice.actions;
+export const { setUserData, setUsersData, editUser, deleteUser } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

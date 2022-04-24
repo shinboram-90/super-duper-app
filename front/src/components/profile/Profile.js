@@ -1,27 +1,34 @@
 import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../api/axios';
 import { Box } from '@mui/system';
 import { setPostsData } from '../../features/posts/postsSlice';
 import PostsExcerpt from '../../features/posts/PostsExcerpt';
+import { setUserData } from '../../features/users/usersSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { auth } = useAuth();
 
-  const posts = useSelector((state) => state.posts.posts);
+  // const posts = useSelector((state) => state.posts.posts);
+  // const myPosts = posts.filter((post) => post.user_id === auth.id);
+  const user = useSelector((state) => state.users.user);
 
-  console.log(posts);
+  const myPosts = useSelector((state) =>
+    state.posts.posts.filter((post) => post.user_id === auth.id)
+  );
+  // const user = useSelector((state) =>
+  //   state.users.users.find((user) => user.id === auth.id)
+  // );
+  console.log(user);
 
-  const [profile, setProfile] = useState();
-
-  const handleClick = async () => {
-    const response = await axios.put(`/api/users/${auth.id}`);
-    // console.log(response.data.currentUser[0]);
-    setProfile(response.data);
-  };
+  useEffect(() => {
+    axios
+      .get(`api/users/${auth.id}`)
+      .then((res) => dispatch(setUserData(res.data.user)));
+  }, [dispatch, auth.id]);
 
   useEffect(() => {
     axios
@@ -29,7 +36,7 @@ const Profile = () => {
       .then((res) => dispatch(setPostsData(res.data.myPosts)));
   }, [dispatch, auth.id]);
 
-  const content = posts.map((post) => (
+  const content = myPosts.map((post) => (
     <PostsExcerpt key={`posts:${post.id}`} post={post} />
   ));
 
@@ -39,12 +46,20 @@ const Profile = () => {
   // console.log(auth);
   return (
     <Box>
+      <Outlet />
       <h3>My Profile</h3>
-      <p>username: {auth.username}</p>
-      <p>email: {auth.email}</p>
+      <img
+        alt="user avatar"
+        src={user.avatar}
+        crossOrigin="true"
+        style={{ maxWidth: 200 }}
+      />
+      <p>Username: {user.username}</p>
+      <p>First name: {user.first_name}</p>
+      <p>Last name: {user.last_name}</p>
+      <p>Email: {user.email}</p>
+      <p>Biography: {user.biography}</p>
 
-      <img alt="user avatar" src={auth.avatar} crossOrigin="true" />
-      <button onClick={handleClick}>Edit Profile</button>
       {content}
     </Box>
   );

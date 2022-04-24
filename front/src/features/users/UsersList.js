@@ -54,7 +54,7 @@ const UsersList = () => {
                 };
               }}
               to={`users/${user.id}`}
-              key={user.id}
+              key={'users' + user.id}
             >
               {user.role === 'user' ? (
                 <div color="blue">

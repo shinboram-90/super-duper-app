@@ -276,7 +276,6 @@ const postsSlice = createSlice({
     addPost: (state, { payload }) => {
       console.log(payload);
       state.posts.unshift(payload);
-      // state.posts = [...state.posts, payload];
     },
     editPost: (state, { payload }) => {
       state.posts = state.posts.map((post) => {
@@ -285,15 +284,6 @@ const postsSlice = createSlice({
         }
         return post;
       });
-      // const postIndex = state.posts.findIndex((post) => post.id === payload);
-      // if (postIndex >= 0) {
-      //   state.postIndex = { ...payload };
-      // }
-      // const index = state.posts.findIndex((post) => post.id === payload[0]);
-      // state[index] = {
-      //   ...state[index],
-      //   ...payload,
-      // };
     },
     deletePost: (state, { payload }) => {
       console.log(payload);
