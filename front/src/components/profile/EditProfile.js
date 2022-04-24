@@ -8,13 +8,14 @@ import defaultAvatar from '../../assets/defaultAvatar.jpg';
 import {
   editUser,
   deleteUser,
-  setUserData,
+  setUsersData,
 } from '../../features/users/usersSlice';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
   const { auth } = useAuth();
-  const user = useSelector((state) => state.users.user);
+  const users = useSelector((state) => state.users.users);
+  const user = users.find((user) => user.id === auth.id);
   const [editing, setEditing] = useState(false);
   // const users = useSelector((state) => state.users.users);
   // const user = users.find((user) => user.id === auth.id);
@@ -27,10 +28,18 @@ const EditProfile = () => {
     setAvatar(null);
   };
 
-  const [firstName, setFirstName] = useState(user.firstname);
-  const [lastName, setLastName] = useState(user.lastname);
-  const [biography, setBiography] = useState(user.biography);
-  const [avatar, setAvatar] = useState(user.avatar);
+  const [firstName, setFirstName] = useState(
+    user && user.first_name ? user.first_name : 'First Name'
+  );
+  const [lastName, setLastName] = useState(
+    user && user.last_name ? user.last_name : 'Last Name'
+  );
+  const [biography, setBiography] = useState(
+    user && user.biography ? user.biography : 'Biography'
+  );
+  const [avatar, setAvatar] = useState(
+    user && user.avatar ? user.avatar : null
+  );
 
   const onFirstNameChanged = (e) => setFirstName(e.target.value);
   const onLastNameChanged = (e) => setLastName(e.target.value);
@@ -39,8 +48,8 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`api/users/${auth.id}`)
-      .then((res) => dispatch(setUserData(res.data.user)));
+      .get(`api/users/`)
+      .then((res) => dispatch(setUsersData(res.data.userList)));
   }, [dispatch, auth.id]);
 
   let imgPreview;
@@ -114,7 +123,7 @@ const EditProfile = () => {
               type="text"
               size="small"
               helperText="Username cannot be changed"
-              placeholder={user.username}
+              placeholder={auth.username}
               disabled
             />
 
@@ -123,7 +132,7 @@ const EditProfile = () => {
               name="email"
               size="small"
               helperText="Contact an admin to change"
-              placeholder={user.email}
+              placeholder={auth.email}
               disabled
             />
             <input
@@ -134,7 +143,7 @@ const EditProfile = () => {
               size="small"
               // helperText="Enter your first name"
               onChange={onFirstNameChanged}
-              defaultValue={user.first_name}
+              defaultValue={firstName}
             />
             {/* <input
             type="text"
@@ -151,7 +160,7 @@ const EditProfile = () => {
               size="small"
               // helperText="Enter your family name"
               onChange={onLastNameChanged}
-              defaultValue={user.last_name}
+              defaultValue={lastName}
             />
             <input
               // label="Biography"
@@ -161,7 +170,7 @@ const EditProfile = () => {
               size="small"
               // helperText="Write something about yourself"
               onChange={onBiographyChanged}
-              defaultValue={user.biography}
+              defaultValue={biography}
             />
 
             <input
@@ -200,9 +209,14 @@ const EditProfile = () => {
               '& > :not(style)': { m: 1 },
             }}
           >
-            {user.avatar ? (
+            {user && user.avatar ? (
               <Avatar sx={{ width: 100, height: 100 }}>
-                <img alt="avatar" src={user.avatar} crossOrigin="true" />
+                <img
+                  alt="avatar"
+                  src={user.avatar}
+                  crossOrigin="true"
+                  style={{ maxWidth: 120 }}
+                />
               </Avatar>
             ) : (
               <Avatar sx={{ width: 100, height: 100 }}>
@@ -237,7 +251,7 @@ const EditProfile = () => {
               id="firstname"
               name="firstname"
               size="small"
-              placeholder={user.first_name}
+              placeholder={firstName}
               disabled
             />
             {/* <input
@@ -252,7 +266,7 @@ const EditProfile = () => {
               id="lastname"
               name="lastname"
               size="small"
-              placeholder={user.last_name}
+              placeholder={lastName}
               disabled
             />
             <TextField
@@ -260,7 +274,7 @@ const EditProfile = () => {
               id="biography"
               name="biography"
               size="small"
-              placeholder={user.biography}
+              placeholder={biography}
               disabled
             />
 
@@ -284,7 +298,11 @@ const EditProfile = () => {
           >
             Edit
           </Button>
-          <p> Last updated at : {user.updated_at}</p>
+          <p>
+            {' '}
+            Last updated at :{' '}
+            {user && user.updated_at ? user.updated_at : 'Last Name'}
+          </p>
         </form>
       )}
       <Button type="button" onClick={onDeleteProfile} variant="contained">

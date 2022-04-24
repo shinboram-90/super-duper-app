@@ -9,7 +9,6 @@ import {
   useLocation,
   NavLink,
 } from 'react-router-dom';
-import PostsList from '../posts/PostsList';
 
 function QueryNavLink({ to, ...props }) {
   let location = useLocation();
@@ -35,7 +34,7 @@ const UsersList = () => {
       {}
 
       <ul>
-        <h2>UserList</h2>
+        <h2>My colleagues</h2>
 
         {Object.values(users)
           .filter((user) => {
