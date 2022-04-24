@@ -3,11 +3,20 @@ import { addPost } from './postsSlice';
 import { useDispatch } from 'react-redux';
 import axios from '../../api/axios';
 
+// MUI STYLES
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { styled } from '@mui/material/styles';
+
 export const AddPost = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
+
+  const Input = styled('input')({
+    display: 'none',
+  });
 
   const formData = new FormData();
 
@@ -64,7 +73,7 @@ export const AddPost = () => {
 
   return (
     <section>
-      <h2>Add a new post</h2>
+      <h2>Write a new post</h2>
       <form onSubmit={onSavePostClicked}>
         <label htmlFor="postTitle">Title:</label>
         <input
@@ -75,8 +84,22 @@ export const AddPost = () => {
           onChange={onTitleChanged}
           value={title}
         />
-
-        <input type="file" id="image" name="image" onChange={onImageChanged} />
+        <label htmlFor="icon-button-file">
+          <Input
+            accept="image/*"
+            id="icon-button-file"
+            type="file"
+            onChange={onImageChanged}
+          />
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+            <PhotoCamera />
+          </IconButton>
+        </label>
+        {/* <input type="file" id="image" name="image" onChange={onImageChanged} /> */}
         <div>{imgPreview}</div>
 
         <label htmlFor="postContent">Content:</label>

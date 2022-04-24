@@ -4,9 +4,16 @@ import { editPost } from './postsSlice';
 import axios from '../../api/axios';
 import DelPost from './DelPost';
 import CommentsList from '../comments/CommentsList';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setCommentsData } from '../comments/commentsSlice';
+
+// MUI STYLES
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { styled } from '@mui/material/styles';
+import { TextField, Button } from '@mui/material';
+
+import moment from 'moment-timezone';
 
 const PostsExcerpt = ({ post }) => {
   const dispatch = useDispatch();
@@ -15,6 +22,9 @@ const PostsExcerpt = ({ post }) => {
 
   const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
+  const Input = styled('input')({
+    display: 'none',
+  });
 
   const canSave = [title, content].every(Boolean);
 
@@ -42,6 +52,11 @@ const PostsExcerpt = ({ post }) => {
       </>
     );
   }
+
+  // const time = post.created_at;
+  // const timeConverted = moment
+  //   .tz(time, 'Europe/Paris')
+  //   .format('dddd, MMMM Do YYYY, h:mm a');
 
   const onEditPostClick = async (e) => {
     e.preventDefault();
@@ -85,33 +100,46 @@ const PostsExcerpt = ({ post }) => {
     <article className="post-excerpt" key={post.id}>
       {editing ? (
         <form onSubmit={onEditPostClick}>
-          <label htmlFor="title">Title:</label>
-          <input
+          <TextField
             type="text"
             id="title"
-            name="title"
+            label="Title"
             defaultValue={post.title}
+            helperText="Edit title"
             onChange={onTitleChanged}
+            size="small"
           />
+          <label htmlFor="image">
+            <Input
+              ref={imageRef}
+              accept="image/*"
+              id="image"
+              type="file"
+              onChange={onImageChanged}
+            />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+            >
+              <PhotoCamera />
+            </IconButton>
+          </label>
 
-          <input
-            ref={imageRef}
-            type="file"
-            id="image"
-            name="image"
-            onInput={onImageChanged}
-          />
           <div>{imgPreview}</div>
-
-          <label htmlFor="content">Content:</label>
-          <textarea
+          <TextField
             type="text"
             id="content"
-            name="content"
+            label="Content"
             defaultValue={post.content}
+            helperText="Edit content"
             onChange={onContentChanged}
+            size="small"
           />
-          <input disabled={!canSave} type="submit" value="Confirm changes" />
+
+          <Button disabled={!canSave} type="submit" value="Confirm changes">
+            Save changes
+          </Button>
         </form>
       ) : (
         <div>
@@ -130,7 +158,8 @@ const PostsExcerpt = ({ post }) => {
             )}
 
             <div>Author : {post.username}</div>
-            <div>{post.created_at}</div>
+
+            <div>{moment(post.created_at).format('dddd, MMMM Do YYYY')}</div>
           </div>
           <button type="button" onClick={() => setEditing(!editing)}>
             Edit
