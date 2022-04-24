@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useNavigate,
 } from 'react-router-dom';
 import Feed from './pages/Feed';
 import Missing from './pages/Missing';
@@ -23,9 +24,6 @@ import AdminRoute from './components/admin/AdminRoute';
 import RequireAuth from './components/auth/RequireAuth';
 
 function App() {
-  const { auth } = useAuth();
-  console.log(auth);
-
   return (
     <Router>
       <Routes>
