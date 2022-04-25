@@ -38,7 +38,9 @@ const Logout = () => {
               justifyContent: 'space-between',
             }}
           >
-            <Button onClick={backToRegister}>Register</Button>
+            <Button variant="outlined" onClick={backToRegister}>
+              Register
+            </Button>
             <Button variant="contained" onClick={backToLogin}>
               Login
             </Button>

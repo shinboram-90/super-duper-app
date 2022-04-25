@@ -135,7 +135,11 @@ const Login = () => {
             }}
           >
             Need an account?
-            <Button sx={{ marginTop: '1rem' }} onClick={backToRegister}>
+            <Button
+              variant="outlined"
+              sx={{ marginTop: '1rem' }}
+              onClick={backToRegister}
+            >
               Register
             </Button>
           </p>

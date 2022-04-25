@@ -32,13 +32,13 @@ const PostAuthor = () => {
   // const userPosts = useSelector((state) =>
   //   state.posts.posts.filter((post) => post.user_id === id)
   // );
-  console.log(posts);
+  // console.log(posts);
 
-  useEffect(() => {
-    axios
-      .get(`api/profile/${id}`)
-      .then((res) => dispatch(setPostsData(res.data.myPosts)));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`api/profile/${id}`)
+  //     .then((res) => dispatch(setPostsData(res.data.myPosts)));
+  // }, [dispatch, id]);
 
   // const content = userPosts.map((post) => (
   //   <PostsExcerpt key={`userPosts:${post.id}`} post={post} />

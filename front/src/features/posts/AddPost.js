@@ -9,7 +9,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
-import { TextField, Button, Box, Stack, Tooltip } from '@mui/material';
+import { TextField, Button, Box, Stack, Tooltip, Card } from '@mui/material';
 
 export const AddPost = () => {
   const dispatch = useDispatch();
@@ -93,12 +93,13 @@ export const AddPost = () => {
   };
 
   return (
-    <Box
+    <Card
       sx={{
         marginBottom: '4rem',
         backgroundColor: 'rgba(239, 239, 239, 0.5)',
         padding: '1.5rem',
         borderRadius: '5px',
+        maxWidth: '42rem',
       }}
     >
       <Stack spacing={3}>
@@ -156,7 +157,7 @@ export const AddPost = () => {
           </Box>
         </form>
       </Stack>
-    </Box>
+    </Card>
   );
 };
 

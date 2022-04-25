@@ -164,7 +164,7 @@ const PostsExcerpt = ({ post }) => {
   };
 
   return (
-    <article className="post-excerpt" key={post.id}>
+    <article>
       {editing ? (
         <Box
           sx={{
@@ -230,7 +230,7 @@ const PostsExcerpt = ({ post }) => {
           </Stack>
         </Box>
       ) : (
-        <Card sx={{ maxWidth: 900, marginBottom: '5rem' }}>
+        <Card sx={{ maxWidth: '45rem', marginBottom: '5rem' }}>
           <Typography
             sx={{ mt: 2, ml: 4 }}
             color="text.secondary"
@@ -301,7 +301,7 @@ const PostsExcerpt = ({ post }) => {
           {post.image ? (
             <CardMedia
               component="img"
-              height="300"
+              height="100%"
               alt={post.title}
               image={post.image}
               crossOrigin="true"

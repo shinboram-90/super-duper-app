@@ -9,14 +9,16 @@ const Feed = () => {
       <Navbar />
       <Container
         sx={{
-          display: 'grid',
-          justifyItems: 'stretch',
           padding: '2rem',
         }}
       >
-        <Box sx={{ display: 'flex' }}>
-          <UsersList />
-          <Outlet />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box>
+            <UsersList />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <Outlet />
+          </Box>
         </Box>
       </Container>
     </>
