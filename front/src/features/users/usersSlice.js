@@ -1,3 +1,4 @@
+import { current } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   users: [],
@@ -11,6 +12,7 @@ const usersSlice = createSlice({
     setUserData: (state, { payload }) => {
       console.log(payload);
       console.log(payload[0].id);
+      console.log(current(state));
       state.user = state.users.find((user) => user.id === payload[0].id);
     },
     setUsersData: (state, { payload }) => {
