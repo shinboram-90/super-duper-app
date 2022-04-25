@@ -10,6 +10,7 @@ import {
   deleteUser,
   setUsersData,
 } from '../../features/users/usersSlice';
+import EditIcon from '@mui/icons-material/Edit';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -95,11 +96,10 @@ const EditProfile = () => {
     try {
       const response = await axios.put(`api/users/${auth.id}`, formData);
       if (response) {
-        // navigate('/feed/profile');
-
         dispatch(editUser([auth.id, response.data.modifications]));
         setEditing(false);
         console.log([auth.id, response.data.modifications]);
+        navigate('/feed/profile');
       }
     } catch (err) {
       console.error(err);
@@ -292,6 +292,7 @@ const EditProfile = () => {
           />*/}
           </Box>
           <Button
+            startIcon={<EditIcon />}
             type="button"
             onClick={() => setEditing(!editing)}
             variant="contained"
@@ -305,7 +306,7 @@ const EditProfile = () => {
           </p>
         </form>
       )}
-      <Button type="button" onClick={onDeleteProfile} variant="contained">
+      <Button type="button" onClick={onDeleteProfile} variant="outlined">
         Delete profile
       </Button>
     </div>

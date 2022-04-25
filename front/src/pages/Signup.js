@@ -124,7 +124,11 @@ const Signup = () => {
             }}
           >
             Already have an account?
-            <Button sx={{ marginTop: '1rem' }} onClick={backToLogin}>
+            <Button
+              variant="outlined"
+              sx={{ marginTop: '1rem' }}
+              onClick={backToLogin}
+            >
               Register
             </Button>
           </p>
