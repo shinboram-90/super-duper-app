@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from '../posts/postsSlice';
+// import PostsExcerpt from '../posts/PostsExcerpt';
 
 const PostAuthor = () => {
   const params = useParams();
@@ -12,6 +13,7 @@ const PostAuthor = () => {
   const dispatch = useDispatch;
 
   const [user, setUser] = useState([]);
+  const posts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
     const fetchUser = () => {
@@ -27,19 +29,20 @@ const PostAuthor = () => {
     fetchUser();
   }, [id]);
 
-  const posts = useSelector((state) => state.posts.posts);
   // const userPosts = useSelector((state) =>
   //   state.posts.posts.filter((post) => post.user_id === id)
   // );
-  // console.log(userPosts);
   console.log(posts);
 
   useEffect(() => {
     axios
-      .get('api/posts')
-      .then((res) => dispatch(setPostsData(res.data.postList)));
-  }, [dispatch]);
+      .get(`api/profile/${id}`)
+      .then((res) => dispatch(setPostsData(res.data.myPosts)));
+  }, [dispatch, id]);
 
+  // const content = userPosts.map((post) => (
+  //   <PostsExcerpt key={`userPosts:${post.id}`} post={post} />
+  // ));
   return (
     <>
       {/* <Navbar /> */}
@@ -47,7 +50,7 @@ const PostAuthor = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* <UsersList /> */}
           <h2>User profile: {id}</h2>
-          <img src={`${user.avatar}`} alt="avatar" />
+          <img src={`${user.avatar}`} alt="avatar" crossOrigin="true" />
           <p>
             {user.id} {user.role}
           </p>
@@ -57,6 +60,11 @@ const PostAuthor = () => {
             Bio : {user.biography}
           </p>
         </Box>
+        {/* {userPosts.map((post) => (
+          <li key={`userPosts:${post.id}`} post={post}>
+            {post.title}
+          </li>
+        ))} */}
       </Container>
     </>
   );

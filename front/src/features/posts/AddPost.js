@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
 import { TextField, Button, Box, Stack, Tooltip } from '@mui/material';
-import { borderRadius } from '@mui/system';
 
 export const AddPost = () => {
   const dispatch = useDispatch();
