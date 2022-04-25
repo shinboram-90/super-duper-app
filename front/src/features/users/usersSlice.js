@@ -29,6 +29,7 @@ const usersSlice = createSlice({
       // });
       state.users = state.users.map((user) => {
         if (user.id === payload[0]) {
+          console.log(payload[1]);
           return { ...payload[1] };
         }
         return user;

@@ -25,11 +25,11 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Tooltip } from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ClearIcon from '@mui/icons-material/Clear';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ITEM_HEIGHT = 48;
@@ -71,21 +71,27 @@ const PostsExcerpt = ({ post }) => {
   let imgPreview;
   if (image) {
     imgPreview = (
-      <Box sx={{ position: 'relative' }}>
+      <div style={{ position: 'relative', width: 300, padding: '1rem 2rem' }}>
         <img
-          style={{ maxWidth: 200 }}
+          style={{ width: '100%', borderRadius: '5px' }}
           src={imageRef.current?.value ? URL.createObjectURL(image) : image}
           alt=""
           crossOrigin="true"
         />
-        <ListItemIcon
-          onClick={onClickRemoveImage}
-          sx={{ position: 'absolute', top: '0' }}
-        >
-          <ClearIcon fontSize="small" />
-        </ListItemIcon>
-        {/* <button onClick={onClickRemoveImage}></button> */}
-      </Box>
+        <Tooltip title="Remove">
+          <ListItemIcon
+            onClick={onClickRemoveImage}
+            sx={{
+              position: 'absolute',
+              top: '1.2rem',
+              left: '19rem',
+              cursor: 'pointer',
+            }}
+          >
+            <HighlightOffIcon fontSize="medium" />
+          </ListItemIcon>
+        </Tooltip>
+      </div>
     );
   }
 
@@ -149,48 +155,69 @@ const PostsExcerpt = ({ post }) => {
   return (
     <article className="post-excerpt" key={post.id}>
       {editing ? (
-        <form onSubmit={onEditPostClick}>
-          <TextField
-            type="text"
-            id="title"
-            label="Title"
-            defaultValue={post.title}
-            helperText="Edit title"
-            onChange={onTitleChanged}
-            size="small"
-          />
-          <label htmlFor="image">
-            <Input
-              ref={imageRef}
-              accept="image/*"
-              id="image"
-              type="file"
-              onChange={onImageChanged}
-            />
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-
-          <div>{imgPreview}</div>
-          <TextField
-            type="text"
-            id="content"
-            label="Content"
-            defaultValue={post.content}
-            helperText="Edit content"
-            onChange={onContentChanged}
-            size="small"
-          />
-
-          <Button disabled={!canSave} type="submit">
-            Save changes
-          </Button>
-        </form>
+        <Box
+          sx={{
+            marginBottom: '4rem',
+            backgroundColor: 'rgba(239, 239, 239, 0.5)',
+            padding: '1.5rem',
+            borderRadius: '5px',
+          }}
+        >
+          <Stack spacing={3}>
+            <form onSubmit={onEditPostClick}>
+              <TextField
+                type="text"
+                id="title"
+                label="Title"
+                defaultValue={post.title}
+                helperText="Edit title"
+                onChange={onTitleChanged}
+                size="small"
+                fullWidth
+                sx={{ marginBottom: '1rem' }}
+              />
+              <TextField
+                type="text"
+                id="content"
+                label="Content"
+                defaultValue={post.content}
+                helperText="Edit content"
+                onChange={onContentChanged}
+                size="small"
+                multiline
+                rows={3}
+                fullWidth
+              />
+              <div>{imgPreview}</div>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <label htmlFor="image">
+                  <Input
+                    ref={imageRef}
+                    accept="image/*"
+                    id="image"
+                    type="file"
+                    onChange={onImageChanged}
+                  />
+                  <Tooltip title="Add a picture">
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </Tooltip>
+                </label>
+                <Button type="button" onClick={() => setEditing(!editing)}>
+                  Cancel
+                </Button>
+                <Button disabled={!canSave} type="submit">
+                  Save changes
+                </Button>
+              </Box>
+            </form>
+          </Stack>
+        </Box>
       ) : (
         <Card sx={{ maxWidth: 900, marginBottom: '5rem' }}>
           <CardHeader
