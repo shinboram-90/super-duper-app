@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from '../api/axios';
-
 import useAuth from '../hooks/useAuth';
 
-import { Button, Box, TextField, Container } from '@mui/material';
-
-// import { DisplayToggles } from './display_toggles';
+import iconLeftColored from '../assets/iconLeftColored.svg';
+import { Button, Box, TextField } from '@mui/material';
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -18,7 +16,12 @@ const Login = () => {
     password: '',
   });
 
+  const backToRegister = () => {
+    navigate('/register');
+  };
+
   const redirectPath = location.state?.path || '/';
+
   // const password = useRef(null);
 
   // const onChange = (event) => {
@@ -55,9 +58,8 @@ const Login = () => {
         const user = response.data.user[0];
 
         localStorage.setItem('user', JSON.stringify(response.data.user[0]));
-
-        setAuth(user);
         navigate(redirectPath, { replace: true });
+        setAuth(user);
       }
     } catch (err) {
       console.error(`Catching ${err}`);
@@ -65,66 +67,81 @@ const Login = () => {
   };
 
   return (
-    <Container className="login__container" style={{ padding: 100 }}>
-      <h1>WELCOME TO GROUPOMANIA</h1>
-      <form onSubmit={handleSubmit} method="POST">
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            '& > :not(style)': { m: 1 },
-          }}
-        >
-          <TextField
-            label="Username"
-            // helperText={text === "" ? 'Empty field!' : "Please enter your username"}
-            id="username"
-            name="username"
-            value={data.username || ''}
-            type="text"
-            size="small"
-            required
-            onChange={handleChange}
-            helperText="Please enter your username"
-
-            // error={text === ""}
-          />
-
-          <TextField
-            label="Password"
-            type="password"
-            helperText="Please enter your password"
-            id="password"
-            name="password"
-            value={data.password || ''}
-            size="small"
-            autoComplete="current-password"
-            required
-            onChange={handleChange}
-          />
-          <Button type="submit" variant="contained">
-            Login
-          </Button>
+    <div
+      className="login__container"
+      style={{
+        position: 'absolute',
+        top: '40%',
+        left: '50%',
+        right: '-50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      <Box
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <Box>
+          <img alt="logo" src={iconLeftColored} height="380" />
         </Box>
+        <Box sx={{ marginTop: '-8rem' }}>
+          <form onSubmit={handleSubmit} method="POST">
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                '& > :not(style)': { m: 1 },
+                marginBottom: '3.5rem',
+              }}
+            >
+              <TextField
+                label="Username"
+                // helperText={text === "" ? 'Empty field!' : "Please enter your username"}
+                id="username"
+                name="username"
+                value={data.username || ''}
+                type="text"
+                size="small"
+                required
+                onChange={handleChange}
+                helperText="Please enter your username"
 
-        {/* {isLoading ? (
-            <div className="loading">
-              <span>Loading...</span>
-            </div>
-          ) : ( */}
+                // error={text === ""}
+              />
 
-        {/* // )} */}
-      </form>
+              <TextField
+                label="Password"
+                type="password"
+                helperText="Please enter your password"
+                id="password"
+                name="password"
+                value={data.password || ''}
+                size="small"
+                autoComplete="current-password"
+                required
+                onChange={handleChange}
+              />
+              <Button type="submit" variant="contained">
+                Login
+              </Button>
+            </Box>
+          </form>
 
-      <p>
-        Need an account?
-        <br />
-        <span className="line">
-          <Link to="/register">Register</Link>
-        </span>
-      </p>
-    </Container>
+          <p
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'end',
+            }}
+          >
+            Need an account?
+            <Button sx={{ marginTop: '1rem' }} onClick={backToRegister}>
+              Register
+            </Button>
+          </p>
+        </Box>
+      </Box>
+    </div>
   );
 };
 

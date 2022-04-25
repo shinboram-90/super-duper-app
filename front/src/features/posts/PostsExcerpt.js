@@ -6,31 +6,40 @@ import DelPost from './DelPost';
 import CommentsList from '../comments/CommentsList';
 import { setCommentsData } from '../comments/commentsSlice';
 import moment from 'moment-timezone';
+import useAuth from '../../hooks/useAuth';
 
 // MUI STYLES
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
-import { TextField, Button, Stack, Box } from '@mui/material';
-
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+
+import {
+  CardHeader,
+  CardMedia,
+  Card,
+  CardContent,
+  CardActions,
+  Collapse,
+  Menu,
+  Avatar,
+  MenuItem,
+  Typography,
+  Tooltip,
+  IconButton,
+  TextField,
+  Button,
+  Stack,
+  Box,
+  ListItemIcon,
+} from '@mui/material';
+
+// MUI ICONS
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Menu, MenuItem, Tooltip } from '@mui/material';
-
 import EditIcon from '@mui/icons-material/Edit';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const ITEM_HEIGHT = 48;
 
@@ -49,9 +58,11 @@ const PostsExcerpt = ({ post }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
-
-  const imageRef = useRef(null);
   const [image, setImage] = useState(post.image);
+  const imageRef = useRef(null);
+
+  const { auth } = useAuth();
+
   const Input = styled('input')({
     display: 'none',
   });
@@ -236,48 +247,52 @@ const PostsExcerpt = ({ post }) => {
               </Avatar>
             }
             action={
-              <Box aria-label="settings">
-                <div>
-                  <IconButton
-                    aria-label="more"
-                    id="long-button"
-                    aria-controls={open ? 'long-menu' : undefined}
-                    aria-expanded={open ? 'true' : undefined}
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    PaperProps={{
-                      style: {
-                        maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch',
-                      },
-                    }}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      <ListItemIcon>
-                        <EditIcon fontSize="small" />
-                      </ListItemIcon>
-                      <Typography variant="inherit">Edit</Typography>
-                      <span
-                        className="edit__helper--click"
-                        onClick={() => setEditing(!editing)}
-                      ></span>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <ListItemIcon>
-                        <DeleteIcon fontSize="small" />
-                      </ListItemIcon>
-                      <DelPost postId={post.id} />
-                    </MenuItem>
-                  </Menu>
-                </div>
-              </Box>
+              post.user_id === auth.id ? (
+                <Box aria-label="settings">
+                  <div>
+                    <IconButton
+                      aria-label="more"
+                      id="long-button"
+                      aria-controls={open ? 'long-menu' : undefined}
+                      aria-expanded={open ? 'true' : undefined}
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      PaperProps={{
+                        style: {
+                          maxHeight: ITEM_HEIGHT * 4.5,
+                          width: '20ch',
+                        },
+                      }}
+                    >
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <EditIcon fontSize="small" />
+                        </ListItemIcon>
+                        <Typography variant="inherit">Edit</Typography>
+                        <span
+                          className="edit__helper--click"
+                          onClick={() => setEditing(!editing)}
+                        ></span>
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <DeleteIcon fontSize="small" />
+                        </ListItemIcon>
+                        <DelPost postId={post.id} />
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                </Box>
+              ) : (
+                ''
+              )
             }
             title={post.title}
             subheader={post.username}
@@ -329,7 +344,6 @@ const PostsExcerpt = ({ post }) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              {/* <Typography paragraph>Comments:</Typography> */}
               <CommentsList comments={neededComments} postId={post.id} />
             </CardContent>
           </Collapse>
