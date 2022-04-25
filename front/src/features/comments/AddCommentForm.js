@@ -4,6 +4,8 @@ import axios from '../../api/axios';
 import { useDispatch } from 'react-redux';
 import { addComment } from './commentsSlice';
 
+import { TextField, Button, Box } from '@mui/material';
+
 export const AddCommentForm = ({ postId }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState('');
@@ -39,21 +41,34 @@ export const AddCommentForm = ({ postId }) => {
   };
 
   return (
-    <section style={{ background: 'blue' }}>
-      <h2>Add a new comment</h2>
+    <Box
+      sx={{
+        backgroundColor: 'rgba(239, 239, 239, 0.5)',
+        padding: '1.5rem',
+        borderRadius: '5px',
+      }}
+    >
       <form onClick={onSaveCommentClicked}>
-        <label htmlFor="commentContent">Content:</label>
-        <textarea
-          id="commentContent"
-          name="commentContent"
-          placeholder="comments's Content"
-          onChange={onContentChanged}
+        <TextField
+          type="text"
+          id="content"
+          label="Say something..."
           value={content}
+          onChange={onContentChanged}
+          size="small"
+          multiline
+          rows={2}
+          required
+          fullWidth
+          helperText="Comment's content"
         />
-
-        <input type="submit" disabled={!canSave} value="Add comment" />
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          <Button disabled={!canSave} type="submit">
+            Publish
+          </Button>
+        </div>
       </form>
-    </section>
+    </Box>
   );
 };
 

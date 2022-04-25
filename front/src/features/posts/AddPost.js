@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 import axios from '../../api/axios';
 
 // MUI STYLES
+import ListItemIcon from '@mui/material/ListItemIcon';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
-import { TextField, Button, Box, Stack } from '@mui/material';
+import { TextField, Button, Box, Stack, Tooltip } from '@mui/material';
+import { borderRadius } from '@mui/system';
 
 export const AddPost = () => {
   const dispatch = useDispatch();
@@ -41,15 +44,33 @@ export const AddPost = () => {
   let imgPreview;
   if (image) {
     imgPreview = (
-      <>
+      <div
+        style={{
+          position: 'relative',
+          width: 300,
+          padding: '1rem 2rem',
+        }}
+      >
         <img
-          style={{ maxWidth: 400 }}
+          style={{ width: '100%', borderRadius: '5px' }}
           src={URL.createObjectURL(image)}
           alt=""
           crossOrigin="true"
         />
-        <button onClick={onClickRemoveImage}>X</button>
-      </>
+        <Tooltip title="Remove">
+          <ListItemIcon
+            onClick={onClickRemoveImage}
+            sx={{
+              position: 'absolute',
+              top: '1.2rem',
+              left: '19rem',
+              cursor: 'pointer',
+            }}
+          >
+            <HighlightOffIcon fontSize="medium" />
+          </ListItemIcon>
+        </Tooltip>
+      </div>
     );
   }
 
@@ -73,7 +94,14 @@ export const AddPost = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', marginBottom: '4rem' }}>
+    <Box
+      sx={{
+        marginBottom: '4rem',
+        backgroundColor: 'rgba(239, 239, 239, 0.5)',
+        padding: '1.5rem',
+        borderRadius: '5px',
+      }}
+    >
       <Stack spacing={3}>
         <h2>Write a new post</h2>
         <form onSubmit={onSavePostClicked}>
@@ -87,6 +115,7 @@ export const AddPost = () => {
             size="small"
             required
             fullWidth
+            sx={{ marginBottom: '1rem' }}
           />
 
           <TextField
@@ -97,28 +126,35 @@ export const AddPost = () => {
             helperText="Post's content"
             onChange={onContentChanged}
             size="small"
+            multiline
+            rows={3}
             required
             fullWidth
           />
-          <label htmlFor="icon-button-file">
-            <Input
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              onChange={onImageChanged}
-            />
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
           <div>{imgPreview}</div>
-          <Button disabled={!canSave} type="submit">
-            Publish
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <label htmlFor="icon-button-file">
+              <Input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                onChange={onImageChanged}
+              />
+              <Tooltip title="Add a picture">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCamera />
+                </IconButton>
+              </Tooltip>
+            </label>
+
+            <Button disabled={!canSave} type="submit">
+              Publish
+            </Button>
+          </Box>
         </form>
       </Stack>
     </Box>

@@ -27,10 +27,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu, MenuItem } from '@mui/material';
 
-import ShareIcon from '@mui/icons-material/Share';
+import EditIcon from '@mui/icons-material/Edit';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import SendIcon from '@mui/icons-material/Send';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ITEM_HEIGHT = 48;
 
@@ -71,15 +71,21 @@ const PostsExcerpt = ({ post }) => {
   let imgPreview;
   if (image) {
     imgPreview = (
-      <>
+      <Box sx={{ position: 'relative' }}>
         <img
           style={{ maxWidth: 200 }}
           src={imageRef.current?.value ? URL.createObjectURL(image) : image}
           alt=""
           crossOrigin="true"
         />
-        <button onClick={onClickRemoveImage}>X</button>
-      </>
+        <ListItemIcon
+          onClick={onClickRemoveImage}
+          sx={{ position: 'absolute', top: '0' }}
+        >
+          <ClearIcon fontSize="small" />
+        </ListItemIcon>
+        {/* <button onClick={onClickRemoveImage}></button> */}
+      </Box>
     );
   }
 
@@ -111,30 +117,11 @@ const PostsExcerpt = ({ post }) => {
     }
   };
 
+  // ----------------------- COMMENTS
   const comments = useSelector((state) => state.comments.comments);
   const neededComments = comments.filter(
     (comment) => comment.post_id === post.id
   );
-
-  const toggleComments = () => {
-    try {
-      axios
-        .get(`api/posts/${post.id}/comments`)
-        .then((res) => dispatch(setCommentsData(res.data.commentList)));
-    } catch (err) {
-      console.error('Failed to delete the post', err);
-    }
-  };
-
-  //MUI STYLES
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const [expanded, setExpanded] = useState(false);
 
@@ -147,6 +134,16 @@ const PostsExcerpt = ({ post }) => {
     } catch (err) {
       console.error('Failed to delete the post', err);
     }
+  };
+
+  // ----------------------- MUI STYLES
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -198,8 +195,8 @@ const PostsExcerpt = ({ post }) => {
         <Card sx={{ maxWidth: 900, marginBottom: '5rem' }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {post.username.charAt(0)}
+              <Avatar sx={{ bgcolor: red[400] }} aria-label="user avatar">
+                {post && post.username ? post.username.charAt(0) : ''}
               </Avatar>
             }
             action={
@@ -227,14 +224,18 @@ const PostsExcerpt = ({ post }) => {
                     }}
                   >
                     <MenuItem onClick={handleClose}>
-                      <ListItemIcon onClick={() => setEditing(!editing)}>
-                        <SendIcon fontSize="small" />
+                      <ListItemIcon>
+                        <EditIcon fontSize="small" />
                       </ListItemIcon>
                       <Typography variant="inherit">Edit</Typography>
+                      <span
+                        className="edit__helper--click"
+                        onClick={() => setEditing(!editing)}
+                      ></span>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
                       <ListItemIcon>
-                        <PriorityHighIcon fontSize="small" />
+                        <DeleteIcon fontSize="small" />
                       </ListItemIcon>
                       <DelPost postId={post.id} />
                     </MenuItem>
@@ -267,9 +268,9 @@ const PostsExcerpt = ({ post }) => {
             <IconButton aria-label="add to favorites">
               <FavoriteIcon />
             </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
+            {/* <IconButton aria-label="delete">
+              <DeleteIcon />
+            </IconButton> */}
             <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -281,7 +282,7 @@ const PostsExcerpt = ({ post }) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Comments:</Typography>
+              {/* <Typography paragraph>Comments:</Typography> */}
               <CommentsList comments={neededComments} postId={post.id} />
             </CardContent>
           </Collapse>
