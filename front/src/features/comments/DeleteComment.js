@@ -2,6 +2,9 @@ import { deleteComment } from './commentsSlice';
 import { useDispatch } from 'react-redux';
 import axios from '../../api/axios';
 
+import { IconButton, Tooltip, Box } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const DeleteComment = ({ postId, commentId }) => {
   const dispatch = useDispatch();
 
@@ -15,14 +18,13 @@ const DeleteComment = ({ postId, commentId }) => {
     }
   };
   return (
-    <button
-      style={{ position: 'relative', cursor: 'pointer' }}
-      className="delete_button"
-      onClick={onDeleteCommentClicked}
-    >
-      Delete
-      {/* <span className="delete__helper--click"></span> */}
-    </button>
+    <Box>
+      <Tooltip title="Delete">
+        <IconButton onClick={onDeleteCommentClicked}>
+          <DeleteIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 };
 

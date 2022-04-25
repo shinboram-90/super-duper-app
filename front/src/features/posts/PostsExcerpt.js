@@ -220,6 +220,15 @@ const PostsExcerpt = ({ post }) => {
         </Box>
       ) : (
         <Card sx={{ maxWidth: 900, marginBottom: '5rem' }}>
+          <Typography
+            sx={{ mt: 2, ml: 4 }}
+            color="text.secondary"
+            display="block"
+            variant="caption"
+          >
+            {moment(post.created_at).format('dddd, MMMM Do YYYY')}
+          </Typography>
+
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[400] }} aria-label="user avatar">
@@ -271,7 +280,7 @@ const PostsExcerpt = ({ post }) => {
               </Box>
             }
             title={post.title}
-            subheader={moment(post.created_at).format('dddd, MMMM Do YYYY')}
+            subheader={post.username}
           />
 
           {post.image ? (
@@ -287,25 +296,36 @@ const PostsExcerpt = ({ post }) => {
           )}
 
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                backgroundColor: 'rgba(239, 239, 239, 0.2)',
+                padding: '1rem 2rem',
+                borderRadius: '5px',
+              }}
+            >
               {post.content}
             </Typography>
           </CardContent>
-          <CardActions disableSpacing>
+          <CardActions
+            disableSpacing
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
             <IconButton aria-label="add to favorites">
               <FavoriteIcon />
             </IconButton>
-            {/* <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton> */}
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box>Comments</Box>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </Box>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
