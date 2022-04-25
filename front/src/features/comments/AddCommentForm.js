@@ -44,7 +44,7 @@ export const AddCommentForm = ({ postId }) => {
     <Box
       sx={{
         backgroundColor: 'rgba(239, 239, 239, 0.5)',
-        padding: '1.5rem',
+        padding: '1.3rem 1rem 0.5rem 1rem',
         borderRadius: '5px',
       }}
     >
@@ -60,7 +60,7 @@ export const AddCommentForm = ({ postId }) => {
           rows={2}
           required
           fullWidth
-          helperText="Comment's content"
+          helperText="Write a comment"
         />
         <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
           <Button disabled={!canSave} type="submit">

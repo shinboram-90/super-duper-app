@@ -1,9 +1,18 @@
-import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-
 import DeleteComment from './DeleteComment';
-import EditCommentForm from './EditCommentForm';
+import moment from 'moment-timezone';
+
+// MUI STYLES
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/system';
 
 const CommentsExcerpt = ({ postId, comment }) => {
   const [content, setContent] = useState(comment.content);
@@ -23,29 +32,40 @@ const CommentsExcerpt = ({ postId, comment }) => {
   // };
   return (
     <div>
-      {editing ? (
-        <div>
-          <EditCommentForm
-            key={'edit' + comment.id}
-            comment={comment}
+      <List>
+        <li>
+          <Typography
+            sx={{ mt: 0.5, ml: 4 }}
+            color="text.secondary"
+            display="block"
+            variant="caption"
+          >
+            {moment(comment.created_at).format('dddd, MMMM Do YYYY')}
+          </Typography>
+        </li>
+        <Box
+          color="text.secondary"
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                {comment && comment.username ? comment.username.charAt(0) : ''}
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              secondary={comment.username}
+              primary={comment.content}
+            />
+          </ListItem>
+          <DeleteComment
+            key={'delete' + comment.id}
             postId={postId}
+            commentId={comment.id}
           />
-        </div>
-      ) : (
-        <div>
-          <h3>{comment.content}</h3>
-          <p>{comment.username}</p>
-        </div>
-      )}
-
-      <button type="button" onClick={() => setEditing(!editing)}>
-        Edit Comment
-      </button>
-      <DeleteComment
-        key={'delete' + comment.id}
-        postId={postId}
-        commentId={comment.id}
-      />
+        </Box>
+        <Divider component="li" />
+      </List>
     </div>
   );
 };
