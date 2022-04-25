@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-
+import PersonIcon from '@mui/icons-material/Person';
 import { Divider, ListItemIcon } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -154,10 +154,9 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Users's avatar"
-                    src="/static/images/avatar/2.jpg"
-                  />
+                  <Avatar aria-label="user avatar">
+                    {auth.username.charAt(0)}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -179,7 +178,10 @@ const Navbar = () => {
                 {auth ? (
                   <span>
                     <MenuItem>
-                      <Avatar /> <Link to="profile">Profile</Link>
+                      <ListItemIcon>
+                        <PersonIcon fontSize="small" />
+                      </ListItemIcon>
+                      <Link to="profile">Profile</Link>
                     </MenuItem>
                     <Divider />
                     <MenuItem>

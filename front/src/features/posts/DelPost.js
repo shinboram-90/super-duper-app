@@ -16,15 +16,17 @@ const DelPost = ({ postId }) => {
   };
 
   return (
-    <div>
-      {' '}
-      <button
-        className="deleteButton"
-        type="button"
-        onClick={onDeletePostClicked}
-      >
-        Delete Post
-      </button>
+    // <span className="deleteButton" type="button" onClick={onDeletePostClicked}>
+    //   Delete
+    // </span>
+    <div
+      style={{ position: 'relative', cursor: 'pointer' }}
+      className="delete_button"
+      type="button"
+      onClick={onDeletePostClicked}
+    >
+      Delete
+      <span className="delete__helper--click"></span>
     </div>
   );
 };

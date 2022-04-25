@@ -29,7 +29,7 @@ const CommentsList = ({ comments, postId }) => {
   // }, [dispatch, postId]);
 
   return (
-    <aside style={{ background: 'red' }}>
+    <aside>
       <AddCommentForm key={'addComment' + { postId }} postId={postId} />
       {comments.map((comment) => (
         // <ul key={comment.id}>

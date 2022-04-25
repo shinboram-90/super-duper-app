@@ -22,7 +22,7 @@ const CommentsExcerpt = ({ postId, comment }) => {
   //   post_id: postId,
   // };
   return (
-    <div style={{ backgroundColor: 'red' }}>
+    <div>
       {editing ? (
         <div>
           <EditCommentForm
