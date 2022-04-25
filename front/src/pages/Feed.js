@@ -7,7 +7,13 @@ const Feed = () => {
   return (
     <>
       <Navbar />
-      <Container>
+      <Container
+        sx={{
+          display: 'grid',
+          justifyItems: 'stretch',
+          padding: '2rem',
+        }}
+      >
         <Box sx={{ display: 'flex' }}>
           <UsersList />
           <Outlet />

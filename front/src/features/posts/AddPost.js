@@ -7,6 +7,7 @@ import axios from '../../api/axios';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
+import { TextField, Button, Box, Stack } from '@mui/material';
 
 export const AddPost = () => {
   const dispatch = useDispatch();
@@ -72,49 +73,55 @@ export const AddPost = () => {
   };
 
   return (
-    <section>
-      <h2>Write a new post</h2>
-      <form onSubmit={onSavePostClicked}>
-        <label htmlFor="postTitle">Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          placeholder="Posts's title"
-          onChange={onTitleChanged}
-          value={title}
-        />
-        <label htmlFor="icon-button-file">
-          <Input
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            onChange={onImageChanged}
+    <Box sx={{ width: '100%', marginBottom: '4rem' }}>
+      <Stack spacing={3}>
+        <h2>Write a new post</h2>
+        <form onSubmit={onSavePostClicked}>
+          <TextField
+            type="text"
+            id="title"
+            label="Title"
+            value={title}
+            helperText="Post's title"
+            onChange={onTitleChanged}
+            size="small"
+            required
+            fullWidth
           />
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-          >
-            <PhotoCamera />
-          </IconButton>
-        </label>
-        {/* <input type="file" id="image" name="image" onChange={onImageChanged} /> */}
-        <div>{imgPreview}</div>
 
-        <label htmlFor="postContent">Content:</label>
-        <textarea
-          type="text"
-          id="postContent"
-          name="postContent"
-          placeholder="Posts's Content"
-          onChange={onContentChanged}
-          value={content}
-        />
-
-        <input type="submit" disabled={!canSave} value="Publish Post" />
-      </form>
-    </section>
+          <TextField
+            type="text"
+            id="content"
+            label="Content"
+            value={content}
+            helperText="Post's content"
+            onChange={onContentChanged}
+            size="small"
+            required
+            fullWidth
+          />
+          <label htmlFor="icon-button-file">
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              onChange={onImageChanged}
+            />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+            >
+              <PhotoCamera />
+            </IconButton>
+          </label>
+          <div>{imgPreview}</div>
+          <Button disabled={!canSave} type="submit">
+            Publish
+          </Button>
+        </form>
+      </Stack>
+    </Box>
   );
 };
 

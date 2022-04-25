@@ -16,16 +16,9 @@ const DelPost = ({ postId }) => {
   };
 
   return (
-    <div>
-      {' '}
-      <button
-        className="deleteButton"
-        type="button"
-        onClick={onDeletePostClicked}
-      >
-        Delete Post
-      </button>
-    </div>
+    <span className="deleteButton" type="button" onClick={onDeletePostClicked}>
+      Delete
+    </span>
   );
 };
 

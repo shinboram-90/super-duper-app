@@ -33,11 +33,9 @@ const PostsList = () => {
         <Navigate replace to="/login" />
       ) : (
         <Container>
-          <Box sx={{ display: 'flex' }}>
-            <Box>
-              <AddPost />
-              {content}
-            </Box>
+          <Box sx={{ paddingLeft: '2rem' }}>
+            <AddPost />
+            {content}
           </Box>
         </Container>
       )}
