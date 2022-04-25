@@ -1,9 +1,10 @@
 import { useRef } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { Button, Box, TextField } from '@mui/material';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import iconLeftColored from '../assets/iconLeftColored.svg';
 
 const Signup = () => {
   const { auth } = useAuth();
@@ -13,6 +14,9 @@ const Signup = () => {
   const password2 = useRef(null);
 
   const navigate = useNavigate();
+  const backToLogin = () => {
+    navigate('/login');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,106 +42,95 @@ const Signup = () => {
   };
 
   return (
-    <section style={{ padding: 100 }}>
-      {/* <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Enter a username"
-          ref={username}
-        />
-
-        <label>Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          ref={email}
-        />
-        <label>Password</label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          placeholder="Enter a password"
-          ref={password}
-        />
-        <input
-          id="password2"
-          type="password"
-          name="password2"
-          placeholder="Confirm password"
-          ref={password2}
-        />
-        <button type="submit">Create an account</button>
-      </form> */}
-      <form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            '& > :not(style)': { m: 1 },
-          }}
-        >
-          <TextField
-            label="Username"
-            id="username"
-            name="username"
-            type="text"
-            size="small"
-            required
-            helperText="Choose a username"
-            inputRef={username}
-          />
-          <TextField
-            label="Email"
-            id="email"
-            name="email"
-            type="text"
-            size="small"
-            required
-            helperText="Enter your email address"
-            inputRef={email}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            helperText="Choose a password"
-            id="password"
-            name="password"
-            size="small"
-            inputRef={password}
-            required
-          />
-
-          <TextField
-            label="Password"
-            type="password"
-            helperText="Confirm your password"
-            id="password"
-            name="password2"
-            size="small"
-            inputRef={password2}
-            required
-          />
-          <Button type="submit" variant="contained">
-            Sign Up
-          </Button>
+    <div
+      className="login__container"
+      style={{
+        position: 'absolute',
+        top: '40%',
+        left: '50%',
+        right: '-50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      <Box
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <Box>
+          <img alt="logo" src={iconLeftColored} height="380" />
         </Box>
-      </form>
+        <Box sx={{ marginTop: '-8rem' }}>
+          <form onSubmit={handleSubmit} method="POST">
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                '& > :not(style)': { m: 1 },
+                marginBottom: '3.5rem',
+              }}
+            >
+              <TextField
+                label="Username"
+                id="username"
+                name="username"
+                type="text"
+                size="small"
+                required
+                helperText="Choose a username"
+                inputRef={username}
+              />
+              <TextField
+                label="Email"
+                id="email"
+                name="email"
+                type="text"
+                size="small"
+                required
+                helperText="Enter your email address"
+                inputRef={email}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                helperText="Choose a password"
+                id="password"
+                name="password"
+                size="small"
+                inputRef={password}
+                required
+              />
 
-      <p>
-        Already have an account?
-        <br />
-        <span className="line">
-          <Link to="/login">Sign In</Link>
-        </span>
-      </p>
-    </section>
+              <TextField
+                label="Password"
+                type="password"
+                helperText="Confirm your password"
+                id="password"
+                name="password2"
+                size="small"
+                inputRef={password2}
+                required
+              />
+              <Button type="submit" variant="contained">
+                Sign Up
+              </Button>
+            </Box>
+          </form>
+
+          <p
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'end',
+            }}
+          >
+            Already have an account?
+            <Button sx={{ marginTop: '1rem' }} onClick={backToLogin}>
+              Register
+            </Button>
+          </p>
+        </Box>
+      </Box>
+    </div>
   );
 };
 
