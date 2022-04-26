@@ -36,7 +36,7 @@ exports.getOnePost = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   if (req.file) {
-    const post = {
+    const postBody = {
       user_id: req.auth.userId,
       title: req.body.title,
       content: req.body.content,
@@ -46,8 +46,11 @@ exports.createPost = async (req, res, next) => {
       }`,
     };
     try {
-      const postCreated = await Post.create(post);
+      const postCreated = await Post.create(postBody);
       if (postCreated) {
+        const postId = postCreated.insertId;
+
+        const post = await Post.findById(postId);
         res.status(201).json({ newPost: post });
       } else {
         res.status(401).json({ error: 'Query not completed' });
@@ -56,7 +59,7 @@ exports.createPost = async (req, res, next) => {
       res.status(403).json({ error: e });
     }
   } else {
-    const post = {
+    const postBody = {
       user_id: req.auth.userId,
       title: req.body.title,
       content: req.body.content,
@@ -64,8 +67,10 @@ exports.createPost = async (req, res, next) => {
     };
 
     try {
-      const postCreated = await Post.create(post);
+      const postCreated = await Post.create(postBody);
       if (postCreated) {
+        const postId = postCreated.insertId;
+        const post = await Post.findById(postId);
         res.status(201).json({ newPost: post });
       } else {
         res.status(401).json({ error: 'Query not completed' });
@@ -79,6 +84,7 @@ exports.createPost = async (req, res, next) => {
 exports.modifyPost = async (req, res, next) => {
   const id = req.params.id;
   const getPost = await Post.findById(id);
+
   const image = getPost[0].image;
 
   if (getPost[0].user_id !== req.auth.userId) {
@@ -88,8 +94,9 @@ exports.modifyPost = async (req, res, next) => {
   } else {
     if (req.file) {
       console.log(req.file);
-      const post = {
+      const postBody = {
         ...req.body,
+
         image: `${req.protocol}://${req.get('host')}/uploads/${
           req.file.filename
         }`,
@@ -99,8 +106,10 @@ exports.modifyPost = async (req, res, next) => {
         if (image) {
           const filename = image.split('/uploads/')[1];
           fs.unlink(`uploads/${filename}`, async () => {
-            const updatedPost = await Post.update(post, id);
+            const updatedPost = await Post.update(postBody, id);
             if (updatedPost) {
+              const getFinalPost = await Post.findById(id);
+              const post = getFinalPost[0];
               res.status(200).json({
                 modifications: { id, post },
               });
@@ -110,8 +119,10 @@ exports.modifyPost = async (req, res, next) => {
           });
         } else {
           // Adding image to a post which has no file
-          const updatedPost = await Post.update(post, id);
+          const updatedPost = await Post.update(postBody, id);
           if (updatedPost) {
+            const getFinalPost = await Post.findById(id);
+            const post = getFinalPost[0];
             res.status(200).json({
               modifications: { id, post },
             });
@@ -127,7 +138,9 @@ exports.modifyPost = async (req, res, next) => {
       // Modifying text only
       const updatedPost = await Post.update(req.body, id);
       if (updatedPost) {
-        post = req.body;
+        console.log(req.admin);
+        const getFinalPost = await Post.findById(id);
+        const post = getFinalPost[0];
         res.status(200).json({
           modifications: { id, post },
         });

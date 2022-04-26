@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from '../posts/postsSlice';
-// import PostsExcerpt from '../posts/PostsExcerpt';
+import PostsExcerpt from '../posts/PostsExcerpt';
 
 import {
   Container,
@@ -21,7 +21,7 @@ const PostAuthor = () => {
   const params = useParams();
   const id = params.id;
 
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState([]);
   const posts = useSelector((state) => state.posts.posts);
@@ -45,15 +45,15 @@ const PostAuthor = () => {
   // );
   // console.log(posts);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`api/profile/${id}`)
-  //     .then((res) => dispatch(setPostsData(res.data.myPosts)));
-  // }, [dispatch, id]);
+  useEffect(() => {
+    axios
+      .get(`api/profile/${id}`)
+      .then((res) => dispatch(setPostsData(res.data.myPosts)));
+  }, [dispatch, id]);
 
-  // const content = userPosts.map((post) => (
-  //   <PostsExcerpt key={`userPosts:${post.id}`} post={post} />
-  // ));
+  const content = posts.map((post) => (
+    <PostsExcerpt key={`userPosts:${post.id}`} post={post} />
+  ));
   return (
     <>
       <Container>
@@ -114,7 +114,7 @@ const PostAuthor = () => {
             </Box>
           </Card>
           <h3>{user.username} publications</h3>
-          {/* {content} */}
+          {content}
         </Box>
       </Container>
     </>

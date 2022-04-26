@@ -80,6 +80,7 @@ export const AddPost = () => {
     if (canSave) {
       try {
         await axios.post('api/posts', formData).then((res) => {
+          console.log(res.data.newPost);
           dispatch(addPost(res.data.newPost));
         });
 

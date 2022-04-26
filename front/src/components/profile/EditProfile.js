@@ -48,13 +48,13 @@ const EditProfile = () => {
   };
 
   const [firstName, setFirstName] = useState(
-    user && user.first_name ? user.first_name : 'First Name'
+    user && user.first_name ? user.first_name : ''
   );
   const [lastName, setLastName] = useState(
-    user && user.last_name ? user.last_name : 'Last Name'
+    user && user.last_name ? user.last_name : ''
   );
   const [biography, setBiography] = useState(
-    user && user.biography ? user.biography : 'Biography'
+    user && user.biography ? user.biography : ''
   );
   const [avatar, setAvatar] = useState(
     user && user.avatar ? user.avatar : null
