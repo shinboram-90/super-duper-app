@@ -17,6 +17,9 @@ ul{
   margin:0
 }
 
+.MuiButtonBase-root{
+  margin:0.5rem
+}
 /* PROFILE */
 .profile__card--img{
   background-image:  url("./assets//profileIcon.png");

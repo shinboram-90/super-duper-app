@@ -58,9 +58,10 @@ const Profile = () => {
           className="profile__card--img"
           sx={{
             display: 'flex',
-            height: 450,
+
             maxWidth: '45rem',
             marginBottom: '5rem',
+            paddingBottom: '1.5rem',
           }}
         >
           <Box sx={{ margin: '0 auto', paddingTop: '2rem' }}>

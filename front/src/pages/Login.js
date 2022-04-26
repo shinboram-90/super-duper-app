@@ -22,8 +22,6 @@ const Login = () => {
 
   const redirectPath = location.state?.path || '/';
 
-  // const password = useRef(null);
-
   // const onChange = (event) => {
   //   if (event.target.value.match(phoneRegex)) {
   //     setErrorText("");

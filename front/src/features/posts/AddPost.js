@@ -151,7 +151,12 @@ export const AddPost = () => {
               </Tooltip>
             </label>
 
-            <Button disabled={!canSave} type="submit">
+            <Button
+              sx={{ marginLeft: '0.5rem' }}
+              disabled={!canSave}
+              type="submit"
+              variant="contained"
+            >
               Publish
             </Button>
           </Box>
