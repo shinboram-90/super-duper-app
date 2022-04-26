@@ -125,6 +125,7 @@ const PostsExcerpt = ({ post }) => {
 
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
+        console.log(res.data.modifications);
         dispatch(editPost([post.id, res.data.modifications]));
       });
 
@@ -252,7 +253,7 @@ const PostsExcerpt = ({ post }) => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[400] }} aria-label="user avatar">
-                {post && post.username ? post.username.charAt(0) : ''}
+                {post && post.username ? auth.username.charAt(0) : ''}
               </Avatar>
             }
             action={
@@ -310,7 +311,6 @@ const PostsExcerpt = ({ post }) => {
           {post.image ? (
             <CardMedia
               component="img"
-              height="100%"
               alt={post.title}
               image={post.image}
               crossOrigin="true"

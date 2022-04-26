@@ -129,7 +129,7 @@ const Signup = () => {
               sx={{ marginTop: '1rem' }}
               onClick={backToLogin}
             >
-              Register
+              Login
             </Button>
           </p>
         </Box>
