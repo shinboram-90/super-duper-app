@@ -219,10 +219,19 @@ const PostsExcerpt = ({ post }) => {
                     </IconButton>
                   </Tooltip>
                 </label>
-                <Button type="button" onClick={() => setEditing(!editing)}>
+                <Button
+                  type="button"
+                  onClick={() => setEditing(!editing)}
+                  sx={{ marginLeft: '0.5rem' }}
+                >
                   Cancel
                 </Button>
-                <Button disabled={!canSave} type="submit">
+                <Button
+                  disabled={!canSave}
+                  type="submit"
+                  variant="outlined"
+                  sx={{ marginLeft: '0.5rem' }}
+                >
                   Save changes
                 </Button>
               </Box>

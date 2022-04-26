@@ -178,23 +178,27 @@ const Navbar = () => {
                 {auth ? (
                   <span>
                     <MenuItem>
-                      <ListItemIcon>
-                        <PersonIcon fontSize="small" />
-                      </ListItemIcon>
-                      <Link to="profile">Profile</Link>
+                      <Link to="profile">
+                        <ListItemIcon>
+                          <PersonIcon fontSize="small" />
+                        </ListItemIcon>
+                        Profile
+                      </Link>
                     </MenuItem>
                     <Divider />
                     <MenuItem>
-                      <ListItemIcon>
-                        <Settings fontSize="small" />
-                      </ListItemIcon>
-                      <Link to="profile/edit">Settings</Link>
+                      <Link to="profile/edit">
+                        <ListItemIcon>
+                          <Settings fontSize="small" />
+                        </ListItemIcon>
+                        Settings
+                      </Link>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={handleLogout}>
                       <ListItemIcon>
                         <Logout fontSize="small" />
                       </ListItemIcon>
-                      <span onClick={handleLogout}>Logout</span>
+                      <span> Logout</span>
                     </MenuItem>
                   </span>
                 ) : (
