@@ -24,7 +24,6 @@ ul{
 .profile__card--img{
   background-image:  url("./assets//profileIcon.png");
   background-repeat: no-repeat;
-  /* background-position: ; */
 
 }
 
@@ -43,3 +42,6 @@ ul{
   left:0;
 }
 
+.MuiCardMedia-img {
+  max-height: 500px;
+}

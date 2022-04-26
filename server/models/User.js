@@ -122,15 +122,20 @@ User.update = (user, id) => {
 
 User.findAll = async () => {
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM users', (err, users) => {
-      if (err) {
-        return reject(err);
+    pool.query(
+      'SELECT u.*, COUNT(p.id) as posts FROM users u LEFT JOIN posts p ON p.user_id = u.id GROUP BY u.id',
+      (err, users) => {
+        if (err) {
+          return reject(err);
+        }
+        console.log('Listing all users');
+        return resolve(users);
       }
-      console.log('Listing all users');
-      return resolve(users);
-    });
+    );
   });
 };
+
+// 'SELECT p.*, u.avatar, u.username, COUNT(c.id) as comments FROM posts p JOIN users u ON p.user_id = u.id LEFT JOIN comments c ON p.id = c.post_id WHERE p.status = "published" GROUP BY p.id ORDER BY p.created_at DESC',
 
 User.updateStatus = async (is_active, id) => {
   return new Promise((resolve, reject) => {

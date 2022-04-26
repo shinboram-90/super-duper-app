@@ -310,7 +310,6 @@ const PostsExcerpt = ({ post }) => {
           {post.image ? (
             <CardMedia
               component="img"
-              height="100%"
               alt={post.title}
               image={post.image}
               crossOrigin="true"

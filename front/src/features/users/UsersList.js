@@ -10,6 +10,8 @@ import {
   NavLink,
 } from 'react-router-dom';
 
+import { Avatar, Box } from '@mui/material';
+
 function QueryNavLink({ to, ...props }) {
   let location = useLocation();
   return <NavLink to={to + location.search} {...props} />;
@@ -55,24 +57,24 @@ const UsersList = () => {
               to={`users/${user.id}`}
               key={'users' + user.id}
             >
-              {user.role === 'user' ? (
-                <div color="blue">
-                  <img
-                    src="https://react.semantic-ui.com/images/avatar/small/veronika.jpg"
-                    alt="admin avatar"
-                  />
-                  {user.username}
-                </div>
-              ) : (
-                <div color="teal">
-                  <img
-                    src="https://react.semantic-ui.com/images/avatar/small/christian.jpg"
-                    alt="user avatar"
-                  />
-                  {user.username}
-                  <div>{user.role}</div>
-                </div>
-              )}
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Avatar aria-label="user avatar" sx={{ mr: 1 }}>
+                  {user && user.avatar ? (
+                    <img
+                      alt="profile avatar"
+                      src={user.avatar}
+                      crossOrigin="true"
+                      style={{ maxWidth: 40 }}
+                    />
+                  ) : user ? (
+                    user.username?.charAt(0)
+                  ) : (
+                    ''
+                  )}
+                </Avatar>
+                <span>{user.username}</span>
+              </Box>
+              {user.role === 'admin' ? <div>{user.role}</div> : ''}
             </QueryNavLink>
           ))}
         {/* <UserPage

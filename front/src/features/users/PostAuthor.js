@@ -1,10 +1,21 @@
 import { useParams } from 'react-router-dom';
-import { Container, Box } from '@mui/material';
+
 import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from '../posts/postsSlice';
 // import PostsExcerpt from '../posts/PostsExcerpt';
+
+import {
+  Container,
+  Box,
+  Card,
+  Avatar,
+  IconButton,
+  Typography,
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import defaultAvatar from '../../assets/defaultAvatar.jpg';
 
 const PostAuthor = () => {
   const params = useParams();
@@ -45,26 +56,66 @@ const PostAuthor = () => {
   // ));
   return (
     <>
-      {/* <Navbar /> */}
       <Container>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          {/* <UsersList /> */}
-          <h2>User profile: {id}</h2>
-          <img src={`${user.avatar}`} alt="avatar" crossOrigin="true" />
-          <p>
-            {user.id} {user.role}
-          </p>
-          <p>
-            Email: {user.email}
-            <br />
-            Bio : {user.biography}
-          </p>
+        <Box sx={{ paddingLeft: '2rem' }}>
+          <Card
+            className="profile__card--img"
+            sx={{
+              display: 'flex',
+
+              maxWidth: '45rem',
+              marginBottom: '5rem',
+              paddingBottom: '1.5rem',
+            }}
+          >
+            <Box sx={{ margin: '0 auto', paddingTop: '2rem' }}>
+              <h3 style={{ textAlign: 'center' }}>{user.username}</h3>
+
+              {user ? (
+                <div style={{ width: 500 }}>
+                  <Avatar sx={{ width: 150, height: 150, margin: '0 auto' }}>
+                    {user.avatar ? (
+                      <img
+                        alt="user avatar"
+                        src={user.avatar}
+                        crossOrigin="true"
+                        style={{ maxWidth: 150 }}
+                      />
+                    ) : (
+                      <img
+                        alt="avatar"
+                        height="150"
+                        src={defaultAvatar}
+                        crossOrigin="true"
+                      />
+                    )}
+                  </Avatar>
+                  <Box
+                    sx={{
+                      marginTop: '2rem',
+                      backgroundColor: 'rgba(239, 239, 239, 0.2)',
+                      padding: '1rem 3rem',
+                    }}
+                  >
+                    <h4 style={{ margin: 0 }}>{user.username} details</h4>
+                    <p>Email: {user.email}</p>
+
+                    <span>
+                      <p>
+                        Name: {user.first_name} {user.last_name}
+                      </p>
+                      <p>Biography: {user.biography}</p>
+                    </span>
+                  </Box>
+                </div>
+              ) : (
+                <div>"loading"</div>
+              )}
+            </Box>
+          </Card>
+          <h3>{user.username} publications</h3>
+          {/* {content} */}
         </Box>
-        {/* {userPosts.map((post) => (
-          <li key={`userPosts:${post.id}`} post={post}>
-            {post.title}
-          </li>
-        ))} */}
       </Container>
     </>
   );
