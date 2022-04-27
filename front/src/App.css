@@ -16,6 +16,7 @@ ul{
 .MuiButtonBase-root{
   margin:0.5rem
 }
+
 /* PROFILE */
 .profile__card--img{
   background-image:  url("./assets//profileIcon.png");
@@ -38,13 +39,21 @@ ul{
   left:0;
 }
 
-.MuiCardMedia-img {
-  max-height: 500px;
-}
 
-/* @media screen and (max-width: 780px) {
-  .main___userslist--responsive {
+@media screen and (max-width: 700px) {
+  .main__userslist--responsive {
     display : none;
   }
-} */
+}
 
+@media screen and (min-width: 1029px) {
+  .main__userslist--responsive {
+    margin-right : 6rem;
+  }
+}
+
+@media screen and (min-width: 1499px) {
+  .main__userslist--responsive {
+    margin-right : 15rem;
+  }
+}

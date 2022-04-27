@@ -1,13 +1,11 @@
 import { useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from '../api/axios';
 
 import { Button, Box, TextField } from '@mui/material';
-import axios from '../api/axios';
-import useAuth from '../hooks/useAuth';
 import iconLeftColored from '../assets/iconLeftColored.svg';
 
 const Signup = () => {
-  const { auth } = useAuth();
   const email = useRef(null);
   const username = useRef(null);
   const password = useRef(null);
@@ -84,6 +82,7 @@ const Signup = () => {
                 helperText="Choose a username"
                 inputRef={username}
                 fullWidth
+                autoComplete="off"
               />
               <TextField
                 label="Email"
@@ -95,6 +94,7 @@ const Signup = () => {
                 helperText="Enter your email address"
                 inputRef={email}
                 fullWidth
+                autoComplete="off"
               />
               <TextField
                 label="Password"

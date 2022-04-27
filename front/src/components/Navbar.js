@@ -3,25 +3,27 @@ import { useState } from 'react';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 
-import logoGroupomania from '../assets/logoGroupomania.svg';
-
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import {
+  Divider,
+  ListItemIcon,
+  Tooltip,
+  Button,
+  Container,
+  IconButton,
+  Typography,
+  Box,
+  Avatar,
+  Menu,
+} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import { Divider, ListItemIcon } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+import logoGroupomania from '../assets/logoGroupomania.svg';
+
 import MenuItem from '@mui/material/MenuItem';
-import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
 const Navbar = () => {

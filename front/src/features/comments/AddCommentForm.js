@@ -32,8 +32,7 @@ export const AddCommentForm = ({ postId }) => {
       }
     }
   };
-  // const onSavecommentClicked = async () => {
-  // if (canSave) {
+
   const formData = {
     content: content,
     post_id: postId,

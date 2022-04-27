@@ -57,7 +57,6 @@ const Login = () => {
 
   return (
     <div
-      className="login__container"
       style={{
         position: 'absolute',
         top: '40%',
@@ -90,7 +89,6 @@ const Login = () => {
             >
               <TextField
                 label="Username"
-                // helperText={text === "" ? 'Empty field!' : "Please enter your username"}
                 id="username"
                 name="username"
                 value={data.username || ''}
@@ -99,8 +97,6 @@ const Login = () => {
                 required
                 onChange={handleChange}
                 helperText="Please enter your username"
-
-                // error={text === ""}
               />
 
               <TextField

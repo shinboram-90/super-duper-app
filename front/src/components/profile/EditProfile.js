@@ -18,7 +18,7 @@ const EditProfile = () => {
 
   return (
     <Container>
-      <Box sx={{ paddingLeft: '2rem', maxWidth: '800px' }}>
+      <Box sx={{ maxWidth: '800px' }}>
         <Card
           sx={{
             display: 'flex',

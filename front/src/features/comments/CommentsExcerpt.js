@@ -43,7 +43,7 @@ const CommentsExcerpt = ({ postId, comment }) => {
               primary={comment.content}
             />
           </ListItem>
-          {comment.user_id === auth.id ? (
+          {comment.user_id === auth.id || auth.role === 'admin' ? (
             <DeleteComment
               key={'delete' + comment.id}
               postId={postId}

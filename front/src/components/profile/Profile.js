@@ -5,8 +5,10 @@ import axios from '../../api/axios';
 import { setPostsData } from '../../features/posts/postsSlice';
 import PostsExcerpt from '../../features/posts/PostsExcerpt';
 
+import moment from 'moment-timezone';
 import { Container, Box, Card, Avatar } from '@mui/material';
 import random2 from '../../assets/random2.png';
+import random20 from '../../assets/random20.jpg';
 
 const Profile = () => {
   const { auth } = useAuth();
@@ -28,7 +30,7 @@ const Profile = () => {
 
   return (
     <Container>
-      <Box sx={{ paddingLeft: '2rem' }}>
+      <Box>
         <Card
           className="profile__card--img"
           sx={{
@@ -39,18 +41,35 @@ const Profile = () => {
             paddingBottom: '1.5rem',
           }}
         >
-          <Box sx={{ margin: '0 auto', paddingTop: '2rem' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              paddingTop: '2rem',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              width: '100%',
+            }}
+          >
             <h3 style={{ textAlign: 'center' }}>{user.username}</h3>
 
             {user ? (
-              <div style={{ width: 500 }}>
+              <div>
                 <Avatar sx={{ width: 150, height: 150, margin: '0 auto' }}>
-                  <img
-                    alt="avatar"
-                    height="150"
-                    src={random2}
-                    crossOrigin="true"
-                  />
+                  {user.role === 'user' ? (
+                    <img
+                      alt="Random user avatar"
+                      src={random2}
+                      crossOrigin="true"
+                      style={{ maxWidth: 150 }}
+                    />
+                  ) : (
+                    <img
+                      alt="Random admin avatar"
+                      height="150"
+                      src={random20}
+                      crossOrigin="true"
+                    />
+                  )}
                 </Avatar>
                 <Box
                   sx={{
@@ -59,8 +78,13 @@ const Profile = () => {
                     padding: '1rem 3rem',
                   }}
                 >
-                  <h4 style={{ margin: 0 }}>My details</h4>
+                  <h4 style={{ margin: 0 }}>{user.username} details</h4>
                   <p>Email: {user.email}</p>
+
+                  <p>
+                    Member since:{' '}
+                    {moment(user.created_at).format('MMMM Do YYYY')}
+                  </p>
                 </Box>
               </div>
             ) : (

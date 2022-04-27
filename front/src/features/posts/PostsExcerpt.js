@@ -252,7 +252,7 @@ const PostsExcerpt = ({ post }) => {
               </Avatar>
             }
             action={
-              post.user_id === auth.id ? (
+              post.user_id === auth.id || auth.role === 'admin' ? (
                 <Box aria-label="settings">
                   <div>
                     <IconButton

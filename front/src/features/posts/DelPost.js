@@ -16,9 +16,6 @@ const DelPost = ({ postId }) => {
   };
 
   return (
-    // <span className="deleteButton" type="button" onClick={onDeletePostClicked}>
-    //   Delete
-    // </span>
     <div
       style={{ position: 'relative', cursor: 'pointer' }}
       className="delete_button"

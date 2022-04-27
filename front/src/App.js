@@ -5,25 +5,24 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+
+// PAGES
 import Feed from './pages/Feed';
 import Missing from './pages/Missing';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
+
 import EditProfile from './components/profile/EditProfile';
 import Profile from './components/profile/Profile';
-
-import PostsList from './features/posts/PostsList';
-
-import PostAuthor from './features/users/PostAuthor';
-
 import RequireAuth from './components/auth/RequireAuth';
+import PostsList from './features/posts/PostsList';
+import PostAuthor from './features/users/PostAuthor';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route element={<RequireAuth user={currentUser} />}> */}
         <Route path="/" element={<Navigate to="feed/posts" replace />} />
         <Route element={<RequireAuth />}>
           <Route path="feed" element={<Feed />}>
@@ -36,7 +35,6 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
         <Route path="logout" element={<Logout />} />
-        {/* <Route path="/*" element={<Missing />} /> */}
         <Route path="/404" element={<Missing />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
@@ -44,12 +42,3 @@ function App() {
   );
 }
 export default App;
-
-// <Routes>
-// <Route path="/" element={<Navigate to="/home" replace />} />
-// <Route path="/home" element={<Home />} />
-// <Route path="films" element={<Films />}>
-//   <Route path="list" element={<FilmsList />} />
-//   <Route path=":filmId" element={<FilmDetail />} />
-// </Route>
-// </Routes>

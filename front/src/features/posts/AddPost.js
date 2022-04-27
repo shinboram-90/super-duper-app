@@ -97,7 +97,6 @@ export const AddPost = () => {
     <Card
       sx={{
         marginBottom: '4rem',
-        // backgroundColor: 'rgba(255,215,216, 0.2)',
         padding: '1.5rem',
         borderRadius: '5px',
         maxWidth: '42rem',
