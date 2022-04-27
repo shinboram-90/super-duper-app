@@ -106,11 +106,6 @@ const PostsExcerpt = ({ post }) => {
     );
   }
 
-  // const time = post.created_at;
-  // const timeConverted = moment
-  //   .tz(time, 'Europe/Paris')
-  //   .format('dddd, MMMM Do YYYY, h:mm a');
-
   const onEditPostClick = async (e) => {
     e.preventDefault();
 
@@ -253,11 +248,11 @@ const PostsExcerpt = ({ post }) => {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[400] }} aria-label="user avatar">
-                {post && post.username ? auth.username.charAt(0) : ''}
+                {post && post.username ? post.username.charAt(0) : ''}
               </Avatar>
             }
             action={
-              post.user_id === auth.id ? (
+              post.user_id === auth.id || auth.role === 'admin' ? (
                 <Box aria-label="settings">
                   <div>
                     <IconButton

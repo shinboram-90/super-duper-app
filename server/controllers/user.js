@@ -89,7 +89,7 @@ exports.modifyUser = async (req, res, next) => {
   } else {
     // building the user object, spread gets all details, just building the avatar file
     if (req.file) {
-      const user = {
+      const userBody = {
         ...req.body,
         avatar: `${req.protocol}://${req.get('host')}/uploads/${
           req.file.filename
@@ -104,11 +104,12 @@ exports.modifyUser = async (req, res, next) => {
           const filename = avatar.split('/uploads/')[1];
 
           fs.unlink(`uploads/${filename}`, async () => {
-            const updatedUser = await User.update(user, id);
-            // console.log(req.file.avatar);
+            const updatedUser = await User.update(userBody, id);
+
             if (updatedUser) {
+              const user = await User.findById(id);
               res.status(200).json({
-                modifications: req.body,
+                modifications: user,
                 avatar: avatar,
               });
             } else {
@@ -117,8 +118,9 @@ exports.modifyUser = async (req, res, next) => {
           });
         } else {
           // User has no avatar
-          const updatedUser = await User.update(user, id);
+          const updatedUser = await User.update(userBody, id);
           if (updatedUser) {
+            const user = await User.findById(id);
             res.status(200).json({
               modifications: user,
             });
@@ -133,8 +135,9 @@ exports.modifyUser = async (req, res, next) => {
     } else {
       const updatedUser = await User.update(req.body, id);
       if (updatedUser) {
+        const user = await User.findById(id);
         res.status(200).json({
-          modifications: req.body,
+          modifications: user,
         });
       }
     }

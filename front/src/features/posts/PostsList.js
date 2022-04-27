@@ -1,16 +1,14 @@
-import useAuth from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from './postsSlice';
 import PostsExcerpt from './PostsExcerpt';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AddPost from './AddPost';
 import axios from '../../api/axios';
-import { Navigate } from 'react-router-dom';
 
-import { Container, Box } from '@mui/material';
+import { Container, Box, CircularProgress } from '@mui/material';
 
 const PostsList = () => {
-  const { auth } = useAuth();
+  const [loading, setLoading] = useState(true);
   // trigger actions
   const dispatch = useDispatch();
 
@@ -18,6 +16,9 @@ const PostsList = () => {
   const posts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
     axios
       .get('api/posts')
       .then((res) => dispatch(setPostsData(res.data.postList)));
@@ -28,18 +29,25 @@ const PostsList = () => {
   ));
 
   return (
-    <>
-      {!auth ? (
-        <Navigate replace to="/login" />
-      ) : (
-        <Container>
-          <Box sx={{ paddingLeft: '2rem' }}>
-            <AddPost />
-            {content}
+    <Container>
+      <Box>
+        <AddPost />
+        {!loading ? (
+          <Box>{content}</Box>
+        ) : (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <CircularProgress color="secondary" />
           </Box>
-        </Container>
-      )}
-    </>
+        )}
+      </Box>
+    </Container>
   );
 };
 export default PostsList;

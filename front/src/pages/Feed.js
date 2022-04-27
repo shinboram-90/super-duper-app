@@ -1,32 +1,35 @@
 import Navbar from '../components/Navbar';
 import { Outlet } from 'react-router-dom';
 import UsersList from '../features/users/UsersList';
-import { Container, Box } from '@mui/material';
+import { Box } from '@mui/material';
 
 const Feed = () => {
   return (
     <>
       <Navbar />
-      <Container
-        sx={{
+      <div
+        style={{
           padding: '4rem',
+          backgroundColor: 'rgba(255,215,216, 0.1)',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            maxWidth: '90vw',
-          }}
-        >
-          <Box>
-            <UsersList />
+        <div sx={{ width: '100vw' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              maxWidth: '90vw',
+            }}
+          >
+            <div className="main__userslist--responsive">
+              <UsersList />
+            </div>
+            <Box sx={{ width: '100%' }}>
+              <Outlet />
+            </Box>
           </Box>
-          <Box sx={{ width: '100%', marginLeft: '2rem' }}>
-            <Outlet />
-          </Box>
-        </Box>
-      </Container>
+        </div>
+      </div>
     </>
   );
 };

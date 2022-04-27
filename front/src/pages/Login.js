@@ -22,15 +22,6 @@ const Login = () => {
 
   const redirectPath = location.state?.path || '/';
 
-  // const onChange = (event) => {
-  //   if (event.target.value.match(phoneRegex)) {
-  //     setErrorText("");
-  //     setPhone(event.target.value);
-  //   } else {
-  //     setErrorText("invalid format");
-  //   }
-  // };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -55,7 +46,7 @@ const Login = () => {
         setData({});
         const user = response.data.user[0];
 
-        localStorage.setItem('user', JSON.stringify(response.data.user[0]));
+        localStorage.setItem('user', JSON.stringify(user));
         navigate(redirectPath, { replace: true });
         setAuth(user);
       }
@@ -66,7 +57,6 @@ const Login = () => {
 
   return (
     <div
-      className="login__container"
       style={{
         position: 'absolute',
         top: '40%',
@@ -99,7 +89,6 @@ const Login = () => {
             >
               <TextField
                 label="Username"
-                // helperText={text === "" ? 'Empty field!' : "Please enter your username"}
                 id="username"
                 name="username"
                 value={data.username || ''}
@@ -108,8 +97,6 @@ const Login = () => {
                 required
                 onChange={handleChange}
                 helperText="Please enter your username"
-
-                // error={text === ""}
               />
 
               <TextField

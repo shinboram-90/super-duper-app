@@ -1,16 +1,22 @@
 import axios from '../../api/axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsersData } from './usersSlice';
-import {
-  Outlet,
-  useSearchParams,
-  useLocation,
-  NavLink,
-} from 'react-router-dom';
+import { useSearchParams, useLocation, NavLink } from 'react-router-dom';
 
-import { Avatar, Box } from '@mui/material';
+import {
+  Avatar,
+  Badge,
+  Stack,
+  Chip,
+  FormControl,
+  TextField,
+} from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import random2 from '../../assets/random2.png';
+import random20 from '../../assets/random20.jpg';
 
 function QueryNavLink({ to, ...props }) {
   let location = useLocation();
@@ -18,8 +24,6 @@ function QueryNavLink({ to, ...props }) {
 }
 
 const UsersList = () => {
-  // const [users, setUsers] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
@@ -32,63 +36,72 @@ const UsersList = () => {
   }, [dispatch]);
 
   return (
-    <>
-      {}
+    <aside>
+      <h3>My colleagues</h3>
 
-      <ul>
-        <h2>My colleagues</h2>
-
-        {Object.values(users)
-          .filter((user) => {
-            let filter = searchParams.get('filter');
-            if (!filter) return true;
-            let username = user.username.toLowerCase();
-            return username.startsWith(filter.toLowerCase());
-          })
-          .map((user) => (
-            <QueryNavLink
-              style={({ isActive }) => {
-                return {
-                  display: 'block',
-                  margin: '1rem 0',
-                  color: isActive ? 'red' : '',
-                };
-              }}
-              to={`users/${user.id}`}
-              key={'users' + user.id}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar aria-label="user avatar" sx={{ mr: 1 }}>
-                  {user && user.avatar ? (
-                    <img
-                      alt="profile avatar"
-                      src={user.avatar}
-                      crossOrigin="true"
-                      style={{ maxWidth: 40 }}
-                    />
-                  ) : user ? (
-                    user.username?.charAt(0)
-                  ) : (
-                    ''
-                  )}
-                </Avatar>
-                <span>{user.username}</span>
-              </Box>
-              {user.role === 'admin' ? <div>{user.role}</div> : ''}
-            </QueryNavLink>
-          ))}
-        {/* <UserPage
-          key={'user' + user.id}
-          user={user}
-          onEdit={editUser}
-          onDelete={deleteUser}
-          fetchUsersPosts={fetchUsersPosts}
+      <FormControl sx={{ margin: '2rem 0' }}>
+        <TextField
+          label="Search by username..."
+          value={searchParams.get('filter') || ''}
+          onChange={(event) => {
+            let filter = event.target.value;
+            if (filter) {
+              setSearchParams({ filter });
+            } else {
+              setSearchParams({});
+            }
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
         />
-        ))} */}
+      </FormControl>
 
-        {/* <Outlet /> */}
-      </ul>
-    </>
+      {Object.values(users)
+        .filter((user) => {
+          let filter = searchParams.get('filter');
+          if (!filter) return true;
+          let username = user.username.toLowerCase();
+          return username.startsWith(filter.toLowerCase());
+        })
+        .map((user) => (
+          <QueryNavLink
+            style={{
+              display: 'block',
+              margin: '1rem 0',
+            }}
+            to={`users/${user.id}`}
+            key={'users' + user.id}
+          >
+            {user && user.role === 'user' ? (
+              <Stack direction="row" spacing={1}>
+                <Chip
+                  avatar={<Avatar alt="User avatar" src={random2} />}
+                  label={user.username}
+                  variant="outlined"
+                  sx={{ cursor: 'pointer', backgroundColor: 'white' }}
+                />{' '}
+              </Stack>
+            ) : (
+              <Badge color="secondary" badgeContent={'Admin'}>
+                <Stack direction="row" spacing={1}>
+                  <Chip
+                    avatar={<Avatar alt="Admin avatar" src={random20} />}
+                    label={user.username}
+                    variant="outlined"
+                    sx={{ cursor: 'pointer', backgroundColor: 'white' }}
+                  />
+                </Stack>
+              </Badge>
+            )}
+          </QueryNavLink>
+        ))}
+    </aside>
   );
 };
 
