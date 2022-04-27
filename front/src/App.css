@@ -1,7 +1,3 @@
-/* .App {
-  text-align: center;
-} */
-
 /* MAIN STYLES */
 a{
   text-decoration: none;
@@ -45,3 +41,10 @@ ul{
 .MuiCardMedia-img {
   max-height: 500px;
 }
+
+/* @media screen and (max-width: 780px) {
+  .main___userslist--responsive {
+    display : none;
+  }
+} */
+

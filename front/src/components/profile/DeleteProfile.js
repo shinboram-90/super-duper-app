@@ -55,7 +55,11 @@ const DeleteProfile = ({ userId }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography id="modal-modal-description" sx={{ mb: 1 }}>
+          <Typography
+            id="modal-modal-description"
+            sx={{ mb: 1 }}
+            component="div"
+          >
             <Alert severity="warning">
               {' '}
               You are about to delete your account, would you like to proceed?

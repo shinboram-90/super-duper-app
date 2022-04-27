@@ -21,6 +21,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
 const Navbar = () => {
   const { auth } = useAuth();
@@ -58,22 +60,6 @@ const Navbar = () => {
 
   return (
     <nav>
-      {/* <Box
-        sx={{
-          display: 'flex',
-          textAlign: 'center',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography sx={{ minWidth: 100, flexShrink: 1 }}>
-          <Link to="/">Feed</Link>
-        </Typography>
-        <Typography sx={{ minWidth: 100, flexShrink: 1 }}>
-          <Link to="/users">Users</Link>
-        </Typography>
-     */}
-
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -120,11 +106,6 @@ const Navbar = () => {
                     <Link to="/">Feed</Link>
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </Typography>
-                </MenuItem>
               </Menu>
             </Box>
             <Typography
@@ -143,19 +124,13 @@ const Navbar = () => {
               >
                 <Link to="/">Feed</Link>
               </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar aria-label="user avatar">
-                    {auth.username.charAt(0)}
+                  <Avatar aria-label="user avatar" sx={{ bgcolor: red[400] }}>
+                    {auth?.username.charAt(0)}
                   </Avatar>
                 </IconButton>
               </Tooltip>

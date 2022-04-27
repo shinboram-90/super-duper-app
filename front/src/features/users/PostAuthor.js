@@ -5,17 +5,10 @@ import axios from '../../api/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostsData } from '../posts/postsSlice';
 import PostsExcerpt from '../posts/PostsExcerpt';
-
-import {
-  Container,
-  Box,
-  Card,
-  Avatar,
-  IconButton,
-  Typography,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import defaultAvatar from '../../assets/defaultAvatar.jpg';
+import random2 from '../../assets/random2.png';
+import random20 from '../../assets/random20.jpg';
+import moment from 'moment-timezone';
+import { Container, Box, Card, Avatar } from '@mui/material';
 
 const PostAuthor = () => {
   const params = useParams();
@@ -39,11 +32,6 @@ const PostAuthor = () => {
     };
     fetchUser();
   }, [id]);
-
-  // const userPosts = useSelector((state) =>
-  //   state.posts.posts.filter((post) => post.user_id === id)
-  // );
-  // console.log(posts);
 
   useEffect(() => {
     axios
@@ -74,18 +62,18 @@ const PostAuthor = () => {
               {user ? (
                 <div style={{ width: 500 }}>
                   <Avatar sx={{ width: 150, height: 150, margin: '0 auto' }}>
-                    {user.avatar ? (
+                    {user.role === user ? (
                       <img
-                        alt="user avatar"
-                        src={user.avatar}
+                        alt="Random user avatar"
+                        src={random2}
                         crossOrigin="true"
                         style={{ maxWidth: 150 }}
                       />
                     ) : (
                       <img
-                        alt="avatar"
+                        alt="Random admin avatar"
                         height="150"
-                        src={defaultAvatar}
+                        src={random20}
                         crossOrigin="true"
                       />
                     )}
@@ -100,12 +88,10 @@ const PostAuthor = () => {
                     <h4 style={{ margin: 0 }}>{user.username} details</h4>
                     <p>Email: {user.email}</p>
 
-                    <span>
-                      <p>
-                        Name: {user.first_name} {user.last_name}
-                      </p>
-                      <p>Biography: {user.biography}</p>
-                    </span>
+                    <p>
+                      Member since:{' '}
+                      {moment(user.created_at).format('MMMM Do YYYY')}
+                    </p>
                   </Box>
                 </div>
               ) : (

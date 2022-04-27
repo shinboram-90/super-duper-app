@@ -28,18 +28,12 @@ const PostsList = () => {
   ));
 
   return (
-    <>
-      {!auth ? (
-        <Navigate replace to="/login" />
-      ) : (
-        <Container>
-          <Box sx={{ paddingLeft: '2rem' }}>
-            <AddPost />
-            {content}
-          </Box>
-        </Container>
-      )}
-    </>
+    <Container>
+      <Box sx={{ paddingLeft: '2rem' }}>
+        <AddPost />
+        {content}
+      </Box>
+    </Container>
   );
 };
 export default PostsList;

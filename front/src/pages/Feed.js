@@ -10,6 +10,7 @@ const Feed = () => {
       <Container
         sx={{
           padding: '4rem',
+          backgroundColor: 'rgba(255,215,216, 0.1)',
         }}
       >
         <Box
@@ -19,7 +20,7 @@ const Feed = () => {
             maxWidth: '90vw',
           }}
         >
-          <Box>
+          <Box className="main__userslist--responsive">
             <UsersList />
           </Box>
           <Box sx={{ width: '100%', marginLeft: '2rem' }}>
