@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const fs = require('fs');
 
-// const passwordValidator = require('password-validator');
-
 exports.logout = async (req, res, next) => {
   try {
     return res
@@ -20,7 +18,6 @@ exports.logout = async (req, res, next) => {
 
 exports.getCurrentUser = async (req, res, next) => {
   const currentUserId = req.auth.userId;
-  console.log(req.auth.userId);
   try {
     const currentUser = await User.findById(currentUserId);
     if (currentUser) return res.status(200).json({ currentUser: currentUser });
@@ -60,8 +57,6 @@ exports.deleteUser = async (req, res, next) => {
 
     // This line allow us to verify if the same user can delete his profile
     if (user[0].id !== req.auth.userId) {
-      console.log(typeof user[0].id);
-      console.log(typeof req.auth.userId);
       return res
         .status(403)
         .json({ error: 'Unauthorized request, id not matching' });
@@ -87,14 +82,13 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.modifyUser = async (req, res, next) => {
   const id = req.auth.userId;
-  console.log(id);
+
   // use only one = sign because one is number, and second is string
   if (id != req.params.id) {
     res.status(404).json({ message: 'Not the same user ID' });
   } else {
     // building the user object, spread gets all details, just building the avatar file
     if (req.file) {
-      console.log(req.file);
       const user = {
         ...req.body,
         avatar: `${req.protocol}://${req.get('host')}/uploads/${
@@ -103,7 +97,6 @@ exports.modifyUser = async (req, res, next) => {
       };
       try {
         const getUser = await User.findById(id);
-        console.log(req.file);
         const avatar = getUser[0].avatar;
 
         // User already has one avatar, unlink the existing one and replace it
@@ -156,7 +149,7 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: hash,
 
-      // Set to admin for test purposes, need to change back to 1 by default : "user"
+      // 1 by default : "user", 2: "admin". Used enumrable instead of boolean to allow creation of other roles like moderator
       role: 1,
       is_active: true,
     });
@@ -227,7 +220,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// ------------- ADMIN SECTION --------------
+// ------------- ADMIN SECTION FOR V2 --------------
 
 exports.getAllUsers = async (req, res, next) => {
   try {

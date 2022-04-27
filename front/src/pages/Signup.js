@@ -56,10 +56,15 @@ const Signup = () => {
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Box>
-          <img alt="logo" src={iconLeftColored} height="380" />
+          <img
+            style={{ marginLeft: '-30px' }}
+            alt="logo"
+            src={iconLeftColored}
+            height="380"
+          />
         </Box>
         <Box sx={{ marginTop: '-8rem' }}>
-          <form onSubmit={handleSubmit} method="POST">
+          <form onSubmit={handleSubmit} style={{ width: 300 }} method="POST">
             <Box
               sx={{
                 display: 'flex',
@@ -78,6 +83,7 @@ const Signup = () => {
                 required
                 helperText="Choose a username"
                 inputRef={username}
+                fullWidth
               />
               <TextField
                 label="Email"
@@ -88,16 +94,18 @@ const Signup = () => {
                 required
                 helperText="Enter your email address"
                 inputRef={email}
+                fullWidth
               />
               <TextField
                 label="Password"
                 type="password"
-                helperText="Choose a password"
+                helperText="Choose a password, min 8 characters "
                 id="password"
                 name="password"
                 size="small"
                 inputRef={password}
                 required
+                fullWidth
               />
 
               <TextField
@@ -109,6 +117,7 @@ const Signup = () => {
                 size="small"
                 inputRef={password2}
                 required
+                fullWidth
               />
               <Button type="submit" variant="contained">
                 Sign Up

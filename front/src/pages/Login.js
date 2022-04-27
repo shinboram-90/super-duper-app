@@ -79,7 +79,12 @@ const Login = () => {
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Box>
-          <img alt="logo" src={iconLeftColored} height="380" />
+          <img
+            alt="logo"
+            src={iconLeftColored}
+            height="380"
+            style={{ marginLeft: '-30px' }}
+          />
         </Box>
         <Box sx={{ marginTop: '-8rem' }}>
           <form onSubmit={handleSubmit} method="POST">

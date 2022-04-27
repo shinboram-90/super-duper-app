@@ -12,7 +12,7 @@ const Comment = function (comment) {
 Comment.findByPost = async (postId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      'SELECT  c.*, u.avatar, u.username, p.title FROM comments c INNER JOIN users u ON c.user_id = u.id INNER JOIN posts p ON c.post_id = p.id WHERE p.id=? ORDER BY c.created_at ASC',
+      'SELECT  c.*, u.avatar, u.username, u.role, p.title FROM comments c INNER JOIN users u ON c.user_id = u.id INNER JOIN posts p ON c.post_id = p.id WHERE p.id=? ORDER BY c.created_at ASC',
       postId,
       (err, comments) => {
         if (err) {
@@ -72,7 +72,8 @@ Comment.countComments = async () => {
 Comment.findById = async (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      'SELECT * FROM comments WHERE id=? AND status = "published"',
+      'SELECT c.*, u.avatar, u.username, u.role FROM comments c JOIN users u ON c.user_id = u.id WHERE c.id=? AND status = "published" ORDER BY c.created_at ASC',
+
       id,
       (err, comment) => {
         if (err) {
@@ -112,21 +113,5 @@ Comment.delete = async (id) => {
     });
   });
 };
-
-// Comment.updateLikes = async (id, userId) => {
-//   return new Promise((resolve, reject) => {
-//     pool.query(
-//       `UPDATE comments SET like_user_id = like_user_id || ?, likes = likes + 1 WHERE NOT (like_user_id @> ?) AND id = ?`,
-//       [userId, id],
-//       (err, likeComment) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         console.log(`Like/dislike given by user Id ${userId}`);
-//         return resolve(likeComment);
-//       }
-//     );
-//   });
-// };
 
 module.exports = Comment;

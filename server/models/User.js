@@ -10,10 +10,9 @@ const User = function (user) {
   this.avatar = user.avatar;
   this.created_at = new Date();
   this.updated_at = new Date();
-  this.first_name = user.first_name; //optional si j'ai le temps
+  this.first_name = user.first_name; //optional
   this.last_name = user.last_name; //optional
   this.phone = user.phone; //optional
-  // add job if time
 };
 
 User.create = async (newUser) => {
@@ -135,39 +134,31 @@ User.findAll = async () => {
   });
 };
 
-// 'SELECT p.*, u.avatar, u.username, COUNT(c.id) as comments FROM posts p JOIN users u ON p.user_id = u.id LEFT JOIN comments c ON p.id = c.post_id WHERE p.status = "published" GROUP BY p.id ORDER BY p.created_at DESC',
-
 User.updateStatus = async (is_active, id) => {
   return new Promise((resolve, reject) => {
     pool.query(
       'UPDATE users SET is_active=? WHERE id=?',
       [is_active, id],
-      (err, users) => {
+      (err, user) => {
         if (err) {
           return reject(err);
         }
-        console.log(users);
-        return resolve(users);
+        return resolve(user);
       }
     );
   });
 };
 
-// User.findAdmin = async () => {
-//   return new Promise((resolve, reject) => {
-//     pool.query(
-//       'SELECT * FROM users WHERE role = ?',
-//       ['admin'],
-//       (err, users) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         console.log(users);
-//         return resolve(users);
-//       }
-//     );
-//   });
-// };
+User.findAdmin = async (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT role FROM users WHERE id = ?', id, (err, user) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(user[0].role);
+    });
+  });
+};
 
 User.findByEmail = (email) => {
   return new Promise((resolve, reject) => {

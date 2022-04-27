@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
 const Like = require('../models/Like');
 const fs = require('fs');
 
@@ -83,24 +84,25 @@ exports.createPost = async (req, res, next) => {
 
 exports.modifyPost = async (req, res, next) => {
   const id = req.params.id;
-  const getPost = await Post.findById(id);
+  const userId = req.auth.userId;
 
+  // Retrieve post to be modified
+  const getPost = await Post.findById(id);
   const image = getPost[0].image;
 
-  if (getPost[0].user_id !== req.auth.userId) {
-    return res
-      .status(403)
-      .json({ error: 'Unauthorized request, id not matching' });
-  } else {
+  // Retrieve role of the current user
+  const role = await User.findAdmin(userId);
+
+  if (getPost[0].user_id === userId || role === 'admin') {
+    // Checking if post has an image
     if (req.file) {
-      console.log(req.file);
       const postBody = {
         ...req.body,
-
         image: `${req.protocol}://${req.get('host')}/uploads/${
           req.file.filename
         }`,
       };
+
       try {
         // Post already has one image, delete and replace
         if (image) {
@@ -138,7 +140,6 @@ exports.modifyPost = async (req, res, next) => {
       // Modifying text only
       const updatedPost = await Post.update(req.body, id);
       if (updatedPost) {
-        console.log(req.admin);
         const getFinalPost = await Post.findById(id);
         const post = getFinalPost[0];
         res.status(200).json({
@@ -146,38 +147,47 @@ exports.modifyPost = async (req, res, next) => {
         });
       }
     }
+  } else {
+    // User is not the same or doesn't have the admin role
+    return res
+      .status(403)
+      .json({ error: 'Unauthorized request, id not matching or not an admin' });
   }
 };
 
 exports.deletePost = async (req, res, next) => {
   const id = req.params.id;
+  const userId = req.auth.userId;
   try {
     const post = await Post.findById(id);
     if (!post[0]) {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    // This line allow us to verify if the post's owner can delete his post
-    if (post[0].user_id !== req.auth.userId) {
-      return res
-        .status(403)
-        .json({ error: 'Unauthorized request, id not matching' });
-    }
-    const image = post[0].image;
+    // Retrieve role of the current user
+    const role = await User.findAdmin(userId);
 
-    if (image) {
-      // loop to unlink all images
-      const filename = await image.split('/uploads/')[1];
+    // This line allows us to verify if the post's owner or an admin can delete the post
+    if (post[0].user_id === userId || role === 'admin') {
+      const image = post[0].image;
+      if (image) {
+        // loop to unlink all images
+        const filename = await image.split('/uploads/')[1];
 
-      fs.unlink(`uploads/${filename}`, async () => {
-        const deletePost = await Post.delete(id);
-        res.status(200).json({
-          message: 'Post successfully deleted with image',
+        fs.unlink(`uploads/${filename}`, async () => {
+          const deletePost = await Post.delete(id);
+          res.status(200).json({
+            message: 'Post successfully deleted with image',
+          });
         });
-      });
+      } else {
+        const deletePost = await Post.delete(id);
+        return res.status(200).json({ message: 'Post successfully deleted' });
+      }
     } else {
-      const deletePost = await Post.delete(id);
-      return res.status(200).json({ message: 'Post successfully deleted' });
+      return res.status(403).json({
+        error: 'Unauthorized request, user id not matching or not an admin',
+      });
     }
   } catch (e) {
     console.log(e);
