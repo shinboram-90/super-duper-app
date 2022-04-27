@@ -12,7 +12,6 @@ exports.auth = (req, res, next) => {
 
     // TOKEN_SECRET could be generated with an algorithm like const{ secret, algorithm } = require('./config');
     const token = cookies.access_token;
-    // const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
 
@@ -27,21 +26,9 @@ exports.auth = (req, res, next) => {
       error: `Invalid request, check token! Id no.${req.params.id}`,
     });
   }
-  // const token = req.cookies.access_token;
-  // if (!token) {
-  //   return res.sendStatus(403);
-  // }
-  // try {
-  //   const data = jwt.verify(token, process.env.TOKEN_SECRET);
-  //   req.userId = data.id;
-  //   req.userRole = data.role;
-  //   console.log(req.userId);
-  //   return next();
-  // } catch {
-  //   return res.sendStatus(403);
-  // }
 };
 
+// Will be used for V2, admin routes
 exports.authAdmin = (req, res, next) => {
   try {
     const { cookies } = req;

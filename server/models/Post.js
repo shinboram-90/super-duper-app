@@ -40,7 +40,7 @@ Post.create = async (newPost) => {
 Post.findById = async (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      'SELECT p.*, u.avatar, u.username FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id=? ORDER BY p.created_at DESC',
+      'SELECT p.*, u.avatar, u.username, u.role FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id=? ORDER BY p.created_at DESC',
       id,
       (err, post) => {
         if (err) {
