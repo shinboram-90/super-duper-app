@@ -9,6 +9,7 @@ import moment from 'moment-timezone';
 import useAuth from '../../hooks/useAuth';
 
 // MUI STYLES
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
@@ -154,6 +155,10 @@ const PostsExcerpt = ({ post }) => {
     } catch (err) {
       console.error('Failed to delete the post', err);
     }
+  };
+
+  const handleClickAway = () => {
+    setExpanded(false);
   };
 
   // ----------------------- MUI STYLES
@@ -349,7 +354,9 @@ const PostsExcerpt = ({ post }) => {
                 aria-expanded={expanded}
                 aria-label="show more"
               >
-                <ExpandMoreIcon />
+                <ClickAwayListener onClickAway={handleClickAway}>
+                  <ExpandMoreIcon />
+                </ClickAwayListener>
               </ExpandMore>
             </Box>
           </CardActions>
