@@ -354,16 +354,16 @@ const PostsExcerpt = ({ post }) => {
                 aria-expanded={expanded}
                 aria-label="show more"
               >
-                <ClickAwayListener onClickAway={handleClickAway}>
-                  <ExpandMoreIcon />
-                </ClickAwayListener>
+                <ExpandMoreIcon />
               </ExpandMore>
             </Box>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <CommentsList comments={neededComments} postId={post.id} />
-            </CardContent>
+            <ClickAwayListener onClickAway={handleClickAway}>
+              <CardContent>
+                <CommentsList comments={neededComments} postId={post.id} />
+              </CardContent>
+            </ClickAwayListener>
           </Collapse>
         </Card>
       )}
