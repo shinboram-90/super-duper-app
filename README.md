@@ -17,3 +17,5 @@ yarn start
 
 ## Evironment
 `CLIENT_URL=http://localhost:3000`
+
+...in progress
