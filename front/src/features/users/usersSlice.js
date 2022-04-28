@@ -19,7 +19,6 @@ const usersSlice = createSlice({
       });
     },
     deleteUser: (state, { payload }) => {
-      console.log(payload);
       state.users = state.users.filter((user) => user.id !== payload);
     },
   },

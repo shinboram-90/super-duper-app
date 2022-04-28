@@ -22,7 +22,6 @@ const postsSlice = createSlice({
       });
     },
     deletePost: (state, { payload }) => {
-      console.log(payload);
       state.posts = state.posts.filter((post) => post.id !== payload);
     },
   },

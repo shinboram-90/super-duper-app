@@ -32,6 +32,7 @@ import {
   Box,
   ListItemIcon,
 } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 
 // MUI ICONS
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -57,6 +58,7 @@ const ExpandMore = styled((props) => {
 
 const PostsExcerpt = ({ post }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [image, setImage] = useState(post.image);
@@ -128,7 +130,6 @@ const PostsExcerpt = ({ post }) => {
 
     try {
       await axios.put(`api/posts/${post.id}`, formData).then((res) => {
-        console.log(res.data.modifications);
         dispatch(editPost([post.id, res.data.modifications]));
       });
 
@@ -148,6 +149,9 @@ const PostsExcerpt = ({ post }) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     try {
       axios
         .get(`api/posts/${post.id}/comments`)
@@ -361,7 +365,21 @@ const PostsExcerpt = ({ post }) => {
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <ClickAwayListener onClickAway={handleClickAway}>
               <CardContent>
-                <CommentsList comments={neededComments} postId={post.id} />
+                {!loading ? (
+                  <CommentsList comments={neededComments} postId={post.id} />
+                ) : (
+                  <Box
+                  // sx={{
+                  //   display: 'flex',
+                  //   justifyContent: 'center',
+                  //   alignItems: 'center',
+                  //   height: '100%',
+                  // }}
+                  >
+                    <LinearProgress color="secondary" />
+                    {/* <CircularProgress color="secondary" /> */}
+                  </Box>
+                )}
               </CardContent>
             </ClickAwayListener>
           </Collapse>

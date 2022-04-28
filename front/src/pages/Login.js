@@ -42,7 +42,6 @@ const Login = () => {
     try {
       const response = await axios.post('/api/login', userData);
       if (response.status === 200) {
-        console.log(response.data);
         setData({});
         const user = response.data.user[0];
 
