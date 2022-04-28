@@ -82,7 +82,14 @@ const PostsExcerpt = ({ post }) => {
   let imgPreview;
   if (image) {
     imgPreview = (
-      <div style={{ position: 'relative', width: 300, padding: '1rem 2rem' }}>
+      <div
+        style={{
+          position: 'relative',
+          maxWidth: '300px',
+          padding: '1rem 2rem',
+          margin: '0 auto',
+        }}
+      >
         <img
           style={{ width: '100%', borderRadius: '5px' }}
           src={imageRef.current?.value ? URL.createObjectURL(image) : image}
@@ -94,8 +101,8 @@ const PostsExcerpt = ({ post }) => {
             onClick={onClickRemoveImage}
             sx={{
               position: 'absolute',
-              top: '1.2rem',
-              left: '19rem',
+              top: '1rem',
+              right: '0',
               cursor: 'pointer',
             }}
           >

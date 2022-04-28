@@ -46,8 +46,9 @@ export const AddPost = () => {
       <div
         style={{
           position: 'relative',
-          width: 300,
+          maxWidth: 300,
           padding: '1rem 2rem',
+          margin: '0 auto',
         }}
       >
         <img
@@ -61,8 +62,8 @@ export const AddPost = () => {
             onClick={onClickRemoveImage}
             sx={{
               position: 'absolute',
-              top: '1.2rem',
-              left: '19rem',
+              top: '1rem',
+              right: '0',
               cursor: 'pointer',
             }}
           >
