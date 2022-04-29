@@ -98,18 +98,22 @@ POST /localhost:3001/api/login
 ```
 #### Posts section
 
-| Method  | Access point  | Description                                                        | Parameter                          |   
-| :-------| :------------ | :------------------------------------------------------------------|:-----------------------------------|
-| `GET`   | /api/posts    | Returns an array of all posts                                      |                                    |
-| `GET`   | /api/posts/:id| Returns a single post                                              | **Required** `id` of post to fetch |
-| `POST`  | /api/posts/   | Create a post, can add an image                                    |                                    |
-| `PUT`   | /api/posts/:id| Modify an existing post, can remove an image if any or add one     | **Required** `id` of post to edit  |
-| `DELETE`| /api/posts/:id| Delete an existing post with the linked image                      | **Required** `id` of post to delete|
+| Method  | Access point        | Description                                                        | Parameter                          |   
+| :-------| :------------------ | :------------------------------------------------------------------|:-----------------------------------|
+| `GET`   | /api/posts          | Returns an array of all posts                                      |                                    |
+| `GET`   | /api/profile/:userId| Returns an array of all posts that belong to one user              | **Required** `id` of post's author |
+| `GET`   | /api/posts/:id      | Returns a single post                                              | **Required** `id` of post to fetch |
+| `POST`  | /api/posts/         | Create a post, can add an image                                    |                                    |
+| `PUT`   | /api/posts/:id      | Modify an existing post, can remove an image if any or add one     | **Required** `id` of post to edit  |
+| `DELETE`| /api/posts/:id      | Delete an existing post with the linked image                      | **Required** `id` of post to delete|
 
 ```http
 GET /localhost:3001/api/posts
+GET /localhost:3001/api/profile/${userId}
 GET /localhost:3001/api/posts/${id}
 ```
+
+api/profile/${auth.id}
 ```http
 POST /localhost:3001/api/posts
 {
