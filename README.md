@@ -70,7 +70,24 @@ POST /localhost:3001/api/signup
  "username":"fakeUsername", 
  "email":"example@email.com",
  "password":"passwordMin8Characters"
-}  
+}
+
+Example of a user object created:
+{
+ "id": 101,
+ "username": "User",
+ "email": "user@email.com",
+ "password": "$2b$10$KXh26EJi7Wob8VYZCZwGteL2F4mYgaFFSAzMYjdlCgKkGz745Y7wu",
+ "role": "user",
+ "biography": null,
+ "is_active": 1,
+ "avatar": null,
+ "created_at": "2022-02-10T13:52:19.000Z",
+ "updated_at": "2022-02-10T13:52:19.000Z",
+ "first_name": null,
+ "last_name": null,
+ "phone": null
+        }
 ```
 ```http
 POST /localhost:3001/api/login
@@ -119,10 +136,10 @@ DELETE /localhost:3001/api/posts/${id}
 
 | Method  | Access point                   | Description                                      | Parameter                                           |   
 | :-------| :----------------------------- | :------------------------------------------------|:----------------------------------------------------|
-| `GET`   | /api/posts:postId/comments     | Returns an array of comments related to one post | **Required** `id` of post with comments             |
-| `POST`  | /api/posts:postId/comments     |Comment created for the selected post with infos entered in the body | **Required** `id` of post related|
+| `GET`   | /api/posts/:postId/comments    | Returns an array of comments related to one post | **Required** `id` of post with comments             |
+| `POST`  | /api/posts/:postId/comments    |Comment created for the selected post with infos entered in the body | **Required** `id` of post related|
 | `PUT`   | /api/posts/:postId/comments/:id| Modify an existing comment              | **Required** `id` of post related and `id` of comment to edit|
-| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment              | **Required** `id` of post related and `id` of comment to delete|
+| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment            | **Required** `id` of post related and `id` of comment to delete|
 
 ```http
 GET /localhost:3001/api/posts/${postId}/comments
