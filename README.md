@@ -21,6 +21,7 @@ The aim is to build a social app for employees at a company called Groupomania.
 - MySQL
 
 ## Installation
+Ensure that you have React, Node and Mysql already installed on your machine
 Cloner super-duper-app
 ```bash
 cd server
