@@ -194,3 +194,6 @@ PUT /localhost:3001/api/users/${id}
 DELETE /localhost:3001/users/${id}
 ```
 #### Likes section is not up running yet, will be in V2
+
+## Author
+[@shinboram-90](https://github.com/shinboram-90)
