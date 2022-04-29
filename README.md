@@ -84,8 +84,9 @@ POST /http://localhost:3001/api/login
 | :-------| :------------ | :------------------------------------------------------------------|:-----------------------------------|
 | `GET`   | /api/posts    | Returns an array of all posts                                      |                                    |
 | `GET`   | /api/posts/:id| Returns a single post                                              | **Required** `id` of post to fetch |
-| `PUT`   | /api/users/:id| Modify an existing user, can complete the profile anf add an avatar| **Required** `id` of user to edit  |
-| `DELETE`| /api/users/:id| Delete an existing user                                            | **Required** `id` of user to delete|
+| `POST`  | /api/posts/   | Create a post, can add an image                                    |                                    |
+| `PUT`   | /api/posts/:id| Modify an existing post, can remove an image if any or add one     | **Required** `id` of post to edit  |
+| `DELETE`| /api/posts/:id| Delete an existing post with the linked image                      | **Required** `id` of post to delete|
 
 ```http
 GET /localhost:3001/api/posts
@@ -120,7 +121,7 @@ A user with an admin role is given rights to delete a post.
 | `GET`   | /api/posts:postId/comments     | Returns an array of comments related to one post | **Required** `id` of post with comments             |
 | `POST`  | /api/posts:postId/comments     |Comment created for the selected post with infos entered in the body | **Required** `id` of post related|
 | `PUT`   | /api/posts/:postId/comments/:id| Modify an existing comment              | **Required** `id` of post related and `id` of comment to edit|
-| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment            | **Required** `id` of post related and `id` of comment to delete|
+| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment              | **Required** `id` of post related and `id` of comment to delete|
 
 ```http
 GET /localhost:3001/api/posts/${postId}/comments
