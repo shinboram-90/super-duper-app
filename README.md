@@ -33,8 +33,8 @@ yarn add
 yarn start
 ```
 
-## Evironment
-In your .env file:
+## Evironment Variables
+To run this project, you will need to add the following environment variables to your .env file
 ```bash
 CLIENT_URL=http://localhost:3000
 TOKEN_SECRET=<YOUR SECRET KEY>
@@ -90,18 +90,21 @@ POST /localhost:3001/api/posts
  "title":"Post's title",
  "content":"Post's description",
  "image":file
-}     
-
+}
+```
+```http
 PUT /localhost:3001/api/users/${id}
 {
  "title":"Title can be modified",
- "content":"Content can be modified,
+ "content":"Content can be modified",
  "image":file can be removed or changed
-}     
+}
+A user with an admin role is given rights to edit a post.
 ```
 
 ```http
 DELETE /localhost:3001/api/posts/${id}
+A user with an admin role is given rights to delete a post.
 ```
 #### Comments section
 
@@ -122,13 +125,16 @@ POST /http://localhost:3001/api/posts/${postId}/comments
 }     
 ```
 ```http
+// This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/posts/${postId}/comments/${id}
 {
  "content":"Content can be modified"
-}     
+}
+A user with an admin role is given rights to edit a comment.
 ```
 ```http
 DELETE /localhost:3001/api/posts/${postId}/comments/${id}
+A user with an admin role is given rights to delete a comment.
 ```
 #### Users section
 
@@ -143,8 +149,9 @@ DELETE /localhost:3001/api/posts/${postId}/comments/${id}
 GET /localhost:3001/api/users
 GET /localhost:3001/api/users/${id}
 ```
-// This part has been removed client side for now, will be implemented soon
+
 ```http
+// This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/users/${id}
 {
  "first_name":"John",
@@ -156,3 +163,4 @@ PUT /localhost:3001/api/users/${id}
 ```http
 DELETE /localhost:3001/users/${id}
 ```
+#### Likes section is not up running yet, will be in V2
