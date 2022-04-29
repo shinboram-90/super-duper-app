@@ -1,7 +1,7 @@
 # super-duper-app : Groupomania
 
 Project 7, last project of my apprenticeship for "Web Developer" with OpenClassrooms.
-The aim is to build a fake social app for a company called Groupomania
+The aim is to build a social app for employees at a company called Groupomania.
 
 ## Languages and Tools
 #### Frontend 
@@ -71,7 +71,6 @@ POST /http://localhost:3001/api/login
  "password":"myPassword",
 }     
 ```
-
 #### Posts section
 
 | Method  | Access point  | Description                                                   | Parameter                           |   
@@ -79,7 +78,7 @@ POST /http://localhost:3001/api/login
 | `GET`   | /api/posts    | Returns an array of all posts                                 |                                     |
 | `GET`   | /api/posts/:id| Returns a single post                                         | **Required** `id` of post to fetch  |
 | `POST`  | /api/posts    | Post created with infos entered in the body, can add an image |                                     |
-| `PUT`   | /api/posts/:id| Modify an existing post, can add or remove image              | **Required** `id` of post to modify |
+| `PUT`   | /api/posts/:id| Modify an existing post, can add or remove image              | **Required** `id` of post to edit   |
 | `DELETE`| /api/posts/:id| Delete an existing post with its image if any                 | **Required** `id` of post to delete |
 
 ```http
@@ -104,4 +103,31 @@ PUT /localhost:3001/api/posts/${id}
 
 ```http
 DELETE /localhost:3001/api/posts/${id}
+```
+#### Comments section
+
+| Method  | Access point                   | Description                                      | Parameter                                           |   
+| :-------| :----------------------------- | :------------------------------------------------|:----------------------------------------------------|
+| `GET`   | /api/posts/:postId/comments    | Returns an array of comments related to one post | **Required** `id` of post with comments             |
+| `POST`  | /api/posts:postId/comments     |Comment created for the selected post with infos entered in the body | **Required** `id` of post related|
+| `PUT`   | /api/posts/:postId/comments/:id| Modify an existing comment              | **Required** `id` of post related and `id` of comment to edit|
+| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment            | **Required** `id` of post related and `id` of comemnt to delete|
+
+```http
+GET /localhost:3001/api/posts/${postId}/comments
+```
+```http
+POST /http://localhost:3001/api/posts/${postId}/comments
+{ 
+ "content":"My first comment",
+}     
+```
+```http
+PUT /localhost:3001/api/posts/${postId}/comments/${id}
+{
+ "content":"Content is modified"
+}     
+```
+```http
+DELETE /localhost:3001/api/posts/${postId}/comments/${id}
 ```
