@@ -1,6 +1,7 @@
 # super-duper-app : Groupomania
 
-Projet 7, dernier projet de mon alternance "Web Developer" avec OpenClassrooms.
+Project 7, last project of my apprenticeship for "Web Developer" with OpenClassrooms.
+The aim is to build a fake social app for a company called Groupomania
 
 ## Languages and Tools
 #### Frontend 
