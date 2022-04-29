@@ -73,31 +73,30 @@ POST /http://localhost:3001/api/login
 ```
 #### Posts section
 
-| Method  | Access point  | Description                                                   | Parameter                           |   
-| :-------| :------------ | :-------------------------------------------------------------|:------------------------------------|
-| `GET`   | /api/posts    | Returns an array of all posts                                 |                                     |
-| `GET`   | /api/posts/:id| Returns a single post                                         | **Required** `id` of post to fetch  |
-| `POST`  | /api/posts    | Post created with infos entered in the body, can add an image |                                     |
-| `PUT`   | /api/posts/:id| Modify an existing post, can add or remove image              | **Required** `id` of post to edit   |
-| `DELETE`| /api/posts/:id| Delete an existing post with its image if any                 | **Required** `id` of post to delete |
+| Method  | Access point  | Description                                                        | Parameter                          |   
+| :-------| :------------ | :------------------------------------------------------------------|:-----------------------------------|
+| `GET`   | /api/posts    | Returns an array of all posts                                      |                                    |
+| `GET`   | /api/posts/:id| Returns a single post                                              | **Required** `id` of post to fetch |
+| `PUT`   | /api/users/:id| Modify an existing user, can complete the profile anf add an avatar| **Required** `id` of user to edit  |
+| `DELETE`| /api/users/:id| Delete an existing user                                            | **Required** `id` of user to delete|
 
 ```http
 GET /localhost:3001/api/posts
 GET /localhost:3001/api/posts/${id}
 ```
 ```http
-POST /http://localhost:3001/api/posts
+POST /localhost:3001/api/posts
 {
- "title":"Post's title", 
- "content":"A description of the post",
- "image": file
+ "title":"Post's title",
+ "content":"Post's description",
+ "image":file
 }     
-```
 
-```http
-PUT /localhost:3001/api/posts/${id}
+PUT /localhost:3001/api/users/${id}
 {
- "content":"Changing only the content of my post"
+ "title":"Title can be modified",
+ "content":"Content can be modified,
+ "image":file can be removed or changed
 }     
 ```
 
@@ -108,10 +107,10 @@ DELETE /localhost:3001/api/posts/${id}
 
 | Method  | Access point                   | Description                                      | Parameter                                           |   
 | :-------| :----------------------------- | :------------------------------------------------|:----------------------------------------------------|
-| `GET`   | /api/posts/:postId/comments    | Returns an array of comments related to one post | **Required** `id` of post with comments             |
+| `GET`   | /api/posts:postId/comments     | Returns an array of comments related to one post | **Required** `id` of post with comments             |
 | `POST`  | /api/posts:postId/comments     |Comment created for the selected post with infos entered in the body | **Required** `id` of post related|
 | `PUT`   | /api/posts/:postId/comments/:id| Modify an existing comment              | **Required** `id` of post related and `id` of comment to edit|
-| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment            | **Required** `id` of post related and `id` of comemnt to delete|
+| `DELETE`| /api/posts/:postId/comments/:id| Delete an existing comment            | **Required** `id` of post related and `id` of comment to delete|
 
 ```http
 GET /localhost:3001/api/posts/${postId}/comments
@@ -125,9 +124,35 @@ POST /http://localhost:3001/api/posts/${postId}/comments
 ```http
 PUT /localhost:3001/api/posts/${postId}/comments/${id}
 {
- "content":"Content is modified"
+ "content":"Content can be modified"
 }     
 ```
 ```http
 DELETE /localhost:3001/api/posts/${postId}/comments/${id}
+```
+#### Users section
+
+| Method  | Access point  | Description               | Parameter                          |   
+| :-------| :------------ | :-------------------------|:---------------------------------- |
+| `GET`   | /api/users    | Returns an array of users |                                    |
+| `GET`   | /api/users/:id| Resturns a single user    | **Required** `id` of user to fetch |
+| `PUT`   | /api/users/:id| Modify an existing user   | **Required** `id` of user to edit  |
+| `DELETE`| /api/users/:id| Delete an existing user   | **Required** `id` of user to delete|
+
+```http
+GET /localhost:3001/api/users
+GET /localhost:3001/api/users/${id}
+```
+// This part has been removed client side for now, will be implemented soon
+```http
+PUT /localhost:3001/api/users/${id}
+{
+ "first_name":"John",
+ "last_name":"Doe",
+ "biography":"Something about myself",
+ "avatar":file
+}     
+```
+```http
+DELETE /localhost:3001/users/${id}
 ```
