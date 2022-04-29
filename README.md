@@ -1,7 +1,13 @@
 # super-duper-app : Groupomania
 
-Project 7, last project of my apprenticeship for "Web Developer" with OpenClassrooms.
-The aim is to build a social app for employees at a company called Groupomania.
+Project 7, last project of my "Web Developer" apprenticeship with OpenClassrooms.
+The aim is to build a social app for employees at a company called Groupomania. It provides the main functions you'd expect from a social app such as a user session, publishing posts and comments, an admin system, etc.
+
+## Requirements
+- Authenticate a user and maintain his session
+- Manage a data storage using SQL
+- Implement a secured data storage using SQL
+- Customize the content sent to a web client
 
 ## Languages and Tools
 #### Frontend 
