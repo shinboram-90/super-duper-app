@@ -73,7 +73,7 @@ POST /localhost:3001/api/signup
 }  
 ```
 ```http
-POST /http://localhost:3001/api/login
+POST /localhost:3001/api/login
 {
  "username":"myUsername", 
  "password":"myPassword",
@@ -102,18 +102,18 @@ POST /localhost:3001/api/posts
 }
 ```
 ```http
-PUT /localhost:3001/api/users/${id}
+PUT /localhost:3001/api/posts/${id}
 {
  "title":"Title can be modified",
  "content":"Content can be modified",
  "image":file can be removed or changed
 }
-A user with an admin role is given rights to edit a post.
+/A user with an admin role is given rights to edit a post.
 ```
 
 ```http
 DELETE /localhost:3001/api/posts/${id}
-A user with an admin role is given rights to delete a post.
+/A user with an admin role is given rights to delete a post.
 ```
 #### Comments section
 
@@ -128,22 +128,22 @@ A user with an admin role is given rights to delete a post.
 GET /localhost:3001/api/posts/${postId}/comments
 ```
 ```http
-POST /http://localhost:3001/api/posts/${postId}/comments
+POST /localhost:3001/api/posts/${postId}/comments
 { 
  "content":"My first comment",
 }     
 ```
 ```http
-// This part has been removed client side for now, will be implemented soon
+/This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/posts/${postId}/comments/${id}
 {
  "content":"Content can be modified"
 }
-A user with an admin role is given rights to edit a comment.
+/A user with an admin role is given rights to edit a comment.
 ```
 ```http
 DELETE /localhost:3001/api/posts/${postId}/comments/${id}
-A user with an admin role is given rights to delete a comment.
+/A user with an admin role is given rights to delete a comment.
 ```
 #### Users section
 
@@ -160,7 +160,7 @@ GET /localhost:3001/api/users/${id}
 ```
 
 ```http
-// This part has been removed client side for now, will be implemented soon
+/This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/users/${id}
 {
  "first_name":"John",
