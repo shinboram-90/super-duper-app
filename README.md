@@ -125,12 +125,12 @@ PUT /localhost:3001/api/posts/${id}
  "content":"Content can be modified",
  "image":file can be removed or changed
 }
-/A user with an admin role is given rights to edit a post.
+A user with an admin role is given rights to edit a post.
 ```
 
 ```http
 DELETE /localhost:3001/api/posts/${id}
-/A user with an admin role is given rights to delete a post.
+A user with an admin role is given rights to delete a post.
 ```
 #### Comments section
 
@@ -151,16 +151,16 @@ POST /localhost:3001/api/posts/${postId}/comments
 }     
 ```
 ```http
-/This part has been removed client side for now, will be implemented soon
+This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/posts/${postId}/comments/${id}
 {
  "content":"Content can be modified"
 }
-/A user with an admin role is given rights to edit a comment.
+A user with an admin role is given rights to edit a comment.
 ```
 ```http
 DELETE /localhost:3001/api/posts/${postId}/comments/${id}
-/A user with an admin role is given rights to delete a comment.
+A user with an admin role is given rights to delete a comment.
 ```
 #### Users section
 
@@ -177,7 +177,7 @@ GET /localhost:3001/api/users/${id}
 ```
 
 ```http
-/This part has been removed client side for now, will be implemented soon
+This part has been removed client side for now, will be implemented soon
 PUT /localhost:3001/api/users/${id}
 {
  "first_name":"John",
